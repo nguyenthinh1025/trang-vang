@@ -4,8 +4,6 @@ export const LoginAction = (value, props) => {
   return async (dispatch) => {
     try {
       let result = await http.post("/user/login", value);
-
-
       const action = {
         type: "LOGIN_USER",
         userLogin : result.data.data,
@@ -14,6 +12,7 @@ export const LoginAction = (value, props) => {
       dispatch(action)
       localStorage.setItem('userlogin',JSON.stringify(result.data.data))
       localStorage.setItem('userID',result.data.data.user?.userId)
+      localStorage.setItem('businessID',result.data.data?.user.businessId)
       const Toast = Swal.mixin({
         toast: true,
         position: "top-end",

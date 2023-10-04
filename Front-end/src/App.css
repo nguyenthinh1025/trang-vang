@@ -566,3 +566,10 @@ svg.icon-search {
   opacity: 0;
   cursor: pointer;
 }
+
+.active::before{
+  display: none;
+}
+.active:after{
+  display: none;
+}

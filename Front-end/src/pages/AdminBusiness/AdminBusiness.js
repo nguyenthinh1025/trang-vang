@@ -346,7 +346,6 @@ export default function AdminBusiness() {
             <Column
               field="formattedCreateDate"
               header="Thời gian tạo"
-              sortable
               style={{ minWidth: "12rem" }}
             ></Column>
             <Column

@@ -313,7 +313,10 @@ export default function Bussiness(props) {
               </div>
             </div>
             <div id="section3" className="w-100 pt-3">
-              <div className="w-100 rounded-3 bg-white border-bottom">
+              <div
+                className="w-100 rounded-3 bg-white border-bottom"
+                style={{ paddingBottom: "50px" }}
+              >
                 <h2 className="fs-6 p-3 pt-4 pb-1">
                   <span className="yellow_bg h2_radius">Thư viện hình ảnh</span>
                 </h2>
@@ -329,7 +332,13 @@ export default function Bussiness(props) {
                   </h3>
                   {businessByID?.Certificates?.map((item, index) => {
                     return (
-                      <div className="pt-3 ps-3 pe-0 listing_images">
+                      <div
+                        className="pt-3 ps-3 pe-0 listing_images"
+                        key={index}
+                        onClick={() => {
+                          console.log(item?.certificateId, index);
+                        }}
+                      >
                         <div className="rounded-3 border border-dark-subtle p-2 text-center sanphamtrungbay_khung">
                           <img
                             id="myImg11"
@@ -344,14 +353,16 @@ export default function Bussiness(props) {
                           style={{ height: 56 }}
                         >
                           <small />
+                         
                         </div>
                       </div>
                     );
                   })}
-                  <p className="p-0 m-0 mb-1 clearfix" />
                 </div>
-                <div>
+
+               
                   <div>
+                    <div>
                     <h3
                       className="fs-6 p-0 ps-3 pt-3 clearfix xanh_color"
                       style={{ marginBottom: "10px", marginTop: "50px" }}
@@ -378,10 +389,17 @@ export default function Bussiness(props) {
                         </div>
                       );
                     })}
+
+                    </div>
+                    <p className="m-0 clearfix" />
+                    <div>
+                   
+
+                  
+                    </div>
+                    <br />
                   </div>
-                  <p className="m-0 clearfix" />
-                  <br />
-                </div>
+                
               </div>
             </div>
             <div id="section4" className="w-100 p-0 m-0 pt-3">

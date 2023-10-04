@@ -221,7 +221,7 @@ useEffect(() => {
         <div className="bg-white rounded-4 p-3 pt-4 text-start">
           <div className="text-center">
             <div
-              className="rounded-4 p-0 mt-3 ps-3 pe-3 yellow_bg mx-auto"
+              className="rounded-4 p-0 mt-3 ps-3 pe-3 yellow_bg mx-auto pb-1"
               style={{ display: "inline-block" }}
             >
               <h1 className="fs-6 text-uppercase p-0 pt-2 text-center">

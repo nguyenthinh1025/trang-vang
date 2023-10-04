@@ -23,12 +23,7 @@ export default function Header() {
                 >
                   TRANG VÀNG
                 </NavLink>
-                <NavLink
-                  style={{ fontWeight: 600, background: "white" }}
-                  to="/"
-                >
-                  <i className="fa fa-solid fa-list pe-1" /> Mục lục ngành nghề
-                </NavLink>
+               
                 <div className="topnav-right">
                   <NavLink to="/gioi-thieu">
                     <i className="fa fa-solid fa-seedling" /> Giới thiệu
@@ -44,8 +39,8 @@ export default function Header() {
                     <i className="fa fa-solid fa-headphones-simple" /> Liên hệ
                   </NavLink>
                   {localStorage.getItem("userID") ? (
-                    <NavLink to="/signin">
-                      <i className="fa fa-solid fa-right-to-bracket" /> Trang cá nhân
+                    <NavLink to={`/yourbussiness/${localStorage.getItem('businessID')}`}>
+                      <i className="fa fa-solid fa-right-to-bracket" /> Trang doanh nghiệp của bạn
                     </NavLink>
                   ) : (
                     <NavLink to="/signin">

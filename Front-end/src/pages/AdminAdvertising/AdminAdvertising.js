@@ -17,7 +17,7 @@ import { GetListBusinessAction, UpdateAciveBusinessAction } from "../../redux/ac
 import { useDispatch, useSelector } from "react-redux";
 import { Dropdown } from "primereact/dropdown";
 import moment from "moment";
-import { GetListAdvertisementsAction } from "../../redux/actions/AdvertisementsAction";
+import { GetListAdvertisementsAction, UpdateStatusAdvertisementsAction } from "../../redux/actions/AdvertisementsAction";
 
 export default function AdminAdvertising() {
   const dispatch = useDispatch();
@@ -91,12 +91,12 @@ export default function AdminAdvertising() {
     let _products = [...products];
     let _product = { ...product };
     console.log(_product)
-     const action = UpdateAciveBusinessAction(_product.businessId);
+     const action = UpdateStatusAdvertisementsAction(_product.adId);
      dispatch(action)
         toast.current.show({
           severity: "success",
           summary: "Thành công",
-          detail: "Duyệt doanh ngihệp thành công",
+          detail: "Duyệt quảng cáo thành công",
           life: 3000,
         });
 
@@ -341,7 +341,6 @@ export default function AdminAdvertising() {
                 moment(createDate.createDate).format("DD/MM/YYYY hh:mm A")
               }
               header="Thời gian tạo"
-              sortable
               style={{ minWidth: "12rem" }}
             ></Column>
             <Column
@@ -356,20 +355,14 @@ export default function AdminAdvertising() {
           visible={productDialog}
           style={{ width: "60rem" }}
           breakpoints={{ "960px": "75vw", "641px": "90vw" }}
-          header="Chi tiết doanh nghiệp"
+          header="Chi tiết quảng cáo"
           modal
           className="p-fluid"
           footer={productDialogFooter}
           onHide={hideDialog}
         >
-          {product.Images && (
-            <img
-              src={product.Images[0]?.imageUrl}
-              alt=""
-              className="product-image block m-auto pb-3"
-            />
-          )}
-          <div class="grid grid-cols-2 gap-2">
+         
+          <div class="grid grid-cols-1 gap-2">
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
                 Tên doanh nghiệp
@@ -388,33 +381,16 @@ export default function AdminAdvertising() {
                 <small className="p-error">Name is required.</small>
               )} */}
             </div>
-            <div className="field mt-3">
-              <label htmlFor="name" className="font-bold">
-                Tên tiếng anh
-              </label>
-              <InputText
-                id="name"
-                value={product.businessNameEng}
-                onChange={(e) => onInputChange(e, "businessNameEng")}
-                required
-                autoFocus
-                // className={classNames({
-                //   "p-invalid": submitted && !product.name,
-                // })}
-              />
-              {/* {submitted && !product.name && (
-                <small className="p-error">Name is required.</small>
-              )} */}
-            </div>
+            
           </div>
           <div className="field mt-3">
             <label htmlFor="description" className="font-bold">
-              Mô tả
+            Loại hình kinh doanh
             </label>
             <InputTextarea
-              id="description"
-              value={product.description}
-              onChange={(e) => onInputChange(e, "description")}
+              id="career"
+              value={product.career}
+              onChange={(e) => onInputChange(e, "career")}
               required
               rows={3}
               cols={20}
@@ -423,115 +399,28 @@ export default function AdminAdvertising() {
           <div class="grid grid-cols-2 gap-2">
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-              Email
+              Sản phẩm
               </label>
               <InputText
                 id="name"
-                value={product.email}
-                onChange={(e) => onInputChange(e, "tax")}
+                value={product.productService}
+                onChange={(e) => onInputChange(e, "productService")}
                 required
                 autoFocus
-                // className={classNames({
-                //   "p-invalid": submitted && !product.name,
-                // })}
+
               />
-              {/* {submitted && !product.name && (
-                <small className="p-error">Name is required.</small>
-              )} */}
             </div>
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-                Số điện thoại
+              Người liên hệ
               </label>
               <InputText
                 id="name"
-                value={product.phone}
-                onChange={(e) => onInputChange(e, "phone")}
+                value={product.userName}
+                onChange={(e) => onInputChange(e, "userName")}
                 required
                 autoFocus
-                // className={classNames({
-                //   "p-invalid": submitted && !product.name,
-                // })}
               />
-              {/* {submitted && !product.name && (
-                <small className="p-error">Name is required.</small>
-              )} */}
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div className="field mt-3">
-              <label htmlFor="name" className="font-bold">
-                Mã số thuế
-              </label>
-              <InputText
-                id="name"
-                value={product.tax}
-                onChange={(e) => onInputChange(e, "tax")}
-                required
-                autoFocus
-                // className={classNames({
-                //   "p-invalid": submitted && !product.name,
-                // })}
-              />
-              {/* {submitted && !product.name && (
-                <small className="p-error">Name is required.</small>
-              )} */}
-            </div>
-            <div className="field mt-3">
-              <label htmlFor="name" className="font-bold">
-                Website
-              </label>
-              <InputText
-                id="name"
-                value={product.website}
-                onChange={(e) => onInputChange(e, "website")}
-                required
-                autoFocus
-                // className={classNames({
-                //   "p-invalid": submitted && !product.name,
-                // })}
-              />
-              {/* {submitted && !product.name && (
-                <small className="p-error">Name is required.</small>
-              )} */}
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div className="field mt-3">
-              <label htmlFor="name" className="font-bold">
-               Người liên lạc
-              </label>
-              <InputText
-                id="name"
-                value={product?.Users && product?.Users?.[0]?.fullName}
-                onChange={(e) => onInputChange(e, "product?.Users?.[0]?.username")}
-                required
-                autoFocus
-                // className={classNames({
-                //   "p-invalid": submitted && !product.name,
-                // })}
-              />
-              {/* {submitted && !product.name && (
-                <small className="p-error">Name is required.</small>
-              )} */}
-            </div>
-            <div className="field mt-3">
-              <label htmlFor="name" className="font-bold">
-                Chức vụ
-              </label>
-              <InputText
-                id="name"
-                value={product?.Users && product?.Users?.[0]?.position}
-                onChange={(e) => onInputChange(e, "product?.Users?.[0]?.position")}
-                required
-                autoFocus
-                // className={classNames({
-                //   "p-invalid": submitted && !product.name,
-                // })}
-              />
-              {/* {submitted && !product.name && (
-                <small className="p-error">Name is required.</small>
-              )} */}
             </div>
           </div>
           <div class="grid grid-cols-2 gap-2">
@@ -541,20 +430,17 @@ export default function AdminAdvertising() {
               </label>
               <InputText
                 id="name"
-                value={product?.Users && product?.Users?.[0]?.phone}
-                onChange={(e) => onInputChange(e, "product?.Users?.[0]?.phone")}
+                value={product.userPhone}
+                onChange={(e) => onInputChange(e, "userPhone")}
                 required
                 autoFocus
-                // className={classNames({
-                //   "p-invalid": submitted && !product.name,
-                // })}
+
               />
-              {/* {submitted && !product.name && (
-                <small className="p-error">Name is required.</small>
-              )} */}
+  
             </div>
-           
+          
           </div>
+          
         </Dialog>
 
         <Dialog

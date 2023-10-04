@@ -6,8 +6,8 @@ export default function Header() {
     <div className="sticky-top m-0 p-0 head_bg_color">
       <div className="container-xl p-2">
         <div className="row">
-          <div className="ps-3" id="head_section1">
-            <a href="https://trangvangvietnam.com">
+          <div className="ps-3 pt-2" id="head_section1">
+            <NavLink to="/">
               <img
                 className="head_pc"
                 alt="Trang Vàng Việt Nam"
@@ -19,32 +19,38 @@ export default function Header() {
                 alt="Trang Vàng Việt Nam"
                 src="https://trangvangvietnam.com/images/trangvang_logo_m.png"
               />
-            </a>
+            </NavLink>
           </div>
-          <div className="ps-3" id="head_section2">
-            <button
+          <div
+            className="ps-3"
+            id="head_section2"
+            style={{ marginTop: "10px", position: "relative" }}
+          >
+            <input
+              type="text"
               id="timkiemtrangvang_btn"
               className="bg-white border-0 rounded-3 timkiem_buttom text-black"
-            >
-              <i className="fa fa-solid fa-magnifying-glass" /> Thực Phẩm Đóng
-              Hộp{" "}
-            </button>
+            />
+            <i
+              className="fa fa-solid fa-magnifying-glass"
+              style={{ position: "absolute", right: "62px", top: "10px" }}
+            />
           </div>
           <div id="head_section3">
             <div className="topnav head_pc">
               <div className="topnav-right">
-                <a
+                {/* <a
                   href="https://trangvangvietnam.com/findex.asp"
                   className="head_text_display"
                 >
                   <i className="fa fa-solid fa-list pe-1" /> Mục lục ngành nghề
-                </a>
-                <a href="https://trangvangvietnam.com/subpages/signup.asp">
+                </a> */}
+                <NavLink to="/signup">
                   <i className="fa-solid fa-user-plus" /> Đăng ký Trang vàng
-                </a>
-                <a href="https://trangvangvietnam.com/subpages/advertising.asp">
+                </NavLink>
+                <NavLink to="/advertising">
                   <i className="fa fa-solid fa-bullseye" /> Quảng cáo Trang vàng
-                </a>
+                </NavLink>
               </div>
             </div>
             <div className="head_m">

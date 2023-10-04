@@ -1,21 +1,25 @@
 import React from "react";
-import {useFormik} from 'formik';
-import {useDispatch, useSelector} from 'react-redux'
+import { useFormik } from "formik";
+import { useDispatch, useSelector } from "react-redux";
 import { LoginAction } from "../../redux/actions/UserAction";
 export default function Signin(props) {
-const dispatch = useDispatch()
-const {message} = useSelector(root =>root.LoginReducer)
-const formik = useFormik({
-  initialValues:{
-    email:"",
-    password:"",
-  },
-  onSubmit: (value) =>{
-    console.log(value)
-    const action = LoginAction(value, props);
-    dispatch(action)
-  }
-})
+  const dispatch = useDispatch();
+  const { message } = useSelector((root) => root.LoginReducer);
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: (value) => {
+      console.log(value);
+      if (value.email === "admin@gmail.com" && value.password === "123456") {
+        props.history.push("/admin");
+      } else {
+        const action = LoginAction(value, props);
+        dispatch(action);
+      }
+    },
+  });
 
   return (
     <div>
@@ -26,12 +30,12 @@ const formik = useFormik({
             <p className="text-sm mt-4 text-[#002D74]">
               Nếu bạn đã có tài khoản, hãy đăng nhập
             </p>
-            <form className="mt-6" onSubmit={formik.handleSubmit} >
+            <form className="mt-6" onSubmit={formik.handleSubmit}>
               <div>
                 <label className="block text-gray-700">Email</label>
                 <input
                   type="email"
-                  name ="email"
+                  name="email"
                   onChange={formik.handleChange}
                   id
                   placeholder="Nhập địa chỉ email"
@@ -45,7 +49,7 @@ const formik = useFormik({
                 <label className="block text-gray-700">Password</label>
                 <input
                   type="password"
-                  name ="password"
+                  name="password"
                   onChange={formik.handleChange}
                   id
                   placeholder="Nhập password"
@@ -55,9 +59,7 @@ const formik = useFormik({
                   required
                 />
               </div>
-              <div className="text-left mt-2 text-red-500">
-               {message}
-              </div>
+              <div className="text-left mt-2 text-red-500">{message}</div>
               <div className="text-right mt-2">
                 <a
                   href="#"

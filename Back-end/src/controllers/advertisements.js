@@ -13,8 +13,7 @@ const getListAdvertisements = async (req, res) => {
   }
 };
 
-
-const createAdvertisements =async (req,res) =>{
+const createAdvertisements = async (req, res) => {
   try {
     let {
       userName,
@@ -22,23 +21,41 @@ const createAdvertisements =async (req,res) =>{
       businessName,
       career,
       productService,
-      createDate
-     } = req.body;
+      createDate,
+    } = req.body;
 
     let result = await models.Advertisements.create({
-      adId:uuidv4(),
+      adId: uuidv4(),
       userName,
       userPhone,
       businessName,
       career,
       productService,
-      createDate, 
-      status:'pending'
+      createDate,
+      status: "pending",
     });
     succesCode(res, result, "Thêm Mới Quảng Cáo Doanh Nghiệp Thành Công!!!");
   } catch (error) {
     errorCode(res, "Lỗi Backend");
   }
-}
+};
 
-module.exports = { getListAdvertisements  , createAdvertisements };
+const updateStatusAdvertisements = async (req, res) => {
+  try {
+    let { id } = req.params;
+    let result = await models.Advertisements.update(
+      {
+        status: "active",
+      },
+      {
+        where: {
+          adId: id,
+        },
+      }
+    );
+    succesCode(res, result, "Cập nhật trạng thái hoạt động quảng cáo thành công!!!");
+  } catch (error) {
+    errorCode(res, "Lỗi Backend");
+  }
+};
+module.exports = { getListAdvertisements, createAdvertisements , updateStatusAdvertisements};

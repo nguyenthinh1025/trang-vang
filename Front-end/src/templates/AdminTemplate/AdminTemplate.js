@@ -4,15 +4,15 @@ import { history } from "../../App";
 
 export const AdminTemplate = (props) => {
   const { Component, ...restProps } = props;
-  const [activeIndex, setActiveIndex] = useState(
-    Number(localStorage.getItem("active"))
-  );
-  console.log(localStorage.getItem("active"));
+
+  const [active, setActive] = useState(0)
   const handleActive = (index) => {
-    setActiveIndex(index);
-    localStorage.setItem("active", index);
+    setActive(index);
   };
-  useEffect(() => {}, [localStorage.getItem("active")]);
+
+
+
+
   return (
     <Route
       {...restProps}
@@ -29,7 +29,7 @@ export const AdminTemplate = (props) => {
                 <ul className="ul-menu">
                   <li
                     className={`li-mneu ${
-                      activeIndex === 0 ? "Active-menu" : ""
+                      active === 0 ? "Active-menu" : ""
                     }`}
                     onClick={() => {
                       handleActive(0);
@@ -86,7 +86,7 @@ export const AdminTemplate = (props) => {
                   </li>
                   <li
                     className={`li-mneu ${
-                      activeIndex === 1 ? "Active-menu" : ""
+                      active === 1 ? "Active-menu" : ""
                     }`}
                     onClick={() => {
                       handleActive(1);
@@ -145,7 +145,7 @@ export const AdminTemplate = (props) => {
                   </li>
                   <li
                     className={`li-mneu ${
-                      activeIndex === 2 ? "Active-menu" : ""
+                      active === 2 ? "Active-menu" : ""
                     }`}
                     onClick={() => {
                       handleActive(2);
@@ -202,7 +202,7 @@ export const AdminTemplate = (props) => {
                   </li>
                   <li
                     className={`li-mneu ${
-                      activeIndex === 3 ? "Active-menu" : ""
+                      active === 3 ? "Active-menu" : ""
                     }`}
                     onClick={() => handleActive(3)}
                   >
@@ -253,7 +253,7 @@ export const AdminTemplate = (props) => {
                   </li>
                   <li
                     className={`li-mneu ${
-                      activeIndex === 4 ? "Active-menu" : ""
+                      active === 4 ? "Active-menu" : ""
                     }`}
                     onClick={() => handleActive(4)}
                   >

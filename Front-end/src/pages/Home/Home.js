@@ -18,8 +18,7 @@ export default function Home() {
     dispatch(action);
   }, []);
   return (
-    <div className="page_bg">
-    
+    <div className="page_bg">   
       <Header />
       <HeaderMobile />
       <Carousel />

@@ -26,20 +26,20 @@ function App() {
   return (
     <Router history={history}>
       <Switch>
-      <Route  path="/gioi-thieu" exact component={Gioithieu} />
       <UserTemplate  path="/signup" exact Component={Signup} />
       <UserTemplate  path="/viewbusiness/:id" exact Component={ViewBusiness} />
       <UserTemplate  path="/signin" exact Component={Signin} />
-      <Route  path="/signup-success" exact component={SignupSuccess} />
       <UserTemplate  path="/advertising" exact Component={Advertising} /> 
-      <Route  path="/contact" exact component={Contact} /> 
-      <Route  path="/stores" exact component={Stores} /> 
       <AdminTemplate  path="/admin" exact Component={Admin} /> 
       <AdminTemplate  path="/adminbusiness" exact Component={AdminBusiness} /> 
       <AdminTemplate  path="/adminadvertising" exact Component={AdminAdvertising} /> 
       <UserTemplate1  path="/getcareersbyname/:name" exact Component={ListBussiness} /> 
       <UserTemplate1  path="/bussiness/:id" exact Component={Bussiness} /> 
       <UserTemplate1  path="/yourbussiness/:id" exact Component={YourBusiness} /> 
+      <Route  path="/gioi-thieu" exact component={Gioithieu} />
+      <Route  path="/signup-success" exact component={SignupSuccess} />
+      <Route  path="/contact" exact component={Contact} /> 
+      <Route  path="/stores" exact component={Stores} /> 
       <Route  path="/test" exact component={Modal} /> 
       <Route  path="/" exact component={Home} />
       </Switch>

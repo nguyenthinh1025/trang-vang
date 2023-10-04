@@ -27,3 +27,14 @@ export const CreateAdvertisementsAction = (value, props) => {
     }
   };
 };
+export const UpdateStatusAdvertisementsAction = (id) => {
+  return async (dispatch) => {
+    try {
+      let result = await http.put(`/advertisements/updateadvertisements/${id}`);
+    const acion = GetListAdvertisementsAction();
+    dispatch(acion)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
