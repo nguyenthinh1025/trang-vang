@@ -1,0 +1,98 @@
+#searchField {
+	width: 200px;	
+	background-color:#ffffff;
+}
+
+#results {
+	height:auto;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	width:100%;
+	border: 1px solid #ffde06;	
+	display: block;
+	font-size: 16px;
+	font-family: arial;
+	font-weight:bold;
+	position: absolute!important;
+	left:2px!important;
+	top: 69px!important;
+	z-index:1!important;
+}
+@media screen and (max-width:991px) {
+#results {
+	height:auto;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	width:100%;
+	border: 1px solid #ffde06;	
+	display: block;
+	font-size: 16px;
+	font-family: arial;
+	font-weight:bold;
+	position: absolute!important;
+	left:0px!important;
+	top: 56px!important;
+	z-index:1!important;
+}
+}
+#results div {
+    padding: 3px;
+	padding-left:9px;
+}
+
+#results .selected {
+	background-color: #ffe593;
+	color: #666;
+	cursor:pointer
+}
+#results .unselected {
+	background-color: #fff;
+	color: #666;
+}
+#results1 {
+	height:auto;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	width:100%;
+	border: 1px solid #ffde06;	
+	display: none;
+	font-size: 16px;
+	font-weight:bold;
+	font-family: arial;
+	background-color:#FFFFFF;
+	position: absolute!important;
+	left:0px!important;
+	top: 69px!important;
+	z-index:1!important;}
+@media screen and (max-width:991px){
+#results1 {
+	height:auto;
+	overflow-y: hidden;
+	overflow-x: hidden;
+	width:100%;
+	border: 1px solid #ffde06;	
+	display: none;
+	font-size: 16px;
+	font-weight:bold;
+	font-family: arial;
+	background-color:#FFFFFF;
+	position: absolute!important;
+	left:0px!important;
+	top: 56px!important;
+	z-index:1!important;}
+}
+#results1 div {
+    padding: 3px;
+	padding-left:9px;
+}
+
+#results1 .selected {
+	background-color: #ffe593;
+	color: #666;
+	cursor:pointer
+}
+
+#results1 .unselected {
+	background-color: #fff;
+	color: #666;
+}

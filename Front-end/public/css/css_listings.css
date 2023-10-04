@@ -1,0 +1,371 @@
+/* CSS of Homepages */
+.fw500{font-weight:500}
+.yp_red_color{color:#CC3366!important}
+.fs_13{font-size:13px!important}
+.yellow_color{color:#ffde06}
+.dark_blue_color{color:#0fa8e1}
+.xanh_color{color:#0fa8e1}
+.color333{color:#333333}
+.color555{color:#555}
+.color666{color:#666}
+#colorFF6600{color:#FF6600}
+.color007BAC{color:#007BAC}
+.bg_ffde06{background:#ffde06}
+.line_height38{line-height:38px}
+.star_898989{color:#C3C3C3}
+.star_mb{margin-bottom:16px}
+.w100{width:100%}
+.w85{width:85%}
+.w15{width:15%}
+.h38{height:38px}
+@media screen and (max-width:765px) {
+.w85{width:100%}
+.w15{width:0%; display:none}
+}
+.gt_lh{line-height:29px}
+@media screen and (max-width:765px) {
+.gt_lh{line-height:25px}
+}
+.emeral_bg{background:#00512b}
+.red_color{color:#CC3366}
+.yellow_bg{background:#ffde06}
+.orange_bg{background:#ff7500}
+
+.mauxam_bg{ background:#f3f3f3}
+.h36{height:36px}
+.span_lienhe{font-size:12px; color:#666; padding-right:2px}
+#email_lienhe{color:#007BAC!important; font-size:12px; text-transform:lowercase}
+                          
+a:link{color:#111; text-decoration:none}
+a:hover{color:#ff6600!important; text-decoration:underline}
+a:active{color:#111}
+a:visited{color:#111}
+.page_bg{background:#f4f4f4}
+.head_text_display{display:block}
+.head_bg{background:#ffde06}
+.head_pc{display:block}
+.head_m{display:none}
+.pc_display{display:block}
+.m_display{display:none}
+#head_section1{width:16%; float:left}
+#head_section2{width:31%; float:left}
+#head_section3{width:53%; float:right}
+.menu_m{height:30px; width:30px; position:absolute; top:13px; right:10px}
+.topnav {overflow: hidden;}
+.topnav a {float:left; color:#222; text-align:center; padding:6px 11px; font-size:15px;}
+#go_myBtn {display:none; position:fixed; bottom:20px; right:30px; z-index:99; font-size:28px; border:2px solid #ffde06; outline:none; background-color:#fff; color:#333; cursor:pointer; padding:10px; border-radius:6px;}
+#go_myBtn:hover {background-color: #f7f7f7;}
+@media screen and (max-width:1399px) {
+#head_section1{width:18%; float:left}
+#head_section2{width:36%; float:left}
+#head_section3{width:46%; float:right}
+.topnav a {float:left; color:#111; text-align:center; padding:6px 11px;text-decoration: none; font-size:15px;}
+.head_text_display{display: none}
+}
+@media screen and (max-width:1199px) {
+.topnav a {float:left; color:#111; text-align:center; padding:6px 11px;text-decoration: none; font-size:15px;}
+#head_section1{width:18%; float:left}
+#head_section2{width:36%; float:left}
+#head_section3{width:46%; float:right}
+}
+@media screen and (max-width:991px) {
+.head_pc{display:none}
+.head_m{display:block}
+#head_section1{width:11%; float:left}
+#head_section2{width:80%; float:left}
+#head_section3{width:9%; float:right}
+}
+@media screen and (max-width:765px) {
+.pc_display{display:none}
+.m_display{ display:block}
+.span_lienhe{font-size:13px; color:#666; padding-right:2px}
+#email_lienhe{color:#007BAC!important; font-size:15px; text-transform:lowercase}
+}
+.topnav a:hover {color:#ff6600}
+.topnav-right {float: right;}
+	.topnav-right strong{font-weight:600}
+.dropdown {position: relative;display: inline-block;}
+.dropdown-content {display:none; width:318px; position:absolute; right:0; background-color:#FFF; min-width:100%; min-height:100%; box-shadow:0px 8px 16px 0px rgba(0,0,0,0.2); border-radius:6px 6px 6px 6px; border-color:#DDD;border-style:solid; border-width:1px; z-index:6;}
+.dropdown-content a {color:black; text-decoration:none; display:block;}
+.dropdown-content a:hover {background-color: #ededed; color:#3399FF;}
+.dropdown:hover .dropdown-content{display: block;}
+.buttom_mo_timkiem{width:90%; overflow:hidden; height:38px; text-align:left;}
+
+.trangvangvietnam{font-size:35px; margin-top:16px; font-family:Verdana; font-weight:600; color:#FFF; text-align:center}
+.timkiemtrangvang{display:none; position:fixed; z-index:1; left:0; top:0; width:100%; height: auto; border-radius:0px 0px 10px 10px; overflow:auto; background-color:rgb(0,0,0); background-color:rgba(0,0,0,0.4); background:#ffde06}
+.timkiemtrangvang_noidung{margin:auto; padding:25px; padding-left:3px; padding-right:3px; width:100%; position:relative}
+.yellowpages{height:50px; background:#2f2f2f; width:292px; margin:auto; text-align:center; transform: rotate(-2deg)}
+	.yellowpages p{font-size:38px; font-weight:700; color:#ffde06}
+.div_timkiem{min-height:66px; width:88%; margin:auto; margin-top:60px; background:#FFFFFF; border-radius: 33px 33px 33px 33px}
+.nut_timgi{height:66px; width:50%; margin-top:0px; background:#FFF; float:left;  border-radius: 33px 0px 0px 33px; border-right-color:#DDD; border-right-style: solid; border-right-width:1px}
+.timgi_input{border:0px solid #fff; font-family: Arial; font-size:21px; color:#666; background:none; padding-left:23px; padding-right:13px; width:100%!important; height:66px; border-radius: 33px 0px 0px 33px}
+.xoa_timgi{height:38px; width:38px; top:18px; right:3px; padding-top:0px; position:absolute; font-size:31px; text-align:center; font-family:Verdana; background:#FFFFFF; font-weight:500; display:none}
+.nut_odau{height:66px; width:44%; margin-top:0px; background:#FFF; float:left;  border-radius: 0px 0px 0px 0px}
+.odau_input{border:0px solid #fff; font-family: Arial; font-size: 21px; color:#666; background:none; padding-left:38px; padding-right:13px; width:100%; height:66px; border-radius: 0px 0px 0px 0px}
+.xoa_odau{height:38px; width:38px; top:18px; right:3px; padding-top:0px; position:absolute; font-size:31px; text-align:center; font-family:Verdana; background:#FFF; font-weight:500; display:none}
+.timkiem{height:66px; width:6%; margin-top:0px; float:left; text-align:right}
+.nut_find{height:66px; width:66px; border:none;background:#2f2f2f;border-radius:50%; margin-top:0px; font-size:21px; color:#ffde06}
+.timtheotencongty{height:28px; width:256px; margin:auto; margin-top:30px; display:none}  
+.timtheotencongty .timtheotencongty_chon{height:23px; width:23px; float:left} 
+.timtheotencongty_chon input{width:16px; height:16px; margin-top:4px}
+.timtheotencongty .timtheotencongty_txt{height:23px; width:223px; float:left; color:#111; margin-left:3px;}
+.top_timkiem{margin-top:86px; text-align:center; color:#111; font-size:18px; display:block}	
+@media screen and (max-width:991px) {
+.buttom_mo_timkiem{width:93%; overflow:hidden; height:35px; margin-top:3px; text-align:left;}
+.trangvangvietnam{font-size:23px; margin-top:16px; font-family:Verdana; font-weight:600; color:#FFF; text-align:center}
+.yellowpages_text{height:38px; background:#2f2f2f; width:228px; margin:auto; text-align:center; transform: rotate(-2deg)}
+			.yellowpages_text p{font-size:28px; font-weight:700}
+.div_timkiem{min-height:50px; width:98%; margin:auto; margin-top:26px; background:#ffde06; border-radius: 33px 33px 33px 33px}
+.nut_timgi{height:50px; width:100%; margin-top:16px; background:#FFF; float:left;  border-radius: 25px 25px 25px 25px}
+.timgi_input{border:0px solid #fff; font-family: Arial; font-size:16px; color:#666; background:none; padding-left:16px; padding-right:16px; width:100%!important; height:50px; border-radius: 25px 25px 25px 25px}
+.xoa_timgi{height:33px; width:33px; top:11px; right:10px; padding-top:0px; position:absolute; font-size:26px; text-align:center; font-family:Verdana; background:#FFF; font-weight:500; display:none}
+.nut_odau{height:50px; width:100%; margin-top:16px; background:#FFF; float:left;  border-radius: 25px 25px 25px 25px}
+.odau_input{border:0px solid #fff; font-family: Arial; font-size: 16px; color:#666; background:none; padding-left:36px; padding-right:16px; width:100%; height:50px; border-radius: 25px 25px 25px 25px}
+.xoa_odau{height:33px; width:33px; top:11px; right:10px; padding-top:0px; position:absolute; font-size:26px; text-align:center; font-family:Verdana; background:#FFF; font-weight:500; display:none}
+.timkiem{height:50px; width:100%; margin-top:8px; float:left; text-align:right}
+.nut_find{height:50px; width:100%; border:none; background:#2f2f2f; border-radius:25px 25px 25px 25px; margin-top:8px; font-size:21px; color:#ffde06}
+.top_timkiem{margin-top:80px; text-align:center; color:#DDD; font-size:18px; display:none}	
+}
+.close_search {color:#111; position:absolute; top:0px; right:16px; font-size:38px; font-weight:bold}
+.close_search:hover,
+.close_search:focus {color:#686868; text-decoration:none; cursor:pointer;}
+
+.h2_radius{padding:3px 15px; padding-bottom:5px; padding-top:5px; border-radius:16px; width:auto; display:inline-block}
+.listing_trai{float:left; width:75%; padding-right:18px; padding-top:16px}
+.listing_phai{float:right; width:25%; padding-top:16px} 
+ .logo_listing{min-height:60px; width:20%; float:left}
+.logo_lisitng_address{width:80%; height:auto; float:left}
+.listing_address_nologo{width:100%; float:left; height:auto} 
+ 
+.star_checked {color: orange}
+.star_898989{color:#C3C3C3}
+.star_text{color:#e89e00; padding-left:2px; font-size:12px; text-transform:uppercase; font-family:Verdana}
+.star_text_thuong{color:#898989; padding-left:2px; font-size:13px}
+.star_text_s{color:#898989; padding-left:6px; font-size:12px; font-family:Verdana}
+
+.xacminh_chinhxac{color:#999; padding-left:6px; font-size:13px; text-transform:uppercase; font-family:Verdana}
+.by_trangvang{color:#888; font-size:13px; text-align:center}
+.div_23{width:23%; float:left}
+.div_77{width:77%; float:left}
+.div_23_txt{font-family:Verdana; font-size:12px; color:#026d90}
+.nganh_loaihinh{ font-family:Verdana; font-size:12px; color:#026d90}
+.menu_truot{display:block}
+.sanphamtrungbay{float:left; width:20%; height:262px}	
+.sanphamtrungbay_khung{width:100%; height:158px; display:flex; justify-content:center; flex-direction:column; align-items:center}
+.sanphamdichvu{float:left; width:33.33%}
+.listing_images{float:left; width:20%}	
+.see_detail{margin-bottom:10px; padding:2px 10px; background:#FFF; border-color:#DDD; color:#007BAC!important; border-style:solid; border-width:1px; border-radius:8px; color:#333; width:auto; display:inline-block; clear:both; margin-right:10px}
+.icon_sponnorpc{display:block}
+	.icon_sponnorpc img{width:18px; padding-top:1px; padding-bottom:1px}
+.icon_sponnor_m{display:none}
+.sponsor_txt{font-size:11px; color:#e89e00}	
+.sponsor_txt_ngan{font-size:11px; color:#999; padding-left:5px; padding-right:5px}
+.xacthuc_pc{display:block}
+.xacthuc_m{display:none}
+.logo_contact{width:100%; height:50px; display:flex; justify-content:center; flex-direction:column; align-items:center}
+div.sticky {position: -webkit-sticky;position: sticky; top:0;}
+#truot_color{color:#0fa8e1!important}
+	#menu_croll a:hover{color:#ff6600!important}
+	
+.email_link a:link{color:#026d90!important}
+.email_link a:hover{color:#ff6600!important; text-decoration:underline}
+.web_link a:link{color:#009933!important}
+.web_link a:hover{color:#ff6600!important; text-decoration:underline}
+.web_link a:visited{color:#009933!important}
+
+.img_style{max-height:142px; max-width:100%}
+#dangkydn_link{color:#FFF!important; border-bottom-color:#FFF!important}
+.sanphamchitiet_img_fix{min-height:168px; display:flex; justify-content:center; flex-direction:column; align-items:cente}
+.sanphamcitiet_divleft{float:left; width:32%; color:#888; font-size:13px; text-transform:uppercase; padding-top:3px}
+.sanphamcitiet_divright{float:left; width:68%}
+.sanphamchitiet_ctyleft{width:25%; float:left; font-size:11px; padding-top:5px; color:#888}
+.sanphamchitiet_ctyright{width:75%; float:left}
+.xemchitiet{float:left}
+	.xemchitiet a{background: #E7E7E7 url(../../images/bg-button-bi-more-details.png) repeat-x; padding:2px 10px; border-color:#DDD; color:#555!important; font-size:13px; border-style:solid; border-width:1px; border-radius:10px; width: auto; display:inline-block; margin-right:11px}
+	.xemchitiet a:hover{text-decoration:underline; color:#ff6600!important}
+.xemchitiet_div{width:100px; float: left; height:30px; margin-top:51px}	
+.w88{width:88px}
+@media screen and (max-width:1399px) {
+.div_23{width:28%; float:left}
+.div_77{width:72%; float:left}
+.sanphamtrungbay{float:left; width:25%; height:262px}	
+.listing_images{float:left; width:25%}
+}
+@media screen and (max-width:1199px) {
+.listing_trai{float:left; width:70%; padding-right:18px; padding-top:16px}
+.listing_phai{float:right; width:30%; padding-top:16px}
+.sanphamtrungbay{float:left; width:33%; height:262px}
+.listing_images{float:left; width:33%}
+.sanphamdichvu{float:left; width:50%}
+}
+@media screen and (max-width:991px) {
+.menu_truot{display:none}
+.listing_trai{float:left; width:100%; padding-right:0px; padding-top:16px}
+.listing_phai{float: right; width:0%; padding-top:16px; display:none}
+.gioithieuchitiet_img img{width:100%!important}
+.gioithieucongty_img img{width:100%!important}
+}
+@media screen and (max-width:765px) {
+.sanphamtrungbay{float:left; width:50%; height:262px}
+.listing_images{float:left; width:50%}
+.sanphamdichvu{float:left; width:100%}	
+}
+ /* findex  */
+.counter_number{font-size:11px; color:#999}
+#paging{height:auto;}
+#paging a{padding:6px 13px; margin-right:8px; background:#FFF; color:#111!important; border-color:#FFCD00; border-style:solid; border-width:2px; border-radius: 6px 6px 6px 6px; text-align:center; float:left}
+#paging a.active{border-color:#FFCD00; border-style:solid; border-width:1px; color:#ff6600}
+#paging a:hover {color:#ff6600!important; background:#ffde07!important;}
+#paging .page_active{color:#ff6600!important; background:#ffde07!important}	
+@media screen and (max-width:765px){
+#paging a{padding:3px 9px; margin-right:3px; color:#111!important; border-color:#FFCD00; border-style:solid; border-width:1px; border-radius: 6px 6px 6px 6px; text-align:center; float:left}
+}
+ /* gindex  */
+.div_nganhnghe_pc{height: auto; width:18%; float:left; display:block}
+.div_list_cty{height:auto; width:57%; float:left; padding-left:18px; padding-right:18px}
+.div_banner_qc_pc{width:25%; float: right; display:block}
+@media screen and (max-width:1399px) {
+.div_nganhnghe_pc{height: auto; width:18%; float:left; display:block}
+.div_list_cty{height:auto; width:55%; float:left; padding-left:18px; padding-right:18px}
+.div_banner_qc_pc{width:27%; float: right; display:block}
+}
+@media screen and (max-width:991px) {
+.div_nganhnghe_pc{height: auto; width:16%; float:left; background:#FFFFFF; display:none}
+.div_list_cty{height:auto; width:100%; float:left; padding-left:0px; padding-right:0px}
+.div_banner_qc_pc{width:26%; float: right; display:none}
+}
+ /* Img Modal  */
+#myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+#myImg:hover {opacity: 0.7;}
+.modal {
+  display: none;
+  position: fixed; 
+  z-index: 1028; 
+  padding-top: 100px; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgb(0,0,0); 
+  background-color: rgba(0,0,0,0.8); 
+}
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+.modal-content, #caption {  
+  -webkit-animation-name: zoom;
+  -webkit-animation-duration: 0.6s;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+@-webkit-keyframes zoom {
+  from {-webkit-transform:scale(0)} 
+  to {-webkit-transform:scale(1)}
+}
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+}
+
+/* croll contact */
+.nut_lienhe{border: none;cursor: pointer;position: fixed;bottom: 80px;right:18px;z-index:100;}
+#lienhe_truot {visibility: hidden;position: fixed;z-index:100;right: 28px;bottom: 150px;}
+#lienhe_truot.show {visibility: visible;}
+.nut_zalo{height:50px; width:50px; border-radius:50%; float:right}
+.nut_email{height:50px; width:50px; background:#FFCC00; border-radius:50%; float:right}
+.nut_phone{background: #ff6700; float:right; float: left; border-radius:15px 15px 15px 15px; margin-top:11px; margin-right:3px;}
+.thanh_phone{height:50px; width:50px; background:#64bc46; border-radius:50%; float:right}
+
+.muclucnganhnghe{font-size:20px; padding-top:31px; font-weight:600; font-family:Verdana; color:#383838; text-align:center}
+#muclucnganhnghe_link{text-transform:capitalize; margin-bottom:16px; padding:1px 8px; background:#FFF; border-color:#CCC; border-style:solid; border-width:1px; border-radius:8px; color:#333; width: auto; display:inline-block; clear:both; margin-right:6px; font-size:18px}
+@media screen and (max-width:1399px) {
+#muclucnganhnghe_link{text-transform:capitalize; margin-bottom:16px; padding:1px 8px; background:#FFF; border-color:#CCC; border-style:solid; border-width:1px; border-radius:8px; color:#333; width: auto; display:inline-block; clear:both; margin-right:3px; font-size:16px}
+}
+.mucluc_pc{display:block}
+.mucluc_mobile{display:none}
+@media screen and (max-width:991px) {
+.mucluc_pc{display:none}
+.mucluc_mobile{display:block}
+}
+
+.foot_signup1{width:22%!important; float:left; text-align:center; font-size:23px; font-weight:500; padding-top:16px}
+.foot_signup2{width:63%!important; float:left; font-size:16px; padding-top:13px}
+.foot_signup3{width:15%!important; float:left; text-align:left; padding-left:8px; padding-top:21px}
+	.foot_signup3 a{color:#FFF!important; text-decoration:none}
+.buttom_bg_footer_signup {background:#ff6a00!important; font-size:16px}
+@media screen and (max-width:1399px) {
+.foot_signup1{width:22%!important; float:left; text-align:center; font-size:21px; font-weight:500; padding-top:16px}
+.foot_signup2{width:63%!important; float:left; font-size:14px; padding-top:15px}
+.foot_signup3{width:15%!important; float:left; text-align:left; padding-left:8px; padding-top:21px}
+.buttom_bg_footer_signup {background:#ff6a00!important; font-size:14px}
+}
+@media screen and (max-width:991px) {
+.foot_signup1{width:22%!important; float:left; text-align:center; font-size:18px; font-weight:500; padding-top:13px}
+.foot_signup2{width:63%!important; float:left; font-size:12px; padding-top:12px}
+.foot_signup3{width:15%!important; float:left; text-align:left; padding-left:8px; padding-top:18px}
+.buttom_bg_footer_signup {background:#ff6a00!important; font-size:12px}
+}
+@media screen and (max-width:768px) {
+.foot_signup1{width:100%!important; float:left; text-align:center; font-size:23px; font-weight:500; padding-top:13px}
+.foot_signup2{width:100%!important; float:left; text-align:center; font-size:15px; padding-top:12px}
+.foot_signup3{width:100%!important; float:left; text-align: center; padding-left:8px; padding-top:18px}
+.buttom_bg_footer_signup {background:#ff6a00!important; width:80%; font-size:15px}
+}
+.lienket_chantrang{background:#f4f4f4; text-align:center; font-size:15px}
+.sangiaodich{width:20%; float:left; text-align: right}
+.noidung_chantrang{width:80%; float:left; text-align:center; padding-right:238px; line-height:33px; color:#333!important}
+@media screen and (max-width:1399px) {
+.sangiaodich{width:18%; float:left; text-align: right}
+.noidung_chantrang{width:82%; float:left; text-align:center; padding-right:189px; padding-left:15px; line-height:33px; color:#333!important}
+}
+@media screen and (max-width:991px) {
+.sangiaodich{width:100%; float:left; text-align: right; text-align:center}
+.noidung_chantrang{width:100%; float:left; text-align:center; padding-right:0px; padding-top:18px; line-height:33px; color:#333!important}
+}
+.accordion{background-color:#FFF; cursor:pointer; padding:9px; padding-left:10px; padding-right:10px; width:100%; color:#111; border:none; text-align:left; outline:none; transition:0.4s; margin-top:6px; border-radius:10px 10px 10px 10px}
+.active, .accordion:hover{background-color:#cff4fc;}
+.accordion:after{content: '\002B'; color: #666; font-weight: bold;float: right;margin-left: 5px;}
+.active:after {content: "\2212";}
+.panel{padding:0 10px; background-color:white; max-height:0; overflow:hidden; transition:max-height 0.2s ease-out;}
+.panel a{text-transform:capitalize; margin-bottom:10px; padding:2px 10px; background:#FFF; border-color:#DDD; border-style:solid; border-width:1px; border-radius:8px; color:#333; width: auto; display:inline-block; clear:both; margin-right:10px}
+
+
+
