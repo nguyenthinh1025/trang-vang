@@ -38,3 +38,16 @@ export const UpdateStatusAdvertisementsAction = (id) => {
     }
   };
 };
+
+
+export const ActiveAdvertisementsAction = (value) => {
+  return async (dispatch) => {
+    try {
+      let result = await http.post(`/advertisements/activeadvertisements`, value);
+    const acion = GetListAdvertisementsAction();
+    dispatch(acion)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

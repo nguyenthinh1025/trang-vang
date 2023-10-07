@@ -46,6 +46,22 @@ class Advertisements extends Sequelize.Model {
     createDate: {
       type: DataTypes.DATE,
       allowNull: true
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    stt: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    website: {
+      type: DataTypes.STRING(255),
+      allowNull: true
     }
   }, {
     sequelize,

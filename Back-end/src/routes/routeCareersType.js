@@ -4,7 +4,7 @@ const routeCareersType = express.Router();
 
 
 routeCareersType.get('/getcareerstype', getCareersType)
-routeCareersType.get('/getcareersbyname/:name', searchCareersByName)
+routeCareersType.get('/getcareersbyname/:name/:location?', searchCareersByName);
 
 
 

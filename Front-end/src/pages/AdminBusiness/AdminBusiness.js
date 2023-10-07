@@ -420,7 +420,7 @@ export default function AdminBusiness() {
               value={product.description}
               onChange={(e) => onInputChange(e, "description")}
               required
-              rows={3}
+              rows={5}
               cols={20}
             />
           </div>

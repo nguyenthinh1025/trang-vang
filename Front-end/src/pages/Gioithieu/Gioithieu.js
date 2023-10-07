@@ -1,48 +1,43 @@
 import React from "react";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
+import HeaderMobile from "../Home/HeaderMobile/HeaderMobile";
 export default function Gioithieu() {
   return (
     <div className="page_bg">
-     <div className="m-0 p-0 head_pc" style={{ background: "#ffde06" }}>
+      <div className="m-0 p-0 head_pc" style={{ background: "#ffde06" }}>
         <div className="container-xl p-2">
           <div className="row">
             <div style={{ height: 50, width: "5%", float: "left" }}>
-              <img src="./images/logo_trangvang.png" />
+              <NavLink to="/">
+                <img src="./images/logo_trangvang.png" />
+              </NavLink>
             </div>
             <div style={{ height: 50, width: "95%", float: "right" }}>
               <div className="topnav">
-                <a
-                  style={{ fontWeight: 600, paddingLeft: 0 }}
-                  href="./findex.asp"
-                >
+                <NavLink to="/" style={{ fontWeight: 600, paddingLeft: 0, background:'none' , fontSize:'20px'}}>
                   TRANG VÀNG
-                </a>
-                <a style={{ fontWeight: 600 }} href="./findex.asp">
-                  <i className="fa fa-solid fa-list pe-1" /> Mục lục ngành nghề
-                </a>
+                </NavLink>
                 <div className="topnav-right">
                   <NavLink to="/gioi-thieu">
                     <i className="fa fa-solid fa-seedling" /> Giới thiệu
                   </NavLink>
-                  <a href="./subpages/advertising.asp">
+                  <NavLink to="/advertising">
                     <i className="fa fa-solid fa-bullseye" /> Quảng cáo Trang
                     vàng
-                  </a>
+                  </NavLink>
                   <NavLink to="/signup">
                     <i className="fa-solid fa-user-plus" /> Đăng ký Trang vàng
                   </NavLink>
-                  <a href="./subpages/contact.asp">
+                  <NavLink to="/contact">
                     <i className="fa fa-solid fa-headphones-simple" /> Liên hệ
-                  </a>
-                  <a target="_blank" href="https://www.yellowpages.com.vn">
-                    <i className="fa fa-regular fa-flag" /> ENGLISH
-                  </a>
+                  </NavLink>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <HeaderMobile />
       <div className="m-auto h-auto">
         <div className="container-xl pt-5">
           <div className="w-100 rounded-3 p-0 pb-4 bg-white m-0 text-center">
@@ -79,13 +74,13 @@ export default function Gioithieu() {
             </div>
             <div className="sanphamtrangvang">
               <div className="sanpham1">
-                <div className="sanpham1_1">
-                  <a target="_blank" href="https://trangvangvietnam.com">
+                <div className="sanpham1_1 ">
+                  <div style={{ width: "20%", margin: "0 auto" }}>
                     <img
                       style={{ maxWidth: 238, paddingTop: 18 }}
                       src="images/trangvangvietnam_com.png"
                     />
-                  </a>
+                  </div>
                 </div>
                 <div className="sanpham1_2">
                   <p className="pt-1 pb-1 text-center text">
@@ -96,7 +91,10 @@ export default function Gioithieu() {
                 </div>
               </div>
               <div className="sanpham1">
-                <div className="sanpham1_1">
+                <div
+                  className="sanpham1_1"
+                  style={{ width: "20%", margin: "0 auto" }}
+                >
                   <a target="_blank" href="https://www.yellowpages.vn">
                     <img
                       style={{ maxWidth: 238, paddingTop: 18 }}
@@ -113,7 +111,10 @@ export default function Gioithieu() {
                 </div>
               </div>
               <div className="sanpham1">
-                <div className="sanpham1_1">
+                <div
+                  className="sanpham1_1"
+                  style={{ width: "20%", margin: "0 auto" }}
+                >
                   <a target="_blank" href="https://niengiamtrangvang.com">
                     <img
                       style={{ maxWidth: 238, paddingTop: 18 }}
@@ -130,7 +131,10 @@ export default function Gioithieu() {
                 </div>
               </div>
               <div className="sanpham2">
-                <div className="sanpham1_1">
+                <div
+                  className="sanpham1_1"
+                  style={{ width: "20%", margin: "0 auto" }}
+                >
                   <a target="_blank" href="http://nhungtrangvang.net">
                     <img
                       style={{ maxWidth: 238, paddingTop: 18 }}
@@ -150,7 +154,10 @@ export default function Gioithieu() {
             <p className="m-4 clearfix" />
             <div className="sanphamtrangvang1">
               <div className="sanpham1">
-                <div className="sanpham1_1">
+                <div
+                  className="sanpham1_1"
+                  style={{ width: "20%", margin: "0 auto" }}
+                >
                   <a href="https://www.sachtrangvang.com" target="_blank">
                     <img
                       style={{ maxWidth: 216, paddingTop: 9 }}
@@ -167,7 +174,10 @@ export default function Gioithieu() {
                 </div>
               </div>
               <div className="sanpham1">
-                <div className="sanpham1_1">
+                <div
+                  className="sanpham1_1"
+                  style={{ width: "20%", margin: "0 auto" }}
+                >
                   <a target="_blank" href="https://www.yellowpages.com.vn">
                     <img
                       style={{ maxWidth: 245, paddingTop: 21 }}
@@ -184,7 +194,10 @@ export default function Gioithieu() {
                 </div>
               </div>
               <div className="sanpham2">
-                <div className="sanpham1_1">
+                <div
+                  className="sanpham1_1"
+                  style={{ width: "20%", margin: "0 auto" }}
+                >
                   <a
                     href="https://sachtrangvang.com/sachquocte/index.asp"
                     target="_blank"
@@ -334,16 +347,21 @@ export default function Gioithieu() {
                   </div>
                   <div
                     className="rounded-5 p-0 ps-4 pe-4 yellow_bg mx-auto mt-3"
-                    style={{ display: "inline-block" , background:'#ffde06'}}
+                    style={{ display: "inline-block", background: "#ffde06" }}
                   >
-                    <p className="fs-6 pt-2 pb-2 m-0 text-center fw500">
-                      Hotline tư vấn QC:{" "}
+                    <p
+                      className="fs-6 pt-2 pb-2 m-0 text-center fw500"
+                      style={{ display: "flex" }}
+                    >
+                      Hotline tư vấn QC:
                       <a href="tel:0934498168">0934.498.168</a> -{" "}
-                      <a href="tel:0912005564">0912.005.564</a> (
-                      <a href="https://zalo.me/0934498168">
+                      <a href="tel:0912005564">0912.005.564</a>
+                      <a
+                        href="https://zalo.me/0934498168"
+                        style={{ marginLeft: "10px", marginTop: "4px" }}
+                      >
                         <img src="https://trangvangvietnam.com/images/zalo_txt.png" />
                       </a>
-                      )
                     </p>
                   </div>
                 </div>
@@ -383,7 +401,10 @@ export default function Gioithieu() {
               </div>
               <div className="col-sm-5 text-start ps-3">
                 <div className="w-100 rounded-3 bg-white pt-0">
-                  <div className="rounded-4 p-1 mb-3 text-dark text-center yellow_bg yp_font_weight_500" style={{ background:'#ffde06'}}>
+                  <div
+                    className="rounded-4 p-1 mb-3 text-dark text-center yellow_bg yp_font_weight_500"
+                    style={{ background: "#ffde06" }}
+                  >
                     <i className="fa fa-solid fa-square-phone pe-1" /> Liên hệ
                     Trang Vàng Việt Nam
                   </div>
@@ -409,12 +430,17 @@ export default function Gioithieu() {
                         <a href="tel:0934498168">0934 498 168</a>/{" "}
                         <a href="tel:0912005564">0912 005 564</a>{" "}
                       </span>{" "}
-                      (
-                      <a href="https://zalo.me/0934498168">
-                        <img src="https://trangvangvietnam.com/images/zalo_txt.png" />
-                      </a>
-                      ) <br />
-                      <span style={{ paddingLeft: 86, fontSize: 12 }}>
+                      <br />
+                      <span
+                        style={{
+                          paddingLeft: 86,
+                          fontSize: 12,
+                          textAlign: "center",
+                        }}
+                      >
+                        <a href="https://zalo.me/0934498168">
+                          <img src="https://trangvangvietnam.com/images/zalo_txt.png" />
+                        </a>
                         (Zalo/ What'sapp/ Skype/ Line)
                       </span>
                     </div>
@@ -436,398 +462,8 @@ export default function Gioithieu() {
               </div>
             </div>
           </div>
-          <button
-            title="LIÊN HỆ VỚI TRANG VÀNG VIỆT NAM !"
-            className="nut_lienhe bg-transparent"
-            onclick="call_all()"
-          >
-            <img src="https://trangvangvietnam.com/images/iconlienhe.png" />
-          </button>
-          <div id="lienhe_truot">
-            <div className="p-0 m-0 clearfix">
-              <div className="mb-2 nut_zalo">
-                <a target="_blank" href="https://zalo.me/0934498168">
-                  <img
-                    title="Zalo: 0934.498.168"
-                    style={{ width: "100%", borderRadius: "50%" }}
-                    src="https://trangvangvietnam.com/images/zalo-icon.png"
-                  />
-                </a>
-              </div>
-            </div>
-            <div className="p-0 m-0 clearfix">
-              <a href="mailto:contact@trangvangvietnam.com">
-                <div
-                  className="mb-2 nut_email"
-                  title="contact@trangvangvietnam.com"
-                >
-                  <p className="h6 text-center text-white pt-3 fs-5">
-                    <i className="fa fa-regular fa-envelope" />
-                  </p>
-                </div>
-              </a>
-            </div>
-            <div className="p-0 m-0 clearfix">
-              <a href="tel:0934498168">
-                <div className="d-inline-flex ps-3 pe-3 nut_phone">
-                  <p className="m-0 text-center text-white p-1">
-                    <small>LIÊN HỆ TRANG VÀNG</small>{" "}
-                    <strong>
-                      {" "}
-                      <i className="fa fa-solid fa-square-phone pe-1 ps-1" />{" "}
-                      0934.498.168
-                    </strong>
-                  </p>
-                </div>
-              </a>
-              <a href="tel:0934498168">
-                <div className="thanh_phone" title="0934.498.168">
-                  <p className="h6 text-center text-white pt-3 fs-5">
-                    <i className="fa fa-solid fa-phone" />
-                  </p>
-                </div>
-              </a>
-            </div>
-          </div>
         </div>
-        <div className="w-100 h-auto">
-          <div className="container-xl pt-4">
-            <div className="rounded-3 bg-white h-auto w-100 mt-4 clearfix">
-              <p className="m-0 muclucnganhnghe">
-                <i className="fa fa-solid fa-magnifying-glass" /> MỤC LỤC NGÀNH
-                NGHỀ
-              </p>
-              <div className="p-4 m-0 text-center mucluc_pc">
-                <span className="pe-3 fw-semibold">Tìm ngành theo</span>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/A"
-                >
-                  A
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/B"
-                >
-                  B
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/C"
-                >
-                  C
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/D"
-                >
-                  D
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/E"
-                >
-                  E
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/F"
-                >
-                  F
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/G"
-                >
-                  G
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/H"
-                >
-                  H
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/I"
-                >
-                  I
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/K"
-                >
-                  K
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/L"
-                >
-                  L
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/M"
-                >
-                  M
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/N"
-                >
-                  N
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/O"
-                >
-                  O
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/P"
-                >
-                  P
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/Q"
-                >
-                  Q
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/R"
-                >
-                  R
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/S"
-                >
-                  S
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/T"
-                >
-                  T
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/U"
-                >
-                  U
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/V"
-                >
-                  V
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/W"
-                >
-                  W
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/X"
-                >
-                  X
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/Y"
-                >
-                  Y
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/Z"
-                >
-                  Z
-                </a>
-              </div>
-              <div className="p-4 m-0 text-center mucluc_mobile">
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/A"
-                >
-                  A
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/B"
-                >
-                  B
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/C"
-                >
-                  C
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/D"
-                >
-                  D
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/E"
-                >
-                  E
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/F"
-                >
-                  F
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/G"
-                >
-                  G
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/H"
-                >
-                  H
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/I"
-                >
-                  I
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/K"
-                >
-                  K
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/L"
-                >
-                  L
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/M"
-                >
-                  M
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/N"
-                >
-                  N
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/O"
-                >
-                  O
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/P"
-                >
-                  P
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/Q"
-                >
-                  Q
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/R"
-                >
-                  R
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/S"
-                >
-                  S
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/T"
-                >
-                  T
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/U"
-                >
-                  U
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/V"
-                >
-                  V
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/W"
-                >
-                  W
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/X"
-                >
-                  X
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/Y"
-                >
-                  Y
-                </a>
-                <a
-                  id="muclucnganhnghe_link"
-                  href="https://trangvangvietnam.com/findex/Z"
-                >
-                  Z
-                </a>
-              </div>
-            </div>
-            <div className="rounded-3 p-3 pb-4 border h-auto w-100 mt-5 mb-5">
-              <div className="foot_signup1">Bạn là doanh nghiệp?</div>
-              <div className="foot_signup2">
-                Đăng ký Trang vàng là cách đơn giản và hiệu quả để bạn quảng bá,
-                bán hàng, giữ và phát triển thị phần !<br />
-                <span className="text-black-50">
-                  <small>
-                    Hãy gọi hoặc gửi Zalo đến <strong>0934.498.168</strong> (gửi
-                    Zalo)/ <strong>0912.005.564</strong> (gửi Zalo) để được tư
-                    vấn và hỗ trợ.
-                  </small>
-                </span>
-              </div>
-              <div className="foot_signup3">
-                <button className="border-0 rounded-2 p-1 ps-3 pe-3 buttom_bg_footer_signup text-white">
-                  <a href="https://trangvangvietnam.com/subpages/signup.asp">
-                    Đăng ký miễn phí !
-                  </a>
-                </button>
-              </div>
-              <p className="m-0 p-0 mb-1 clearfix" />
-            </div>
-            <p className="m-0 clearfix" />
-          </div>
-        </div>
+
         <div className="w-100 h-auto bg_ffde06">
           <div className="container-xl  pt-5">
             <div className="rounded-3 h-auto w-100 p-3 clearfix lienket_chantrang mucluc_pc">

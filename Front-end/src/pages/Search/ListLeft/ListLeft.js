@@ -33,18 +33,14 @@ export default function ListLeft(props) {
         <small>
           <i className="fa-solid fa-layer-group ps-1 colord63384" />
         </small>{" "}
-        Ngành nghề
+       Kết quả tìm kiếm
       </p>
       <p className="m-0 p-1 ps-4 pe-3 fw500">
         <div className="yp_red_color">
           {name}
           <span className="counter_number fs_13">
             (
-            {
-              arrBusinessByCareersType?.businesses?.filter(
-                (item) => item.status === "active"
-              ).length
-            }
+            {arrBusinessByCareersType}
             )
           </span>
         </div>
@@ -61,7 +57,7 @@ export default function ListLeft(props) {
             className="m-0 p-1 ps-4 pb-3 pe-3"
             style={{ cursor: "pointer" }}
             onClick={() => {
-              history.push(`/getcareersbyname/${name}/${item.name}`);
+              history.push(`/searchbusinesslocation/${name}/${item.name}`);
             }}
           >
             <div>

@@ -609,6 +609,7 @@ export default function Advertising(props) {
                             type="text"
                             name="userName"
                             onChange={formik.handleChange}
+                            required
                           />
                         </div>
                       </div>
@@ -622,6 +623,7 @@ export default function Advertising(props) {
                             type="text"
                             name="userPhone"
                             onChange={formik.handleChange}
+                            required
                           />
                         </div>
                       </div>
@@ -635,6 +637,7 @@ export default function Advertising(props) {
                             type="text"
                             name="businessName"
                             onChange={formik.handleChange}
+                            required
                           />
                         </div>
                       </div>
@@ -648,6 +651,7 @@ export default function Advertising(props) {
                             type="text"
                             name="career"
                             onChange={formik.handleChange}
+                            required
                           />
                         </div>
                       </div>
@@ -662,6 +666,7 @@ export default function Advertising(props) {
                             type="text"
                             name="productService"
                             onChange={formik.handleChange}
+                            required
                           />
                         </div>
                       </div>

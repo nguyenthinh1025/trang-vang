@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const getListAdvertisements = async (req, res) => {
   try {
-    let result = await models.Advertisements.findAll();
+    let result = await models.Advertisements.findAll({include :'image', order: [['stt', 'ASC']] });
     succesCode(res, result, "Lấy Danh Sách Quảng Cáo Thành Công!!!");
   } catch (error) {
     errorCode(res, "Lỗi Backend");
@@ -45,7 +45,7 @@ const updateStatusAdvertisements = async (req, res) => {
     let { id } = req.params;
     let result = await models.Advertisements.update(
       {
-        status: "active",
+        status: "update",
       },
       {
         where: {
@@ -53,9 +53,53 @@ const updateStatusAdvertisements = async (req, res) => {
         },
       }
     );
-    succesCode(res, result, "Cập nhật trạng thái hoạt động quảng cáo thành công!!!");
+    succesCode(
+      res,
+      result,
+      "Chờ cập nhật quảng cáo!!!"
+    );
   } catch (error) {
     errorCode(res, "Lỗi Backend");
   }
 };
-module.exports = { getListAdvertisements, createAdvertisements , updateStatusAdvertisements};
+
+const updateAdvertisements = async (req, res) => {
+  try {
+    let { id,  image, startDate, endDate, website, stt } = req.body;
+    let result = await models.Images.create({
+      imageId: uuidv4(),
+      imageUrl: image,
+    });
+    let result1 = await models.Advertisements.update(
+      {
+        status: "active",
+        startDate,
+        endDate,
+        website,
+        stt,
+        imageId : result.imageId
+      },
+      {
+        where: {
+          adId: id,
+        },
+      }
+    );
+    let adver = await models.Advertisements.findOne({where:{adId:id}})
+    succesCode(
+      res,
+      adver,
+      "Cập nhật trạng thái hoạt động quảng cáo thành công!!!"
+    );
+  } catch (error) {
+    errorCode(res, "Lỗi Backend");
+  }
+};
+
+
+module.exports = {
+  getListAdvertisements,
+  createAdvertisements,
+  updateStatusAdvertisements,
+  updateAdvertisements
+};

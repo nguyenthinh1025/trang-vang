@@ -15,3 +15,21 @@ export const GetListCareersAction = () => {
         }
     }
 }
+
+
+export const GetListCareersNameAction = (name) => {
+    return async (dispatch) => {
+        try {
+            let result = await http.put(`/careers/careerbusiness/${name}`);
+            const action = {
+                type: "GET_LIST_CAREERS_NAME",
+                arrCareersName: result.data.data.businesses,
+                arrCareersAdvertisement: result.data.data.advertisement,
+            }
+            dispatch(action)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}

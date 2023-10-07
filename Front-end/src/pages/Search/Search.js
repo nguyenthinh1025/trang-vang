@@ -6,22 +6,36 @@ import Event from "./Event/Event";
 import ListLeft from "./ListLeft/ListLeft";
 import ListCenter from "./ListCenter/ListCenter";
 import ListRight from "./ListRight/ListRight";
-export default function ListBussiness(props) {
+import { SearchBusiness, SearchBusinessLocation } from "../../redux/actions/BusinessAction";
+export default function Search(props) {
   const { name ,location} = props.match.params;
   const dispatch = useDispatch();
-  const { arrBusinessByCareersType,arrAdvertisement } = useSelector(
-    (root) => root.CareersTypeReducer
+  const { searchBusinessName,searchBusinessCareer,searchBusinessProduct,searchBusinessAdvertisement } = useSelector(
+    (root) => root.BusinessReducer
   );
-
+  console.log(searchBusinessName)
+  console.log(searchBusinessCareer)
+  console.log(searchBusinessProduct)
+  console.log(searchBusinessAdvertisement)
   useEffect(() => {
     if(location){
-      const action = GetListBusinessByCareerLocationTypeAction(name,location);
+      const action = SearchBusinessLocation(name,location);
       dispatch(action);
     }else{
-      const action = GetListBusinessByCareersTypeAction(name);
+      const action = SearchBusiness(name);
     dispatch(action);
     }
   }, [location]);
+  const countActiveBusinesses = (businessList) => {
+    return businessList?.filter(item => item.status === "active").length || 0;
+  };
+  
+  const totalActiveBusinesses = 
+    countActiveBusinesses(searchBusinessName) +
+    countActiveBusinesses(searchBusinessCareer) +
+    countActiveBusinesses(searchBusinessProduct) +
+    countActiveBusinesses(searchBusinessAdvertisement);
+  
   return (
     <div className="page_bg mb-5" >
 
@@ -35,7 +49,7 @@ export default function ListBussiness(props) {
             </div>
             <div className="float-start div_ketquatimkiem pc_display">
               <span className="ketquatimkiem_counter">
-                ({arrBusinessByCareersType?.businesses?.filter(item =>item.status ==="active").length} doanh nghiệp được tìm
+                ({totalActiveBusinesses} doanh nghiệp được tìm
                 thấy)
               </span>
             </div>
@@ -44,10 +58,10 @@ export default function ListBussiness(props) {
           <Event />
          
           <div className="m-auto h-auto mt-4">
-            <ListLeft  name ={name} arrBusinessByCareersType={arrBusinessByCareersType}/>
-            <ListCenter  name ={name} arrBusinessByCareersType={arrBusinessByCareersType}/>
+             <ListLeft  name ={name} arrBusinessByCareersType= {totalActiveBusinesses}/>
+           {/* <ListCenter  name ={name} arrBusinessByCareersType={arrBusinessByCareersType}/>*/}
            
-           <ListRight arrAdvertisement = {arrAdvertisement} />
+           <ListRight arrAdvertisement = {searchBusinessAdvertisement} /> 
             <p className="m-0 clearfix" />
           </div>        
           <p className="m-0 clearfix" />

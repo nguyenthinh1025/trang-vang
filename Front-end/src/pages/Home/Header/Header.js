@@ -18,6 +18,7 @@ export default function Header() {
                     fontWeight: 600,
                     paddingLeft: 0,
                     background: "white",
+                    fontSize:'20px'
                   }}
                   to="/"
                 >

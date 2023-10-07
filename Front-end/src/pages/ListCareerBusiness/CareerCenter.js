@@ -1,20 +1,13 @@
 import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
-
-export default function ListCenter(props) {
-  const { name, arrBusinessByCareersType } = props;
-  console.log(
-    arrBusinessByCareersType?.businesses?.filter(
-      (item) => item.status === "active"
-    )
-  );
+export default function CareerCenter(props) {
+  const { arrCareersName } = props;
   return (
-    <div className="div_list_cty">
-      {arrBusinessByCareersType?.businesses?.filter(
-        (item) => item.status === "active"
-      ).length !== 0 ? (
+    <div className="mt-7">
+      {arrCareersName?.filter((item) => item.status === "active").length !==
+      0 ? (
         <Fragment>
-          {arrBusinessByCareersType?.businesses
+          {arrCareersName
             ?.filter((item) => item.status === "active")
             .map((item, index) => {
               return (
@@ -116,7 +109,7 @@ export default function ListCenter(props) {
                             <div className="border rounded-2 small_image p-1 image_show ">
                               <img
                                 className="w-100 mh-100 piczoom"
-                                src={img.imageUrl }
+                                src={img.imageUrl}
                                 title=""
                                 alt=""
                               />

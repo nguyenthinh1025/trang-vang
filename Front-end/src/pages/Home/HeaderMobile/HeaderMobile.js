@@ -9,7 +9,7 @@ export default function HeaderMobile() {
           <div className="p-0 h-auto text-center position-relative">
             <img
               style={{ width: 186 }}
-              src="./images/trangvang_logo_mobile.png"
+              src="../images/trangvang_logo_mobile.png"
             />
           </div>
           <div className="menu_m">
@@ -33,42 +33,42 @@ export default function HeaderMobile() {
                     <div className="p-3 pt-4 pb-2 border-bottom h6">
                       <i className="fa fa-solid fa-house pe-2" /> TRANG VÀNG
                       VIỆT NAM
-                    </div>
-                    <div className="p-3 pt-4 pb-2">
-                      <a href="./findex.asp">
-                        <i className="fa fa-solid fa-list pe-2" /> Mục lục ngành
-                        nghề
-                      </a>
-                    </div>
+                    </div>                
                     <div className="p-3 pb-2">
-                      <a href="./subpages/aboutus.asp">
+                    <NavLink to="/gioi-thieu">
                         <i className="fa fa-solid fa-seedling pe-2" /> Giới
                         thiệu Trang vàng
-                      </a>
+                    </NavLink>
                     </div>
                     <div className="p-3 pb-2">
-                      <a href="./subpages/advertising.asp">
+                    <NavLink to="/advertising">
                         <i className="fa fa-solid fa-bullseye pe-2" /> Quảng cáo
                         Trang vàng
-                      </a>
+                    </NavLink>
                     </div>
                     <div className="p-3 pb-2">
-                      <a href="./subpages/signup.asp">
+                    <NavLink to="/signup">
                         <i className="fa-solid fa-user-plus pe-2" /> Đăng ký
                         Trang vàng miễn phí
-                      </a>
+                     </NavLink>
                     </div>
                     <div className="p-3 pb-2">
-                      <a href="./subpages/contact.asp">
+                    <NavLink to="/contact">
                         <i className="fa fa-solid fa-headphones-simple pe-2" />{" "}
                         Liên hệ Trang vàng
-                      </a>
+                        </NavLink>
                     </div>
                     <div className="p-3 pb-4 border-bottom">
-                      <NavLink to="/signin">
-                        <i className="fa fa-solid fa-right-to-bracket" /> Đăng
-                        nhập
-                      </NavLink>
+                    {localStorage.getItem("userID") ? (
+                    <NavLink to={`/yourbussiness/${localStorage.getItem('businessID')}`}>
+                      <i className="fa fa-solid fa-right-to-bracket" /> Trang doanh nghiệp của bạn
+                    </NavLink>
+                  ) : (
+                    <NavLink to="/signin">
+                      <i className="fa fa-solid fa-right-to-bracket" /> Đăng
+                      nhập
+                    </NavLink>
+                  )}
                     </div>
                     <div className="h-auto ms-3 mt-3 mb-4 clearfix">
                       <button

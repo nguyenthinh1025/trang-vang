@@ -6,6 +6,7 @@ const { Op } = require("sequelize");
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
 const { sendEmail } = require("../routes/sendEmail");
+
 const getBussiness = async (req, res) => {
   try {
     let result = await models.Businesses.findAll({
@@ -34,7 +35,7 @@ const createImageBussiness = async (req, res) => {
     let result = await models.Images.create({
       imageId: uuidv4(),
       businessId,
-      imageUrl
+      imageUrl,
     });
     succesCode(res, result, "Tạo hình ảnh cho doanh nghiệp thảnh công!!!");
   } catch (error) {
@@ -513,6 +514,148 @@ const updateBusiness = async (req, res) => {
   }
 };
 
+const searchBusinessByName = async (req, res) => {
+  const { name, location } = req.params;
+
+  const decodedName = decodeURIComponent(name);
+  try {
+    const result = await models.Careers.findAll({
+      model: models.Careers,
+      as: "Careers",
+      where: {
+        careerName: {
+          [Op.like]: `%${decodedName}%`,
+        },
+      },
+      include: [
+        "business",
+        {
+          model: models.Businesses,
+          as: "business",
+          include: [
+            {
+              model: models.Careers,
+              as: "Careers",
+              where: {
+                careerName: {
+                  [Op.like]: `%${name}%`,
+                },
+              },
+            },
+            "Locations",
+            "Users",
+            "Reviews",
+            "Images",
+            "Certificates",
+            {
+              model: models.Certificates,
+              as: "Certificates",
+              include: [{ model: models.Images, as: "image" }],
+            },
+          ],
+          where: location
+            ? {
+                address: {
+                  [Op.like]: `%${location}%`,
+                },
+              }
+            : {
+                address: {
+                  [Op.like]: `%%`,
+                },
+              },
+        },
+      ],
+    });
+
+    const result1 = await models.Products.findAll({
+      where: {
+        productName: {
+          [Op.like]: `%${decodedName}%`,
+        },
+      },
+      include: [
+        "service",
+        {
+          model: models.Services,
+          as: "service",
+          include: [
+            {
+              model: models.BusinessServices,
+              as: "BusinessServices",
+              include: [
+                {
+                  model: models.Businesses,
+                  as: "business",
+                  include: ["Images"],
+                  where: location
+                    ? {
+                        address: {
+                          [Op.like]: `%${location}%`,
+                        },
+                      }
+                    : {
+                        address: {
+                          [Op.like]: `%%`,
+                        },
+                      },
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+    const business = await models.Businesses.findAll({
+      where: {
+        [Op.and]: [
+          {
+            businessName: {
+              [Op.like]: `%${decodedName}%`,
+            },
+          },
+          location
+            ? {
+                address: {
+                  [Op.like]: `%${location}%`,
+                },
+              }
+            : null,
+        ],
+      },
+    });
+    const career = result.map((category) => category.business);
+    const listproduct = result1.map(
+      (category) => category.service.BusinessServices
+    );
+    const arrProduct = listproduct.map((product) => {
+      const businessData = product[0];
+      if (!businessData) {
+        return null;
+      }
+      const businessId = businessData.business;
+      return businessId;
+    });
+    const advertisement = await models.Advertisements.findAll({
+      where: {
+        career: {
+          [Op.like]: `%${name}%`,
+        },
+      },
+      include: "image",
+      order: [["stt", "ASC"]],
+    });
+    const product = arrProduct.filter((item) => item !== null);
+    succesCode(
+      res,
+      { name, career, product, advertisement, business },
+      `Lấy Danh Sách Doanh Nghiệp Thành Công!!!`
+    );
+  } catch (error) {
+    errorCode(res, "Lỗi Backend");
+  }
+};
+
 module.exports = {
   getBussiness,
   getListBussiness,
@@ -520,5 +663,6 @@ module.exports = {
   getBussinessById,
   updateStatusActiveBussiness,
   updateBusiness,
-  createImageBussiness
+  createImageBussiness,
+  searchBusinessByName,
 };

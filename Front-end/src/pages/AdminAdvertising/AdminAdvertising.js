@@ -4,24 +4,28 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
-import { FileUpload } from "primereact/fileupload";
-import { Rating } from "primereact/rating";
 import { Toolbar } from "primereact/toolbar";
 import { InputTextarea } from "primereact/inputtextarea";
-import { RadioButton } from "primereact/radiobutton";
-import { InputNumber } from "primereact/inputnumber";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import { Tag } from "primereact/tag";
-import { GetListBusinessAction, UpdateAciveBusinessAction } from "../../redux/actions/BusinessAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Dropdown } from "primereact/dropdown";
 import moment from "moment";
-import { GetListAdvertisementsAction, UpdateStatusAdvertisementsAction } from "../../redux/actions/AdvertisementsAction";
+import { addHours } from "date-fns";
+import {
+  ActiveAdvertisementsAction,
+  GetListAdvertisementsAction,
+  UpdateStatusAdvertisementsAction,
+} from "../../redux/actions/AdvertisementsAction";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
+import { storage_bucket } from "../../firebase";
+import { useFormik } from "formik";
 
 export default function AdminAdvertising() {
   const dispatch = useDispatch();
-  const { arrAdvertisements } = useSelector((root) => root.AdvertisementsReducer);
+  const { arrAdvertisements } = useSelector(
+    (root) => root.AdvertisementsReducer
+  );
   console.log(arrAdvertisements);
   let emptyProduct = {
     id: null,
@@ -47,20 +51,75 @@ export default function AdminAdvertising() {
   const dt = useRef(null);
 
   const arrReportType = [
+    { value: "pending", label: "Chờ duyệt" },
+    { value: "update", label: "Cập nhật" },
     { value: "active", label: "Hoạt động" },
     { value: "inactive", label: "Cấm hoạt động" },
-    { value: "pending", label: "Chờ duyệt" },
   ];
+
+  const formik = useFormik({
+    initialValues: {
+      id: "",
+      startDate: "",
+      endDate: "",
+      website: "",
+      image: "",
+      stt: 0,
+    },
+    onSubmit: (value) => {
+      console.log(value);
+      const newStartDate = addHours(new Date(value.startDate), 7);
+      const newEndDate = addHours(new Date(value.endDate), 7);
+      const updatedValues = {
+        ...value,
+        startDate: newStartDate,
+        endDate: newEndDate,
+      };
+      const action = ActiveAdvertisementsAction(updatedValues);
+      dispatch(action);
+      hideDialog()
+    },
+  });
+  const uploadFile = async (e) => {
+    try {
+      const file = e.target.files[0];
+      const fileRef = ref(storage_bucket, file.name);
+      const uploadTask = uploadBytesResumable(fileRef, file);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload Progress: ${progress}%`);
+        },
+        (err) => {
+          console.error("Upload Error:", err);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            console.log(`Download URL: ${url}`);
+            console.log({ imageUrl: url });
+            formik.setFieldValue("image", url);
+
+            // const action = UpateCertificatesAction(id, value);
+            // dispatch(action);
+          });
+        }
+      );
+    } catch (error) {
+      console.error("File Upload Error:", error);
+    }
+  };
   const [op, setOp] = useState("active");
   const onInputDropdown = (e, field) => {
-    setOp(e.target.value);;
+    setOp(e.target.value);
   };
   useEffect(() => {
     const modifiedArray = arrAdvertisements.map((item) => ({
       ...item,
-      formattedCreateDate: moment(item.createDate).format('DD/MM/YYYY hh:mm A')
+      formattedCreateDate: moment(item.createDate).format("DD/MM/YYYY hh:mm A"),
     }));
-  
+
     const filteredArray = modifiedArray.filter((item) => item.status === op);
     setProducts(filteredArray);
   }, [arrAdvertisements, op]);
@@ -69,8 +128,6 @@ export default function AdminAdvertising() {
     const action = GetListAdvertisementsAction();
     dispatch(action);
   }, []);
-
-
 
   const hideDialog = () => {
     setSubmitted(false);
@@ -90,21 +147,19 @@ export default function AdminAdvertising() {
 
     let _products = [...products];
     let _product = { ...product };
-    console.log(_product)
-     const action = UpdateStatusAdvertisementsAction(_product.adId);
-     dispatch(action)
-        toast.current.show({
-          severity: "success",
-          summary: "Thành công",
-          detail: "Duyệt quảng cáo thành công",
-          life: 3000,
-        });
+    console.log(_product);
+    const action = UpdateStatusAdvertisementsAction(_product.adId);
+    dispatch(action);
+    toast.current.show({
+      severity: "success",
+      summary: "Thành công",
+      detail: "Duyệt quảng cáo thành công",
+      life: 3000,
+    });
 
-
-      setProducts(_products);
-      setProductDialog(false);
-      setProduct(emptyProduct);
-    
+    setProducts(_products);
+    setProductDialog(false);
+    setProduct(emptyProduct);
   };
 
   const editProduct = (product) => {
@@ -134,9 +189,6 @@ export default function AdminAdvertising() {
     dt.current.exportCSV();
   };
 
-
-
-
   const deleteSelectedProducts = () => {
     let _products = products.filter((val) => !selectedProducts.includes(val));
 
@@ -151,8 +203,6 @@ export default function AdminAdvertising() {
     });
   };
 
-
-
   const onInputChange = (e, name) => {
     const val = (e.target && e.target.value) || "";
     let _product = { ...product };
@@ -161,8 +211,6 @@ export default function AdminAdvertising() {
 
     setProduct(_product);
   };
-
-  
 
   const leftToolbarTemplate = () => {
     return (
@@ -190,7 +238,6 @@ export default function AdminAdvertising() {
     );
   };
 
-
   const actionBodyTemplate = (rowData) => {
     return (
       <React.Fragment>
@@ -199,7 +246,10 @@ export default function AdminAdvertising() {
           rounded
           outlined
           className="mr-2"
-          onClick={() => editProduct(rowData)}
+          onClick={() => {
+            editProduct(rowData);
+            formik.setFieldValue("id", rowData.adId);
+          }}
         />
         <Button
           icon="pi pi-trash"
@@ -211,8 +261,6 @@ export default function AdminAdvertising() {
       </React.Fragment>
     );
   };
-
-
 
   const header = (
     <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
@@ -230,7 +278,11 @@ export default function AdminAdvertising() {
   const productDialogFooter = (
     <React.Fragment>
       <Button label="Hủy" icon="pi pi-times" outlined onClick={hideDialog} />
-     {op ==="pending" ?  <Button label="Đồng ý" icon="pi pi-check" onClick={saveProduct} /> : <div></div>}
+      {op === "pending" ? (
+        <Button label="Đồng ý" icon="pi pi-check" onClick={saveProduct} />
+      ) : (
+        <div></div>
+      )}
     </React.Fragment>
   );
   const deleteProductDialogFooter = (
@@ -330,7 +382,7 @@ export default function AdminAdvertising() {
               sortable
               style={{ minWidth: "12rem" }}
             ></Column>
-             <Column
+            <Column
               field="userPhone"
               header="Số điện thoại"
               sortable
@@ -361,7 +413,6 @@ export default function AdminAdvertising() {
           footer={productDialogFooter}
           onHide={hideDialog}
         >
-         
           <div class="grid grid-cols-1 gap-2">
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
@@ -381,11 +432,10 @@ export default function AdminAdvertising() {
                 <small className="p-error">Name is required.</small>
               )} */}
             </div>
-            
           </div>
           <div className="field mt-3">
             <label htmlFor="description" className="font-bold">
-            Loại hình kinh doanh
+              Loại hình kinh doanh
             </label>
             <InputTextarea
               id="career"
@@ -399,7 +449,7 @@ export default function AdminAdvertising() {
           <div class="grid grid-cols-2 gap-2">
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-              Sản phẩm
+                Sản phẩm
               </label>
               <InputText
                 id="name"
@@ -407,12 +457,11 @@ export default function AdminAdvertising() {
                 onChange={(e) => onInputChange(e, "productService")}
                 required
                 autoFocus
-
               />
             </div>
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-              Người liên hệ
+                Người liên hệ
               </label>
               <InputText
                 id="name"
@@ -426,7 +475,7 @@ export default function AdminAdvertising() {
           <div class="grid grid-cols-2 gap-2">
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-              Số điện thoại
+                Số điện thoại
               </label>
               <InputText
                 id="name"
@@ -434,13 +483,116 @@ export default function AdminAdvertising() {
                 onChange={(e) => onInputChange(e, "userPhone")}
                 required
                 autoFocus
-
               />
-  
             </div>
-          
           </div>
-          
+
+          {op === "update" ? (
+            <form onSubmit={formik.handleSubmit}>
+              <div style={{ marginTop: "30px" }}>
+                <hr />
+                <div
+                  style={{
+                    textAlign: "center",
+                    fontWeight: 800,
+                    fontSize: "20px",
+                  }}
+                >
+                  Cần Cập nhật
+                </div>
+              </div>
+              <div class="grid grid-cols-1 gap-2">
+                <div className="field mt-3">
+                  <label htmlFor="name" className="font-bold">
+                    Hình ảnh
+                  </label>
+                  <InputText
+                    type="file"
+                    name="upload"
+                    placeholder="Tải ảnh lên"
+                    onChange={(e) => {
+                      uploadFile(e);
+                    }}
+                  />
+                </div>
+              </div>
+              <div class="grid grid-cols-1 gap-2">
+                {formik.values.image !== "" ? (
+                  <img
+                    src={formik.values.image}
+                    width={300}
+                    height={300}
+                    style={{ marginTop: "50px" }}
+                  />
+                ) : (
+                  <div></div>
+                )}
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div className="field mt-3">
+                  <label htmlFor="name" className="font-bold">
+                    Ngày bắt đầu
+                  </label>
+                  <InputText
+                    type="datetime-local"
+                    name="startDate"
+                    value={formik.values.startDate}
+                    onChange={formik.handleChange}
+                    id="name"
+                    required
+                    autoFocus
+                  />
+                </div>
+                <div className="field mt-3">
+                  <label htmlFor="name" className="font-bold">
+                    Ngày kết thúc
+                  </label>
+                  <InputText
+                    type="datetime-local"
+                    name="endDate"
+                    value={formik.values.endDate}
+                    onChange={formik.handleChange}
+                    id="name"
+                    required
+                    autoFocus
+                  />
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div className="field mt-3">
+                  <label htmlFor="name" className="font-bold">
+                    Website
+                  </label>
+                  <InputText
+                    id="name"
+                    name="website"
+                    onChange={formik.handleChange}
+                    required
+                    autoFocus
+                  />
+                </div>
+                <div className="field mt-3">
+                  <label htmlFor="name" className="font-bold">
+                    Số thứ tự
+                  </label>
+                  <InputText
+                    min={1}
+                    name="stt"
+                    onChange={formik.handleChange}
+                    type="number"
+                    id="name"
+                    required
+                    autoFocus
+                  />
+                </div>
+              </div>
+              <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Cập nhật
+              </button>
+            </form>
+          ) : (
+            <div></div>
+          )}
         </Dialog>
 
         <Dialog

@@ -25,49 +25,127 @@ const getCareersType = async (req, res) => {
 };
 
 const searchCareersByName = async (req, res) => {
-  let { name } = req.params;
+  const { name, location } = req.params;
 
-  name = decodeURIComponent(name);
-  // try {
-  const result = await models.Careers.findAll({
-    
-    
-      model: models.Careers,
-      as: "Careers",
-      where: {
-        careerName: {
-          [Op.like]: `%${name}%`,
-        },
-      },
-    
-
-    include: [
-      "business",
-      {
-        model: models.Businesses,
-        as: "business",
-        include: [{ model: models.Careers, as: "Careers",
+  const decodedName = decodeURIComponent(name);
+  try {
+    if (location) {
+      const result = await models.Careers.findAll({
+        model: models.Careers,
+        as: "Careers",
         where: {
           careerName: {
+            [Op.like]: `%${decodedName}%`,
+          },
+        },
+        include: [
+          "business",
+          {
+            model: models.Businesses,
+            as: "business",
+            include: [
+              {
+                model: models.Careers,
+                as: "Careers",
+                where: {
+                  careerName: {
+                    [Op.like]: `%${name}%`,
+                  },
+                },
+              },
+              "Locations",
+              "Users",
+              "Reviews",
+              "Images",
+              "Certificates",
+              {
+                model: models.Certificates,
+                as: "Certificates",
+                include: [{ model: models.Images, as: "image" }],
+              },
+            ],
+            where: {
+              address: {
+                [Op.like]: `%${location}%`,
+              },
+            },
+          },
+        ],
+      });
+
+      const businesses = result.map((category) => category.business);
+      const advertisement = await models.Advertisements.findAll({      
+        where: {
+          career: {
             [Op.like]: `%${name}%`,
           },
-        },  },'Locations','Users',"Reviews","Images","Certificates",{
-          model: models.Certificates,
-          as: "Certificates",
-          include: [{ model: models.Images, as: "image" }],
-        },],
-      },
-    ],
-  });
+        },
+        include: "image",
+        order: [["stt", "ASC"]],
+      });
+      succesCode(
+        res,
+        { name, businesses, advertisement },
+        `Lấy Danh Sách Công Ty Theo Ngành Nghề Thành Công!!!`
+      );
+    } else {
+      const result = await models.Careers.findAll({
+        model: models.Careers,
+        as: "Careers",
+        where: {
+          careerName: {
+            [Op.like]: `%${decodedName}%`,
+          },
+        },
+        include: [
+          "business",
+          {
+            model: models.Businesses,
+            as: "business",
+            include: [
+              {
+                model: models.Careers,
+                as: "Careers",
+                where: {
+                  careerName: {
+                    [Op.like]: `%${name}%`,
+                  },
+                },
+              },
+              "Locations",
+              "Users",
+              "Reviews",
+              "Images",
+              "Certificates",
+              {
+                model: models.Certificates,
+                as: "Certificates",
+                include: [{ model: models.Images, as: "image" }],
+              },
+            ],
+          },
+        ],
+      });
 
-  const businesses = result.map((category) => category.business);
-  succesCode(
-    res,
-    { name, businesses },
-    `Lấy Danh Sách Công Ty Theo Ngành Nghề Thành Công!!!`
-  );
-  // } catch (error) {
-  //   errorCode(res, "Lỗi Backend");
-  // }
+      const businesses = result.map((category) => category.business);
+      const advertisement = await models.Advertisements.findAll({      
+        where: {
+          career: {
+            [Op.like]: `%${name}%`,
+          },
+        },
+        include: "image",
+        order: [["stt", "ASC"]],
+      });
+      succesCode(
+        res,
+        { name, businesses, advertisement },
+        `Lấy Danh Sách Công Ty Theo Ngành Nghề Thành Công!!!`
+      );
+    }
+  } catch (error) {
+    errorCode(res, "Lỗi Backend");
+  }
 };
+
 module.exports = { getCareersType, searchCareersByName };

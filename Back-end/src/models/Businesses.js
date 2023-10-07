@@ -43,10 +43,6 @@ class Businesses extends Sequelize.Model {
       type: DataTypes.TEXT,
       allowNull: true
     },
-    locationId: {
-      type: DataTypes.STRING(40),
-      allowNull: true
-    },
     rating: {
       type: DataTypes.DECIMAL(3,2),
       allowNull: true
@@ -89,10 +85,6 @@ class Businesses extends Sequelize.Model {
     },
     createDate: {
       type: DataTypes.DATE,
-      allowNull: true
-    },
-    certificateId: {
-      type: DataTypes.STRING(40),
       allowNull: true
     },
     avatar: {

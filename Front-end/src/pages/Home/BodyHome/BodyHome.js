@@ -4,12 +4,10 @@ import Slider from "react-slick";
 import { GetListMainCategoryAction } from "../../../redux/actions/MainCategoryAction";
 import { useDispatch, useSelector } from "react-redux";
 import { GetListCareersTypeAction } from "../../../redux/actions/CareersTypeAction";
+import { ListCareer } from "./ListCareer";
 export default function BodyHome(props) {
   const dispatch = useDispatch();
   const { arrCareersType } = useSelector((root) => root.CareersTypeReducer);
-  console.log(arrCareersType);
-  const { arrCareers } = props;
-  console.log(arrCareers);
   const settings = {
     dots: false,
     infinite: true,
@@ -21,7 +19,6 @@ export default function BodyHome(props) {
 
   const isDesktop = window.innerWidth > 768;
   settings.slidesToShow = isDesktop ? 2 : 1;
-  console.log(isDesktop);
   useEffect(() => {
     const action = GetListCareersTypeAction();
     dispatch(action);
@@ -55,7 +52,7 @@ export default function BodyHome(props) {
                                       window.innerWidth > 768
                                         ? " 191px"
                                         : "80px",
-                                        height:
+                                    height:
                                       window.innerWidth > 768
                                         ? " 100px"
                                         : "80px",
@@ -67,7 +64,7 @@ export default function BodyHome(props) {
                               <NavLink
                                 to={`getcareersbyname/${cate.careerName}`}
                               >
-                                {cate.description}
+                                {cate.careerName}
                               </NavLink>
                             </p>
                           </div>
@@ -87,284 +84,19 @@ export default function BodyHome(props) {
           <div className="title_text">NIÊN GIÁM NGÀNH NGHỀ</div>
         </div>
         <div className="h-auto w-100 mt-5">
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/27/an-ninh-bảo-vệ">An ninh - Bảo vệ</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/9/bao-bì">Bao bì</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/46/bảo-hộ-lao-động">Bảo hộ lao động</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/48/cao-su">Cao su</a>
-            </div>
-          </div>
-          <div className="niengiam_div_end">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/10/cơ-khí">Cơ khí</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/41/công-nghiệp-thiết-bị">
-                Công Nghiệp - Thiết bị
-              </a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/39/điện-thiết-bị-điện">
-                Điện &amp; Thiết bị điện
-              </a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/21/điện-lạnh">Điện lạnh</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/17/đồ-gia-dụng">Đồ gia dụng</a>
-            </div>
-          </div>
-          <div className="niengiam_div_end">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/35/doanh-nghiệp-cần-dùng">
-                Doanh nghiệp cần dùng
-              </a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/14/du-lịch">Du lịch</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/13/vận-tải--giao-nhận">Vận tải - giao nhận</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/31/giấy-sản-phẩm-giấy">Giấy - sản phẩm giấy</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/24/gỗ-đồ-gỗ">Gỗ &amp; đồ gỗ</a>
-            </div>
-          </div>
-          <div className="niengiam_div_end">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/7/hóa-chất">Hóa chất</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/32/in-ấn-thiết-kế">In ấn &amp; thiết kế</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/8/may-mặc">May mặc </a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/38/máy-móc">Máy móc</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/36/môi-trường">Môi trường</a>
-            </div>
-          </div>
-          <div className="niengiam_div_end">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/34/nhựa-sản-phẩm-nhựa">Nhựa - sản phẩm nhựa</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/42/nội-thất">Nội Thất</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/1/nông-nghiệp">Nông nghiệp</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/30/ô-tô-xe-máy">Ô tô - xe máy</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/47/quà-tặng">Quà tặng</a>
-            </div>
-          </div>
-          <div className="niengiam_div_end">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/11/quảng-cáo">Quảng cáo</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/18/y-tế-thiết-bị-y-tế">Y tế - Thiết bị Y tế</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/15/thép--inox">Thép - Inox</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/6/thủ-công-mỹ-nghệ">Thủ công mỹ nghệ</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/19/thực-phẩm--đồ-uống">Thực phẩm - đồ uống</a>
-            </div>
-          </div>
-          <div className="niengiam_div_end">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/16/văn-phòng-phẩm">Văn Phòng phẩm</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/40/vật-liệu-xây-dựng">Vật liệu xây dựng</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/26/viễn-thông">Viễn thông</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/3/xây-dựng">Xây dựng</a>
-            </div>
-          </div>
-          <div className="niengiam_div">
-            <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize">
-              <span>
-                <i className="fa fa-solid fa-bars pe-1" />
-              </span>{" "}
-              <a href="./gindex/43/xuất-nhập-khẩu">Xuất nhập khẩu</a>
-            </div>
-          </div>
+          {ListCareer.map((item, index) => {
+            return (
+              <NavLink to={`/careerbussiness/${item.name}`} className="niengiam_div" key={index}>
+                <div className="rounded-2 bg-white mb-3 p-3 text-uppercase niengiam_fontsize" style={{display:'flex'}}>
+                  <span>
+                    <i className="fa fa-solid fa-bars pe-1" />
+                  </span>{" "}
+                  <div style={{paddingLeft:'10px'}}>{item.name}</div>
+                </div>
+              </NavLink>
+            );
+          })}
+
           <p className="m-0 p-0 clearfix" />
         </div>
         <div className="title_line">
@@ -399,166 +131,7 @@ export default function BodyHome(props) {
           </div>
           <p className="m-0 p-0 clearfix" />
         </div>
-        <div className="rounded-3 bg-white h-auto w-100 mt-5">
-          <p className="m-0 muclucnganhnghe">
-            <i className="fa fa-solid fa-magnifying-glass" /> MỤC LỤC NGÀNH NGHỀ
-          </p>
-          <div className="p-4 m-0 text-center mucluc_pc">
-            <span className="pe-3 fw-semibold">Tìm ngành theo</span>
-            <a id="muclucnganhnghe_link" href="./findex/A">
-              A
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/B">
-              B
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/C">
-              C
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/D">
-              D
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/E">
-              E
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/F">
-              F
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/G">
-              G
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/H">
-              H
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/I">
-              I
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/K">
-              K
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/L">
-              L
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/M">
-              M
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/N">
-              N
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/O">
-              O
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/P">
-              P
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/Q">
-              Q
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/R">
-              R
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/S">
-              S
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/T">
-              T
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/U">
-              U
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/V">
-              V
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/W">
-              W
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/X">
-              X
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/Y">
-              Y
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/Z">
-              Z
-            </a>
-          </div>
-          <div className="p-4 m-0 text-center mucluc_mobile">
-            <a id="muclucnganhnghe_link" href="./findex/A">
-              A
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/B">
-              B
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/C">
-              C
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/D">
-              D
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/E">
-              E
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/F">
-              F
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/G">
-              G
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/H">
-              H
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/I">
-              I
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/K">
-              K
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/L">
-              L
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/M">
-              M
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/N">
-              N
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/O">
-              O
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/P">
-              P
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/Q">
-              Q
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/R">
-              R
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/S">
-              S
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/T">
-              T
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/U">
-              U
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/V">
-              V
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/W">
-              W
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/X">
-              X
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/Y">
-              Y
-            </a>
-            <a id="muclucnganhnghe_link" href="./findex/Z">
-              Z
-            </a>
-          </div>
-        </div>
+
         <p className="m-0 p-0 clearfix" />
         <div className="rounded-3 p-3 pb-4 border h-auto w-100 mt-5">
           <div className="foot_signup1">Bạn là doanh nghiệp?</div>

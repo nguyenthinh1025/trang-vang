@@ -1,6 +1,5 @@
 const DataTypes = require("sequelize").DataTypes;
 const _Advertisements = require("./Advertisements");
-const _BusinessKeywords = require("./BusinessKeywords");
 const _BusinessServices = require("./BusinessServices");
 const _Businesses = require("./Businesses");
 const _Careers = require("./Careers");
@@ -22,7 +21,6 @@ const _Users = require("./Users");
 
 function initModels(sequelize) {
   const Advertisements = _Advertisements(sequelize, DataTypes);
-  const BusinessKeywords = _BusinessKeywords(sequelize, DataTypes);
   const BusinessServices = _BusinessServices(sequelize, DataTypes);
   const Businesses = _Businesses(sequelize, DataTypes);
   const Careers = _Careers(sequelize, DataTypes);
@@ -42,8 +40,6 @@ function initModels(sequelize) {
   const UserReviews = _UserReviews(sequelize, DataTypes);
   const Users = _Users(sequelize, DataTypes);
 
-  BusinessKeywords.belongsTo(Businesses, { as: "business", foreignKey: "businessId"});
-  Businesses.hasMany(BusinessKeywords, { as: "BusinessKeywords", foreignKey: "businessId"});
   BusinessServices.belongsTo(Businesses, { as: "business", foreignKey: "businessId"});
   Businesses.hasMany(BusinessServices, { as: "BusinessServices", foreignKey: "businessId"});
   Careers.belongsTo(Businesses, { as: "business", foreignKey: "businessId"});
@@ -76,8 +72,6 @@ function initModels(sequelize) {
   Images.hasMany(Certificates, { as: "Certificates", foreignKey: "imageId"});
   Products.belongsTo(Images, { as: "image", foreignKey: "imageId"});
   Images.hasMany(Products, { as: "Products", foreignKey: "imageId"});
-  BusinessKeywords.belongsTo(Keywords, { as: "keyword", foreignKey: "keywordId"});
-  Keywords.hasMany(BusinessKeywords, { as: "BusinessKeywords", foreignKey: "keywordId"});
   Categories.belongsTo(MainCategory, { as: "mainCategory", foreignKey: "mainCategoryId"});
   MainCategory.hasMany(Categories, { as: "Categories", foreignKey: "mainCategoryId"});
   UserReviews.belongsTo(Reviews, { as: "review", foreignKey: "reviewId"});
@@ -93,7 +87,6 @@ function initModels(sequelize) {
 
   return {
     Advertisements,
-    BusinessKeywords,
     BusinessServices,
     Businesses,
     Careers,

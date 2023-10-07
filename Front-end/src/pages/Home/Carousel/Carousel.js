@@ -1,35 +1,56 @@
 import React, { useEffect, useState } from "react";
-
-export default function Carousel() {
-  const [searchTerm, setSearchTerm] = useState("");
+import { ListCity } from "./ListCity";
+import {useFormik} from 'formik'
+import { SearchBusiness, SearchBusinessLocation } from "../../../redux/actions/BusinessAction";
+import { useDispatch } from "react-redux";
+import { history } from "../../../App";
+export default function Carousel(props) {
+  const dispatch = useDispatch()
+  const [location,setLocation]= useState('')
+  const [searchTerm, setSearchTerm] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
-  const handleChange = async (event) => {
-    const value = event.target.value;
-    setSearchTerm(value);
 
-    try {
-      const response = await fetch(
-        `https://nominatim.openstreetmap.org/search?city=${value}&country=Vietnam&format=json`
-      );
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
+  const formik = useFormik({
+    initialValues:{
+      name:"",
+      location:""
+    },
+    onSubmit : (value)=>{
+      if(value.location ===""){
+      //  const action = SearchBusiness(value.name);
+      //  dispatch(action)
+       history.push(`/searchbusiness/${value.name}`)
       }
-
-      const data = await response.json();
-
-      const cities = data.map((item) => item.display_name);
-      setSuggestions(cities);
-    } catch (error) {
-      console.error("Error:", error);
+      else{
+      //   const action = SearchBusinessLocation(value.name, value.location);
+      //  dispatch(action)
+       history.push(`/searchbusinesslocation/${value.name}/${value.location}`)
+      }
     }
-  };
+  })
 
-  const handleClick = (city) => {
-    setSearchTerm(city);
-    setSuggestions([]); // Đặt gợi ý thành mảng trống để ẩn danh sách gợi ý
+
+  const handleChange = (event) => {
+    const value = event.target.value;
+    if(value ===""){
+      setSuggestions([])
+      setLocation(value)
+      formik.setFieldValue('location', value)
+    }
+   else{
+    setSearchTerm(value);
+    setLocation(value)
+    const filteredCities = ListCity.filter(city =>
+      city.toLowerCase().trim().includes(value.toLowerCase().trim())
+    );
+
+    setSuggestions(filteredCities);
+    formik.setFieldValue('location', value)
+   }    
   };
+ 
   return (
     <div className="m-0 p-0">
       <div className="box_timkiem">
@@ -40,10 +61,7 @@ export default function Carousel() {
           </div>
           <h1 className="trangvangvietnam">TRANG VÀNG VIỆT NAM</h1>
           <form
-            method="GET"
-            action="./search.asp"
-            name="frmTrangvang"
-            onsubmit="return Checkinput_hay();"
+          onSubmit={formik.handleSubmit}
           >
             <div className="div_form_input">
               <div className="nut_what" style={{ position: "relative" }}>
@@ -51,11 +69,12 @@ export default function Carousel() {
                   <input
                     id="searchField"
                     type="text"
-                    name="keyword"
+                    name="name"
                     autoComplete="OFF"
                     className="nut_what_input"
                     tabIndex={1}
                     placeholder="Ngành nghề, sản phẩm dịch vụ, tên công ty,..."
+                    onChange={formik.handleChange}
                   />
                 </p>
                 <div id="xoakey" className="xoakey_what">
@@ -78,14 +97,17 @@ export default function Carousel() {
                     autoComplete="OFF"
                     className="nut_where_input"
                     tabIndex={1}
-                    placeholder="Địa chỉ, tỉnh thành phố,..."
-                    value={searchTerm}
+                    placeholder="Tỉnh, Thành phố,..."
+                    value={location}
                     onChange={handleChange}
                   />
-                  <ul>
-                    {suggestions.map((suggestion, index) => (
-                      <li key={index} onClick={() => handleClick(suggestion)}>
-                        {suggestion}
+                  <ul style={{background:'white'}}>
+                    {suggestions.map((city, index) => (
+                      <li key={index}style={{paddingLeft:'20px', fontSize:'18px', fontWeight:700, paddingBottom:'10px', cursor:'pointer'}}  onClick={()=>{
+                        setLocation(city)
+                        formik.setFieldValue('location', city)
+                      }}>
+                        {city}
                       </li>
                     ))}
                   </ul>

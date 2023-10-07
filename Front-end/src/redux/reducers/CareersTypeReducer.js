@@ -1,6 +1,7 @@
 const stateDefault = {
     arrCareersType: [],
-    arrBusinessByCareersType:{}
+    arrBusinessByCareersType:{},
+    arrAdvertisement:[]
 }
 
 
@@ -10,9 +11,10 @@ export const CareersTypeReducer = (state = stateDefault, action) => {
         case 'GET_LIST_CAREERSTYPE': {
             state.arrCareersType = action.arrCareersType;
             return { ...state }
-        };
+        }
         case 'GET_LIST_BUSINESS_CAREERSTYPE': {
             state.arrBusinessByCareersType = action.arrBusinessByCareersType;
+            state.arrAdvertisement = action.arrAdvertisement;
             return { ...state }
         }
 

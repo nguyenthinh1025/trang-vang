@@ -10,9 +10,6 @@ export const AdminTemplate = (props) => {
     setActive(index);
   };
 
-
-
-
   return (
     <Route
       {...restProps}
@@ -21,7 +18,6 @@ export const AdminTemplate = (props) => {
           <div className="body-1">
             <div className="Side-bar">
               <div className="Box-logo" style={{ display: "flex" }}>
-                {" "}
                 <img src="./images/logo_trangvang.png" />
                 <span>Trang Vàng</span>
               </div>

@@ -21,6 +21,8 @@ import ViewBusiness from "./pages/ViewBusiness/ViewBusiness";
 import YourBusiness from "./pages/YourBusiness/YourBusiness";
 import Modal from "./Test";
 import AdminAdvertising from "./pages/AdminAdvertising/AdminAdvertising";
+import ListCareerBusiness from "./pages/ListCareerBusiness/ListCareerBusiness";
+import Search from "./pages/Search/Search";
 export const history = createBrowserHistory();
 function App() {
   return (
@@ -30,16 +32,20 @@ function App() {
       <UserTemplate  path="/viewbusiness/:id" exact Component={ViewBusiness} />
       <UserTemplate  path="/signin" exact Component={Signin} />
       <UserTemplate  path="/advertising" exact Component={Advertising} /> 
+      <UserTemplate  path="/stores" exact Component={Stores} />
       <AdminTemplate  path="/admin" exact Component={Admin} /> 
       <AdminTemplate  path="/adminbusiness" exact Component={AdminBusiness} /> 
       <AdminTemplate  path="/adminadvertising" exact Component={AdminAdvertising} /> 
       <UserTemplate1  path="/getcareersbyname/:name" exact Component={ListBussiness} /> 
+      <UserTemplate1  path="/searchbusiness/:name" exact Component={Search} /> 
+      <UserTemplate1  path="/searchbusinesslocation/:name/:location" exact Component={Search} /> 
+      <UserTemplate1  path="/getcareersbyname/:name/:location" exact Component={ListBussiness} /> 
       <UserTemplate1  path="/bussiness/:id" exact Component={Bussiness} /> 
+      <UserTemplate1  path="/careerbussiness/:name" exact Component={ListCareerBusiness} /> 
       <UserTemplate1  path="/yourbussiness/:id" exact Component={YourBusiness} /> 
       <Route  path="/gioi-thieu" exact component={Gioithieu} />
       <Route  path="/signup-success" exact component={SignupSuccess} />
-      <Route  path="/contact" exact component={Contact} /> 
-      <Route  path="/stores" exact component={Stores} /> 
+      <Route  path="/contact" exact component={Contact} />  
       <Route  path="/test" exact component={Modal} /> 
       <Route  path="/" exact component={Home} />
       </Switch>

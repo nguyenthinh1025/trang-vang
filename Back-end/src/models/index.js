@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('db_trangvangvietnam_v2', 'root', '1234', {
+const sequelize = new Sequelize('db_trangvangvietnam_v3', 'root', '1234', {
     port: 3306,
     host: 'localhost',
     dialect: "mysql",/* one of 'mysql' | 'postgres' | 'sqlite' | 'mariadb' | 'mssql' | 'db2' | 'snowflake' | 'oracle' */
