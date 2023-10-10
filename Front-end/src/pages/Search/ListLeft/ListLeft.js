@@ -54,6 +54,7 @@ export default function ListLeft(props) {
       {location.map((item, index) => {
         return (
           <p
+          key={index}
             className="m-0 p-1 ps-4 pb-3 pe-3"
             style={{ cursor: "pointer" }}
             onClick={() => {

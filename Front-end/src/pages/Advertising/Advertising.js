@@ -1,10 +1,19 @@
 import { useFormik } from "formik";
 import moment from "moment";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import * as Yup from "yup";
+import { useDispatch } from "react-redux";
 import { CreateAdvertisementsAction } from "../../redux/actions/AdvertisementsAction";
 export default function Advertising(props) {
   const dispatch = useDispatch()
+
+  const validationSchema = Yup.object().shape({
+    userName: Yup.string().required("Tên người dùng không được bỏ trống"),
+    userPhone: Yup.string().required("Số điện thoại người dùng không được bỏ trống"),
+    businessName: Yup.string().required("Tên doanh nghiệp không được bỏ trống"),
+    career: Yup.string().required("Lĩnh vực kinh doanh không được bỏ trống"),
+    productService: Yup.string().required("Sản phẩm kinh doanh không được bỏ trống"),
+  })
   const formik = useFormik({
     initialValues: {
       userName: "",
@@ -14,6 +23,7 @@ export default function Advertising(props) {
       productService: "",
       createDate: moment().format('YYYY/MM/DD'),
     },
+    validationSchema:validationSchema,
     onSubmit:async (value) => {
       const action = CreateAdvertisementsAction(value, props);
       dispatch(action)
@@ -587,9 +597,9 @@ export default function Advertising(props) {
                 <div className="w-100 rounded-3 bg-white pt-0 text-center">
                   <div
                     className="rounded-4 p-0 ps-4 pe-4 yellow_bg mx-auto mt-1"
-                    style={{ display: "inline-block" }}
+                    style={{ display: "inline-block"}}
                   >
-                    <h1 className="fs-6 text-uppercase p-0 pt-2 text-center">
+                    <h1 className="fs-6 text-uppercase p-0 pt-2 text-center pb-2">
                       ĐĂNG KÝ QUẢNG CÁO TRANG VÀNG
                     </h1>
                   </div>
@@ -611,6 +621,7 @@ export default function Advertising(props) {
                             onChange={formik.handleChange}
                             required
                           />
+                           <div className="text-red-700">{formik.touched.userName && formik.errors.userName}</div>
                         </div>
                       </div>
                       <div className="row mt-3 text-start">
@@ -625,6 +636,7 @@ export default function Advertising(props) {
                             onChange={formik.handleChange}
                             required
                           />
+                           <div className="text-red-700">{formik.touched.userName && formik.errors.userName}</div>
                         </div>
                       </div>
                       <div className="row mt-3 text-start">
@@ -639,6 +651,7 @@ export default function Advertising(props) {
                             onChange={formik.handleChange}
                             required
                           />
+                           <div className="text-red-700">{formik.touched.businessName && formik.errors.businessName}</div>
                         </div>
                       </div>
                       <div className="row mt-3 text-start">
@@ -653,6 +666,7 @@ export default function Advertising(props) {
                             onChange={formik.handleChange}
                             required
                           />
+                           <div className="text-red-700">{formik.touched.career && formik.errors.career}</div>
                         </div>
                       </div>
                       <div className="row mt-3 text-start">
@@ -668,6 +682,7 @@ export default function Advertising(props) {
                             onChange={formik.handleChange}
                             required
                           />
+                           <div className="text-red-700">{formik.touched.productService && formik.errors.productService}</div>
                         </div>
                       </div>
                       <div className="row mt-3 text-start">

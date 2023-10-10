@@ -8,7 +8,7 @@ routeBussiness.get('/getlistbussiness', getListBussiness)
 routeBussiness.post('/createbussiness', createBusiness)
 routeBussiness.get('/getbussinessbyid/:id', getBussinessById)
 routeBussiness.put('/updatebusiness/:id', updateBusiness)
-routeBussiness.put('/changeactivebusiness/:id', updateStatusActiveBussiness)
+routeBussiness.post('/changeactivebusiness', updateStatusActiveBussiness)
 routeBussiness.get('/getbusinessname/:name/:location?', searchBusinessByName)
 // routeBussiness.post('/createimagebusiness', createImageBussiness)
 

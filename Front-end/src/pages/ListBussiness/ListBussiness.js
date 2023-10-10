@@ -14,6 +14,7 @@ export default function ListBussiness(props) {
   );
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     if(location){
       const action = GetListBusinessByCareerLocationTypeAction(name,location);
       dispatch(action);

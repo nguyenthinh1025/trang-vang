@@ -12,6 +12,7 @@ export default function ListCareerBusiness(props) {
 const {arrCareersName,arrCareersAdvertisement} = useSelector(root =>root.CareersReducer)
 console.log(arrCareersAdvertisement)
   useEffect(() => {
+    window.scrollTo(0, 0);
     const action = GetListCareersNameAction(name);
     dispatch(action);
   }, [name]);

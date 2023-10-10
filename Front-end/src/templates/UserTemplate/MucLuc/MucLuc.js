@@ -21,7 +21,7 @@ export default function MucLuc() {
         </div>
         <div className="foot_signup3">
           <button className="border-0 rounded-2 p-1 ps-3 pe-3 buttom_bg_footer_signup text-white" style={{background:'none'}}>
-            <NavLink to="/signup" >
+            <NavLink to="/signup" style={{background:'none'}} >
               Đăng ký miễn phí !
             </NavLink>
           </button>

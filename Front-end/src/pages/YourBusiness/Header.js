@@ -28,10 +28,10 @@ const dispatch = useDispatch()
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
             console.log(`Download URL: ${url}`);
             const value = {
-              id:businessByID.businessId,
+              id:businessByID?.businessId,
               avatar: url,
             };
-            const action = UpdateAvatarBusinessAction( value, businessByID.businessId);
+            const action = UpdateAvatarBusinessAction( value, businessByID?.businessId);
             dispatch(action);
           });
         }
@@ -68,7 +68,7 @@ const dispatch = useDispatch()
               <div className="border border-dark-subtle rounded-2 p-2 text-center mb-2 logo_listing logo-bisuness">
                 <img
                   style={{ width: "100%" }}
-                  alt={`  ${businessByID.businessNameEng} - ${businessByID.businessName}`}
+                  alt={`  ${businessByID?.businessNameEng} - ${businessByID?.businessName}`}
                   src={
                     businessByID &&
                     businessByID.Images &&
@@ -84,25 +84,25 @@ const dispatch = useDispatch()
                               className="upload-box"
                               placeholder="Tải ảnh lên"
                               onChange={(e) => {
-                                uploadFile(e, businessByID.businessId);
+                                uploadFile(e, businessByID?.businessId);
                               }}
                             />
                           </div>
               </div>
               <div className="logo_lisitng_address">
                 <div className="pb-2 pt-0 ps-3 pe-4 m-0">
-                  {businessByID.address}
+                  {businessByID?.address}
                 </div>
                 <div className="pb-2 pt-0 ps-3 pe-4 m-0 fs-5">
                   <i className="fa fa-solid fa-phone-volume text-black-50 pe-1" />
-                  <a href={`tel:{${businessByID.phone}`}>
-                    {businessByID.phone}
+                  <a href={`tel:{${businessByID?.phone}`}>
+                    {businessByID?.phone}
                   </a>
                 </div>
                 <div className="pb-2 pt-0 ps-3 pe-0 m-0 email_link">
                   <i className="fa fa-regular fa-envelope pe-1 text-black-50" />{" "}
-                  <a href={`mailto:${businessByID.email}`}>
-                    {businessByID.email}
+                  <a href={`mailto:${businessByID?.email}`}>
+                    {businessByID?.email}
                   </a>
                 </div>
                 <div className="pb-2 pt-0 ps-3 pe-0 m-0 web_link">
@@ -111,9 +111,9 @@ const dispatch = useDispatch()
                     className="fs-5 web"
                     rel="nofollow"
                     target="_blank"
-                    href={`${businessByID.website}`}
+                    href={`${businessByID?.website}`}
                   >
-                    {businessByID.website}
+                    {businessByID?.website}
                   </a>
                 </div>
               </div>

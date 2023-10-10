@@ -9,7 +9,7 @@ export default function ListRight(props) {
   return (
     <div className="div_banner_qc_pc">
       {arrAdvertisement
-        .filter((item) => item.status === "active")
+        ?.filter((item) => item.status === "active")
         .map((item, index) => {
           return (
             <Fragment>

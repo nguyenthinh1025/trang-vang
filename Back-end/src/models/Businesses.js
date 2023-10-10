@@ -90,6 +90,18 @@ class Businesses extends Sequelize.Model {
     avatar: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    money: {
+      type: DataTypes.INTEGER,
+      allowNull: true
+    },
+    endDate: {
+      type: DataTypes.DATE,
+      allowNull: true
+    },
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: true
     }
   }, {
     sequelize,

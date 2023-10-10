@@ -1,21 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { classNames } from "primereact/utils";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Toast } from "primereact/toast";
 import { Button } from "primereact/button";
-import { FileUpload } from "primereact/fileupload";
-import { Rating } from "primereact/rating";
 import { Toolbar } from "primereact/toolbar";
 import { InputTextarea } from "primereact/inputtextarea";
-import { RadioButton } from "primereact/radiobutton";
-import { InputNumber } from "primereact/inputnumber";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import { Tag } from "primereact/tag";
 import { GetListBusinessAction, UpdateAciveBusinessAction } from "../../redux/actions/BusinessAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Dropdown } from "primereact/dropdown";
+import { addHours } from "date-fns";
 import moment from "moment";
 
 export default function AdminBusiness() {
@@ -84,13 +79,16 @@ export default function AdminBusiness() {
     setDeleteProductsDialog(false);
   };
 
+  const  [money,setMoney] = useState(0)
+  const  [startDate,setStartDate] = useState("")
+  const  [endDate,setEndDate] = useState("")
   const saveProduct = () => {
     setSubmitted(true);
 
     let _products = [...products];
-    let _product = { ...product };
+    let _product = { ...product , money:Number(money), startDate: addHours(new Date(startDate), 7), endDate: addHours(new Date(endDate), 7)};
     console.log(_product)
-     const action = UpdateAciveBusinessAction(_product.businessId);
+     const action = UpdateAciveBusinessAction(_product);
      dispatch(action)
         toast.current.show({
           severity: "success",
@@ -100,9 +98,9 @@ export default function AdminBusiness() {
         });
 
 
-      setProducts(_products);
-      setProductDialog(false);
-      setProduct(emptyProduct);
+      // setProducts(_products);
+      // setProductDialog(false);
+      // setProduct(emptyProduct);
     
   };
 
@@ -304,12 +302,12 @@ export default function AdminBusiness() {
             globalFilter={globalFilter}
             header={header}
           >
-            <Column
+            {/* <Column
               field="businessId"
               header="Mã"
               sortable
               style={{ minWidth: "12rem" }}
-            ></Column>
+            ></Column> */}
             <Column
               field="businessName"
               header="Tên doanh nghiệp"
@@ -344,8 +342,9 @@ export default function AdminBusiness() {
               style={{ minWidth: "12rem" }}
             ></Column>
             <Column
-              field="formattedCreateDate"
-              header="Thời gian tạo"
+              field={money => (money.money).toLocaleString() + " vnđ"}
+              header="Số tiền"
+              sortable
               style={{ minWidth: "12rem" }}
             ></Column>
             <Column
@@ -491,13 +490,7 @@ export default function AdminBusiness() {
                 onChange={(e) => onInputChange(e, "website")}
                 required
                 autoFocus
-                // className={classNames({
-                //   "p-invalid": submitted && !product.name,
-                // })}
               />
-              {/* {submitted && !product.name && (
-                <small className="p-error">Name is required.</small>
-              )} */}
             </div>
           </div>
           <div class="grid grid-cols-2 gap-2">
@@ -538,7 +531,7 @@ export default function AdminBusiness() {
               )} */}
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-2">
+          <div class="grid grid-cols-2 gap-2" style={{paddingBottom:'20px'}}>
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
               Số điện thoại
@@ -558,6 +551,52 @@ export default function AdminBusiness() {
               )} */}
             </div>
            
+          </div>
+          <hr />
+          <div style={{textAlign:'center', paddingBottom:'20px', fontWeight:700, fontSize:'20px'}}>Cần cập nhật</div>
+          <div class="grid grid-cols-2 gap-2" style={{paddingBottom:'20px'}}>
+            <div className="field mt-3">
+              <label htmlFor="name" className="font-bold">
+              Số tiền
+              </label>
+              <InputText
+              type="number"
+                id="name"
+                // value={1000}
+                onChange={(e) => setMoney(e.target.value)}
+                required
+                // autoFocus
+              />
+            </div>
+           
+          </div>
+          <div class="grid grid-cols-2 gap-2" style={{paddingBottom:'20px'}}>
+            <div className="field mt-3">
+              <label htmlFor="name" className="font-bold">
+              Ngày bắt đầu
+              </label>
+              <InputText
+              type="datetime-local"
+                id="name"
+                // value={product.startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                required
+                autoFocus
+              />
+            </div>
+            <div className="field mt-3">
+              <label htmlFor="name" className="font-bold">
+              Ngày kết thúc
+              </label>
+              <InputText
+              type="datetime-local"
+                id="name"
+                // value={product.endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                required
+                autoFocus
+              />
+            </div>
           </div>
         </Dialog>
 

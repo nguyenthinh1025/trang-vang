@@ -1,12 +1,52 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useFormik } from "formik";
-import moment from 'moment';
-import { useSelector, useDispatch } from 'react-redux'
+import moment from "moment";
+import { useSelector, useDispatch } from "react-redux";
 import { CreateBusinessAction } from "../../redux/actions/BusinessAction";
+import * as Yup from "yup";
 
- export default function Signup(props) {
-  const dispatch = useDispatch()
+export default function Signup(props) {
+  const dispatch = useDispatch();
+  const { errorEmail } = useSelector((root) => root.BusinessReducer);
+  const validationSchema = Yup.object().shape({
+    businessName: Yup.string().required("Tên doanh nghiệp không được bỏ trống"),
+    businessNameEng: Yup.string().required(
+      "Tên doanh nghiệp tiếng Anh không được bỏ trống"
+    ),
+    operator: Yup.string().required("Tên người điều hành không được bỏ trống"),
+    address: Yup.string().required("Địa chỉ không được bỏ trống"),
+    phone: Yup.string().required("Số điện thoại không được bỏ trống"),
+    email: Yup.string()
+      .required("Địa chỉ email không được bỏ trống")
+      .email("Địa chỉ email không hợp lệ"),
+    website: Yup.string().required("Địa chỉ website không được bỏ trống"),
+    description: Yup.string().required("Mô tả không được bỏ trống"),
+    establishedYear: Yup.number().required("Năm thành lập không được bỏ trống"),
+    tax: Yup.string().required("Mã số thuế không được bỏ trống"),
+    // fax: Yup.string().required("Số fax không được bỏ trống"),
+    phoneOperator: Yup.string().required(
+      "Số điện thoại của người điều hành không được bỏ trống"
+    ),
+    emailOperator: Yup.string()
+      .required("Email của người điều hành không được bỏ trống")
+      .email("Địa chỉ email không hợp lệ"),
+    province: Yup.string().required("Tỉnh/thành phố không được bỏ trống"),
+    fullName: Yup.string().required("Họ và tên không được bỏ trống"),
+    emailuser: Yup.string()
+      .required("Email người dùng không được bỏ trống")
+      .email("Địa chỉ email không hợp lệ"),
+    phoneuser: Yup.string().required(
+      "Số điện thoại người dùng không được bỏ trống"
+    ),
+  
+    position: Yup.string().required("Vị trí không được bỏ trống"),
+  });
+
+  const [car, setCar] = useState("");
+  const [ser, setSer] = useState("");
+  const [cate, setCate] = useState("");
+  const [loca, setLoca] = useState("");
   const formik = useFormik({
     initialValues: {
       businessName: "",
@@ -19,14 +59,14 @@ import { CreateBusinessAction } from "../../redux/actions/BusinessAction";
       description: "",
       rating: 0,
       numberOfRatings: 0,
-      establishedYear: 2000,
+      establishedYear: 0,
       tax: "",
       employees: "",
       fax: "",
       phoneOperator: "",
       emailOperator: "",
       province: "",
-      createDate: moment().format('YYYY-MM-DD hh:mm A'),
+      createDate: moment().format("YYYY-MM-DD hh:mm A"),
       images: [],
       careers: [],
       services: [],
@@ -37,16 +77,15 @@ import { CreateBusinessAction } from "../../redux/actions/BusinessAction";
       emailuser: "",
       phoneuser: "",
       zalouser: "",
-      position:'',
+      position: "",
     },
+    validationSchema: validationSchema,
     onSubmit: async (value) => {
-    const action = CreateBusinessAction(value, props);
-    dispatch(action)
-     
+      console.log(value);    
+        const action = CreateBusinessAction(value, props);
+        dispatch(action);
     },
-    
   });
-
 
   //careers
   const [careers, setCareers] = useState([]);
@@ -54,7 +93,9 @@ import { CreateBusinessAction } from "../../redux/actions/BusinessAction";
     const updatedCareers = [...careers];
     updatedCareers[index] = value;
     setCareers(updatedCareers);
-    const filteredCareers = updatedCareers.filter((career) => career !== undefined);
+    const filteredCareers = updatedCareers.filter(
+      (career) => career !== undefined
+    );
     const arrCareer = filteredCareers.map((item, index) => {
       return {
         careerName: item,
@@ -80,141 +121,152 @@ import { CreateBusinessAction } from "../../redux/actions/BusinessAction";
     formik.setFieldValue("services", arrCareer);
   };
 
-
-
-
   //category
   const [formValues, setFormValues] = useState({
     category: [],
-    categoryOther: ''
+    categoryOther: "",
   });
 
- const handleInputChangeCheckbox = (e) => {
+  const handleInputChangeCheckbox = (e) => {
     const { name, value, type, checked } = e.target;
 
-    if (type === 'checkbox') {
-      if (value === 'Other') {
-        setFormValues(prevState => ({
+    if (type === "checkbox") {
+      if (value === "Other") {
+        setFormValues((prevState) => ({
           ...prevState,
-          category: checked ? [...prevState.category, value] : prevState.category.filter(item => item !== value),
-          categoryOther: checked ? prevState.categoryOther : ''
+          category: checked
+            ? [...prevState.category, value]
+            : prevState.category.filter((item) => item !== value),
+          categoryOther: checked ? prevState.categoryOther : "",
         }));
       } else {
-        setFormValues(prevState => ({
+        setFormValues((prevState) => ({
           ...prevState,
-          category: checked ? [...prevState.category, value] : prevState.category.filter(item => item !== value)
+          category: checked
+            ? [...prevState.category, value]
+            : prevState.category.filter((item) => item !== value),
         }));
       }
-    } else if (name === 'categoryOther') {
-      setFormValues(prevState => ({
+    } else if (name === "categoryOther") {
+      setFormValues((prevState) => ({
         ...prevState,
         categoryOther: value,
-  
       }));
     }
     handleSubmit();
   };
 
-  const handleSubmit = () => {  
-      const newCategory1 = [
-        ...formValues.category.map(categoryName => ({ categoryName })),
-        { categoryName: formValues.categoryOther }
-      ];
-      const cate = newCategory1.filter(category => category.categoryName !== "");
-      formik.setFieldValue('category', cate)
+  const handleSubmit = () => {
+    const newCategory1 = [
+      ...formValues.category.map((categoryName) => ({ categoryName })),
+      { categoryName: formValues.categoryOther },
+    ];
+    const cate = newCategory1.filter(
+      (category) => category.categoryName !== ""
+    );
+    formik.setFieldValue("category", cate);
   };
 
- //locations
- const [formValues1, setFormValues1] = useState({
-  location: [],
-  locationOther: ''
-});
+  //locations
+  const [formValues1, setFormValues1] = useState({
+    location: [],
+    locationOther: "",
+  });
 
+  const handleInputChangeCheckbox1 = (e) => {
+    const { name, value, type, checked } = e.target;
 
-const handleInputChangeCheckbox1 = (e) => {
-  const { name, value, type, checked } = e.target;
-
-  if (type === 'checkbox') {
-    if (value === 'Other') {
-      setFormValues1(prevState => ({
+    if (type === "checkbox") {
+      if (value === "Other") {
+        setFormValues1((prevState) => ({
+          ...prevState,
+          location: checked
+            ? [...prevState.location, value]
+            : prevState.location.filter((item) => item !== value),
+          locationOther: checked ? prevState.locationOther : "",
+        }));
+      } else {
+        setFormValues1((prevState) => ({
+          ...prevState,
+          location: checked
+            ? [...prevState.location, value]
+            : prevState.location.filter((item) => item !== value),
+        }));
+      }
+    } else if (name === "locationOther") {
+      setFormValues1((prevState) => ({
         ...prevState,
-        location: checked ? [...prevState.location, value] : prevState.location.filter(item => item !== value),
-        locationOther: checked ? prevState.locationOther : ''
-      }));
-    } else {
-      setFormValues1(prevState => ({
-        ...prevState,
-        location: checked ? [...prevState.location, value] : prevState.location.filter(item => item !== value)
-      }));
-    }
-  } else if (name === 'locationOther') {
-    setFormValues1(prevState => ({
-      ...prevState,
-      locationOther: value,
-
-    }));
-  }
-  handleSubmit1();
-};
-const handleSubmit1 = () => {  
-  const newLocation1 = [
-    ...formValues1.location.map(locationName => ({ locationName })),
-    { locationName: formValues1.locationOther }
-  ];
-  const loca = newLocation1.filter(location => location.locationName !== "");
-  console.log(loca);
-  formik.setFieldValue('locations', loca)
-};
-
-
-//certificates
- const [formValues2, setFormValues2] = useState({
-  certificates: [],
-  certificatesOther: ''
-});
-
-
-const handleInputChangeCheckbox2 = (e) => {
-  const { name, value, type, checked } = e.target;
-
-  if (type === 'checkbox') {
-    if (value === 'Other') {
-      setFormValues2(prevState => ({
-        ...prevState,
-        certificates: checked ? [...prevState.certificates, value] : prevState.certificates.filter(item => item !== value),
-        certificatesOther: checked ? prevState.certificatesOther : ''
-      }));
-    } else {
-      setFormValues2(prevState => ({
-        ...prevState,
-        certificates: checked ? [...prevState.certificates, value] : prevState.certificates.filter(item => item !== value)
+        locationOther: value,
       }));
     }
-  } else if (name === 'certificatesOther') {
-    setFormValues2(prevState => ({
-      ...prevState,
-      certificatesOther: value,
-
-    }));
-  }
-  handleSubmit2();
-};
-
-const handleSubmit2 = () => {  
-    const certificates = [
-      ...formValues2.certificates.map(certificateName => ({ certificateName })),
-      { certificateName: formValues2.certificatesOther }
+    handleSubmit1();
+  };
+  const handleSubmit1 = () => {
+    const newLocation1 = [
+      ...formValues1.location.map((locationName) => ({ locationName })),
+      { locationName: formValues1.locationOther },
     ];
-    const loca = certificates.filter(certificates => certificates.certificateName !== "");
+    const loca = newLocation1.filter(
+      (location) => location.locationName !== ""
+    );
     console.log(loca);
-    formik.setFieldValue('certificates', loca)
-};
-  
-useEffect(() => {
-  handleSubmit();
-  handleSubmit1();
-  handleSubmit2();
-}, [formValues,formValues1,formValues2]); 
+    formik.setFieldValue("locations", loca);
+  };
+
+  //certificates
+  const [formValues2, setFormValues2] = useState({
+    certificates: [],
+    certificatesOther: "",
+  });
+
+  const handleInputChangeCheckbox2 = (e) => {
+    const { name, value, type, checked } = e.target;
+
+    if (type === "checkbox") {
+      if (value === "Other") {
+        setFormValues2((prevState) => ({
+          ...prevState,
+          certificates: checked
+            ? [...prevState.certificates, value]
+            : prevState.certificates.filter((item) => item !== value),
+          certificatesOther: checked ? prevState.certificatesOther : "",
+        }));
+      } else {
+        setFormValues2((prevState) => ({
+          ...prevState,
+          certificates: checked
+            ? [...prevState.certificates, value]
+            : prevState.certificates.filter((item) => item !== value),
+        }));
+      }
+    } else if (name === "certificatesOther") {
+      setFormValues2((prevState) => ({
+        ...prevState,
+        certificatesOther: value,
+      }));
+    }
+    handleSubmit2();
+  };
+
+  const handleSubmit2 = () => {
+    const certificates = [
+      ...formValues2.certificates.map((certificateName) => ({
+        certificateName,
+      })),
+      { certificateName: formValues2.certificatesOther },
+    ];
+    const loca = certificates.filter(
+      (certificates) => certificates.certificateName !== ""
+    );
+    console.log(loca);
+    formik.setFieldValue("certificates", loca);
+  };
+
+  useEffect(() => {
+    handleSubmit();
+    handleSubmit1();
+    handleSubmit2();
+  }, [formValues, formValues1, formValues2]);
   return (
     <div className="m-auto h-auto">
       <div className="container pt-5 pb-5">
@@ -256,7 +308,9 @@ useEffect(() => {
                     type="text"
                     name="businessName"
                     onChange={formik.handleChange}
+                    value={formik.values.businessName}
                   />
+                 <div className="text-red-700">{formik.touched.businessName && formik.errors.businessName}</div>
                 </div>
               </div>
               <div className="row mt-4">
@@ -270,6 +324,9 @@ useEffect(() => {
                     name="businessNameEng"
                     onChange={formik.handleChange}
                   />
+                  <div className="text-red-700">
+                    { formik.touched.businessNameEng && formik.errors.businessNameEng}
+                  </div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -283,6 +340,7 @@ useEffect(() => {
                     name="address"
                     onChange={formik.handleChange}
                   />
+                  <div className="text-red-700">{ formik.touched.address && formik.errors.address}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -296,6 +354,7 @@ useEffect(() => {
                     name="province"
                     onChange={formik.handleChange}
                   />
+                  <div className="text-red-700">{ formik.touched.province && formik.errors.province}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -309,6 +368,7 @@ useEffect(() => {
                     name="phone"
                     onChange={formik.handleChange}
                   />
+                  <div className="text-red-700">{ formik.touched.phone && formik.errors.phone}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -322,6 +382,7 @@ useEffect(() => {
                     name="fax"
                     onChange={formik.handleChange}
                   />
+                  <div className="text-red-700">{ formik.touched.fax && formik.errors.fax}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -335,6 +396,7 @@ useEffect(() => {
                     name="website"
                     onChange={formik.handleChange}
                   />
+                  <div className="text-red-700">{ formik.touched.website && formik.errors.website}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -348,6 +410,7 @@ useEffect(() => {
                     name="email"
                     onChange={formik.handleChange}
                   />
+                  <div className="text-red-700">{ formik.touched.email && formik.errors.email}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -361,6 +424,7 @@ useEffect(() => {
                     name="operator"
                     onChange={formik.handleChange}
                   />
+                  <div className="text-red-700">{  formik.touched.operator && formik.errors.operator}</div>
                 </div>
                 <div className="col-sm-1 pe-2 pt-1 title_text_align">
                   Di động
@@ -372,6 +436,9 @@ useEffect(() => {
                     name="phoneOperator"
                     onChange={formik.handleChange}
                   />
+                  <div className="text-red-700">
+                    { formik.touched.phoneOperator && formik.errors.phoneOperator}
+                  </div>
                 </div>
                 <div className="col-sm-1 pe-2 pt-1 title_text_align">Email</div>
                 <div className="col-sm-2">
@@ -381,6 +448,7 @@ useEffect(() => {
                     name="emailOperator"
                     onChange={formik.handleChange}
                   />
+                  <div className="text-red-700">{ formik.touched.emailOperator && formik.errors.email}</div>
                 </div>
               </div>
               <div className="rounded-4 bg-info bg-opacity-25 p-1 ps-4 mt-4">
@@ -396,6 +464,7 @@ useEffect(() => {
                     type="text"
                     value={careers[0] || ""}
                     onChange={(e) => handleInputChange(0, e.target.value)}
+                    required
                   />
                 </div>
               </div>
@@ -418,7 +487,7 @@ useEffect(() => {
                 </div>
                 <div className="col-sm-4">
                   <input
-                    className="p-1 ps-2 pe-2 w-100 class-input" 
+                    className="p-1 ps-2 pe-2 w-100 class-input"
                     type="text"
                     value={careers[2] || ""}
                     onChange={(e) => handleInputChange(2, e.target.value)}
@@ -438,6 +507,7 @@ useEffect(() => {
                   />
                 </div>
               </div>
+              <div className="text-red-700">{car}</div>
               <div className="rounded-4 bg-info bg-opacity-25 p-1 ps-4 mt-4">
                 Phần 3: SẢN PHẨM DỊCH VỤ
               </div>
@@ -453,6 +523,7 @@ useEffect(() => {
                     onChange={(e) =>
                       handleInputChangeServices(0, e.target.value)
                     }
+                    required
                   />
                 </div>
                 <div className="col-sm-2 mt-2">
@@ -513,6 +584,7 @@ useEffect(() => {
                     onChange={formik.handleChange}
                     defaultValue={""}
                   />
+                   <div className="text-red-700">{ formik.touched.description && formik.errors.description}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -556,7 +628,6 @@ useEffect(() => {
                   />{" "}
                   Nhập khẩu và phân phối
                   <br />
-                 
                   Loại hình khác...
                   <br />
                   <input
@@ -641,12 +712,13 @@ useEffect(() => {
                   Năm thành lập
                 </div>
                 <div className="col-sm-9">
-                  <select className="mt-1 class-input" size={1}  name="establishedYear" 
-                      onChange={formik.handleChange}>
-                    <option
-                      value="" >
-                      --- Chọn năm thành lập ---
-                    </option>
+                  <select
+                    className="mt-1 class-input"
+                    size={1}
+                    name="establishedYear"
+                    onChange={formik.handleChange}
+                  >
+                    <option value="">--- Chọn năm thành lập ---</option>
                     <option>2025</option>
                     <option>2024</option>
                     <option>2023</option>
@@ -761,6 +833,7 @@ useEffect(() => {
                     <option>1914</option>
                     <option>1913</option>
                   </select>
+                  <div className="text-red-700">{ formik.touched.establishedYear && formik.errors.establishedYear}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -774,6 +847,7 @@ useEffect(() => {
                     name="tax"
                     onChange={formik.handleChange}
                   />
+                   <div className="text-red-700">{ formik.touched.tax && formik.errors.tax}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -932,6 +1006,7 @@ useEffect(() => {
                     name="fullName"
                     onChange={formik.handleChange}
                   />
+                   <div className="text-red-700">{ formik.touched.fullName && formik.errors.fullName}</div>
                 </div>
               </div>
               <div className="row mt-4">
@@ -945,6 +1020,7 @@ useEffect(() => {
                     name="position"
                     onChange={formik.handleChange}
                   />
+                   <div className="text-red-700">{ formik.touched.position && formik.errors.position}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -958,6 +1034,7 @@ useEffect(() => {
                     name="phoneuser"
                     onChange={formik.handleChange}
                   />
+                   <div className="text-red-700">{ formik.touched.phoneuser && formik.errors.phoneuser}</div>
                 </div>
               </div>
               <div className="row mt-3">
@@ -971,6 +1048,7 @@ useEffect(() => {
                     name="zalouser"
                     onChange={formik.handleChange}
                   />
+                
                 </div>
               </div>
               <div className="row mt-3 ">
@@ -980,10 +1058,12 @@ useEffect(() => {
                 <div className="col-sm-4">
                   <input
                     className="p-1 ps-2 pe-2 w-100 class-input"
-                    type="emaillienhe"
+                    type="email"
                     name="emailuser"
                     onChange={formik.handleChange}
                   />
+                   <div className="text-red-700">{ formik.touched.emailuser && formik.errors.emailuser}</div>
+                  <div className="text-red-600">{errorEmail}</div>
                 </div>
               </div>
               <div className="row mt-3">

@@ -8,8 +8,18 @@ export const CreateBusinessAction = (value, props) => {
       let result = await http.post("/bussiness/createbussiness", value);
 
       props.history.push("/signup-success");
+      const action = {
+        type: "CHECK_EMAIL",
+        errorEmail:"",
+      };
+      dispatch(action)
     } catch (error) {
-      console.log(error);
+      console.log(error.response?.data.message);
+      const action = {
+        type: "CHECK_EMAIL",
+        errorEmail: error.response?.data.message,
+      };
+      dispatch(action)
     }
   };
 };
@@ -72,10 +82,10 @@ export const GetListBusinessAction = (id) => {
   };
 };
 
-export const UpdateAciveBusinessAction = (id) => {
+export const UpdateAciveBusinessAction = (value) => {
   return async (dispatch) => {
     try {
-      let result = await http.put(`/bussiness/changeactivebusiness/${id}`);
+      let result = await http.post(`/bussiness/changeactivebusiness`, value);
 
       const action = GetListBusinessAction();
       dispatch(action);
@@ -137,14 +147,16 @@ export const SearchBusiness = (name) => {
       // props.history.push(`/searchbusiness/${name}`)
       dispatch(action);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 };
 export const SearchBusinessLocation = (name, location) => {
   return async (dispatch) => {
     try {
-      let result = await http.get(`/bussiness/getbusinessname/${name}/${location}`);
+      let result = await http.get(
+        `/bussiness/getbusinessname/${name}/${location}`
+      );
       const action = {
         type: "SEARCH_BUSINESS",
         searchBusinessName: result.data.data.business,
@@ -155,7 +167,7 @@ export const SearchBusinessLocation = (name, location) => {
       dispatch(action);
       // props.history.push(`/searchbusiness/${name}/${location}`)
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 };

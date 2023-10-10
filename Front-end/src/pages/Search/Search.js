@@ -9,15 +9,13 @@ import ListRight from "./ListRight/ListRight";
 import { SearchBusiness, SearchBusinessLocation } from "../../redux/actions/BusinessAction";
 export default function Search(props) {
   const { name ,location} = props.match.params;
+  const currentUrl = window.location.href;
   const dispatch = useDispatch();
   const { searchBusinessName,searchBusinessCareer,searchBusinessProduct,searchBusinessAdvertisement } = useSelector(
     (root) => root.BusinessReducer
   );
-  console.log(searchBusinessName)
-  console.log(searchBusinessCareer)
-  console.log(searchBusinessProduct)
-  console.log(searchBusinessAdvertisement)
   useEffect(() => {
+    window.scrollTo(0, 0);
     if(location){
       const action = SearchBusinessLocation(name,location);
       dispatch(action);
@@ -25,7 +23,7 @@ export default function Search(props) {
       const action = SearchBusiness(name);
     dispatch(action);
     }
-  }, [location]);
+  }, [currentUrl]);
   const countActiveBusinesses = (businessList) => {
     return businessList?.filter(item => item.status === "active").length || 0;
   };
@@ -59,7 +57,7 @@ export default function Search(props) {
          
           <div className="m-auto h-auto mt-4">
              <ListLeft  name ={name} arrBusinessByCareersType= {totalActiveBusinesses}/>
-           {/* <ListCenter  name ={name} arrBusinessByCareersType={arrBusinessByCareersType}/>*/}
+           <ListCenter  name ={name} searchBusinessName={searchBusinessName} searchBusinessCareer ={searchBusinessCareer} searchBusinessProduct = {searchBusinessProduct}  />
            
            <ListRight arrAdvertisement = {searchBusinessAdvertisement} /> 
             <p className="m-0 clearfix" />

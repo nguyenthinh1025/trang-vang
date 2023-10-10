@@ -17,8 +17,8 @@ export default function Contact(props) {
                         style={{ width: "100%", maxHeight: 46 }}
                         src={
                           businessByID &&
-                          businessByID.Images &&
-                          businessByID?.Images[0]?.imageUrl
+                          businessByID.avatar &&
+                          businessByID?.avatar
                         }
                       />
                     </div>

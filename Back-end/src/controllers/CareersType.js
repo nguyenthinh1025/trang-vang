@@ -28,121 +28,78 @@ const searchCareersByName = async (req, res) => {
   const { name, location } = req.params;
 
   const decodedName = decodeURIComponent(name);
+
   try {
-    if (location) {
-      const result = await models.Careers.findAll({
-        model: models.Careers,
-        as: "Careers",
-        where: {
-          careerName: {
-            [Op.like]: `%${decodedName}%`,
-          },
+    const result = await models.Careers.findAll({
+      model: models.Careers,
+      as: "Careers",
+      where: {
+        careerName: {
+          [Op.like]: `%${decodedName}%`,
         },
-        include: [
-          "business",
-          {
-            model: models.Businesses,
-            as: "business",
-            include: [
-              {
-                model: models.Careers,
-                as: "Careers",
-                where: {
-                  careerName: {
-                    [Op.like]: `%${name}%`,
-                  },
+      },
+      include: [
+        {
+          model: models.Businesses,
+          as: "business",
+          include: [
+            {
+              model: models.Careers,
+              as: "Careers",
+              where: {
+                careerName: {
+                  [Op.like]: `%${name}%`,
                 },
-              },
-              "Locations",
-              "Users",
-              "Reviews",
-              "Images",
-              "Certificates",
-              {
-                model: models.Certificates,
-                as: "Certificates",
-                include: [{ model: models.Images, as: "image" }],
-              },
-            ],
-            where: {
-              address: {
-                [Op.like]: `%${location}%`,
               },
             },
-          },
-        ],
-      });
-
-      const businesses = result.map((category) => category.business);
-      const advertisement = await models.Advertisements.findAll({      
-        where: {
-          career: {
-            [Op.like]: `%${name}%`,
-          },
-        },
-        include: "image",
-        order: [["stt", "ASC"]],
-      });
-      succesCode(
-        res,
-        { name, businesses, advertisement },
-        `Lấy Danh Sách Công Ty Theo Ngành Nghề Thành Công!!!`
-      );
-    } else {
-      const result = await models.Careers.findAll({
-        model: models.Careers,
-        as: "Careers",
-        where: {
-          careerName: {
-            [Op.like]: `%${decodedName}%`,
-          },
-        },
-        include: [
-          "business",
-          {
-            model: models.Businesses,
-            as: "business",
-            include: [
-              {
-                model: models.Careers,
-                as: "Careers",
-                where: {
-                  careerName: {
-                    [Op.like]: `%${name}%`,
-                  },
+            "Locations",
+            "Users",
+            "Reviews",
+            "Images",
+            "Certificates",
+            {
+              model: models.Certificates,
+              as: "Certificates",
+              include: [{ model: models.Images, as: "image" }],
+            },
+          ],
+          where: location
+            ? {
+                address: {
+                  [Op.like]: `%${location}%`,
                 },
-              },
-              "Locations",
-              "Users",
-              "Reviews",
-              "Images",
-              "Certificates",
-              {
-                model: models.Certificates,
-                as: "Certificates",
-                include: [{ model: models.Images, as: "image" }],
-              },
-            ],
-          },
-        ],
-      });
-
-      const businesses = result.map((category) => category.business);
-      const advertisement = await models.Advertisements.findAll({      
+              }
+            : {},
+        },
+      ],
+    });
+    const currentDate = new Date(); 
+    currentDate.setHours(currentDate.getHours() + 7);
+    const businesses = result
+      .map((category) => category.business)
+      .filter((business) => {
+        const endDate = new Date(business.endDate); 
+        return endDate >= currentDate;
+      })
+     .sort((a, b) => b.money - a.money);
+      const advertisement = await models.Advertisements.findAll({
         where: {
           career: {
             [Op.like]: `%${name}%`,
           },
+          endDate: {
+            [Op.gte]: currentDate, // Chỉ lấy những quảng cáo có endDate lớn hơn hoặc bằng ngày hiện tại
+          },
         },
         include: "image",
-        order: [["stt", "ASC"]],
+        order: [["money", "ASC"]],
       });
-      succesCode(
-        res,
-        { name, businesses, advertisement },
-        `Lấy Danh Sách Công Ty Theo Ngành Nghề Thành Công!!!`
-      );
-    }
+
+    succesCode(
+      res,
+      { name, businesses, advertisement },
+      `Lấy Danh Sách Công Ty Theo Ngành Nghề Thành Công!!!`
+    );
   } catch (error) {
     errorCode(res, "Lỗi Backend");
   }

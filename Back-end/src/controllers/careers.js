@@ -104,16 +104,27 @@ const searchCareersBusiness = async (req, res) => {
       ],
     });
 
-    const businesses = result.map((category) => category.business);
-    const advertisement = await models.Advertisements.findAll({      
-      where: {
-        career: {
-          [Op.like]: `%${decodedName}%`,
+    const currentDate = new Date(); 
+    currentDate.setHours(currentDate.getHours() + 7);
+    const businesses = result
+      .map((category) => category.business)
+      .filter((business) => {
+        const endDate = new Date(business.endDate); 
+        return endDate >= currentDate;
+      })
+     .sort((a, b) => b.money - a.money);
+     const advertisement = await models.Advertisements.findAll({
+        where: {
+          career: {
+            [Op.like]: `%${name}%`,
+          },
+          endDate: {
+            [Op.gte]: currentDate, // Chỉ lấy những quảng cáo có endDate lớn hơn hoặc bằng ngày hiện tại
+          },
         },
-      },
-      include: "image",
-      order: [["stt", "ASC"]],
-    });
+        include: "image",
+        order: [["money", "ASC"]],
+      });
     succesCode(
       res,
       { name, businesses, advertisement },

@@ -5,6 +5,7 @@ const stateDefault = {
     searchBusinessCareer:[],
     searchBusinessProduct:[],
     searchBusinessAdvertisement:[],
+    errorEmail: ""
 }
 
 
@@ -17,6 +18,10 @@ export const BusinessReducer = (state = stateDefault, action) => {
         }
         case 'GET_LIST_BUSINESS': {
             state.arrBusiness = action.arrBusiness;
+            return { ...state }
+        }
+        case 'CHECK_EMAIL': {
+            state.errorEmail = action.errorEmail;
             return { ...state }
         }
         case 'SEARCH_BUSINESS': {

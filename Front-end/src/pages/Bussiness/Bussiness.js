@@ -45,8 +45,8 @@ export default function Bussiness(props) {
                         alt={`  ${businessByID.businessNameEng} - ${businessByID.businessName}`}
                         src={
                           businessByID &&
-                          businessByID.Images &&
-                          businessByID?.Images[0]?.imageUrl
+                          businessByID.avatar &&
+                          businessByID?.avatar
                         }
                       />
                     </div>
@@ -261,10 +261,10 @@ export default function Bussiness(props) {
                 <p className="m-0 mb-2 clearfix" />
               </div>
             </div>
-            <div id="section2" className="w-100 p-0 m-0 pt-3">
+            <div id="section2" className="w-100 p-0 m-0 pt-3 pb-3">
               <div
                 className="w-100 rounded-3  bg-white  border-bottom"
-                style={{ paddingBottom: "30px" }}
+                style={{ paddingBottom: "100px" }}
               >
                 <h2 className="fs-6 p-3 pt-4 pb-1">
                   <span className="yellow_bg h2_radius">Sản phẩm dịch vụ</span>
@@ -277,7 +277,7 @@ export default function Bussiness(props) {
                         className=" w-100 pe-3"
                         style={{ padding: "30px 0" }}
                       >
-                        <div style={{ display: "flex" }}>
+                        <div style={{ display: "flex" , paddingBottom:'10px'}}>
                           <h3
                             className="fs-6 p-0 ps-3 pt-2 clearfix dark_blue_color"
                             style={{ textAlign: "left", cursor: "pointer" }}
@@ -402,7 +402,7 @@ export default function Bussiness(props) {
                 
               </div>
             </div>
-            <div id="section4" className="w-100 p-0 m-0 pt-3">
+            <div id="section4" className="w-100 p-0 m-0 pt-3 mb-5">
               <div className="w-100 rounded-3 p-0 bg-white m-0 border-bottom">
                 <h2 className="fs-6 p-3 pt-4 pb-1">
                   <span className="yellow_bg h2_radius">Hồ sơ công ty</span>
@@ -413,7 +413,7 @@ export default function Bussiness(props) {
                       <i className="fa fa-brands fa-connectdevelop pe-1" /> TÊN
                       CÔNG TY
                     </div>
-                    <div className="div_77 text-uppercase h6">
+                    <div className="div_77 text-uppercase h6" style={{fontSize:'18px'}}>
                       {businessByID?.businessName}
                     </div>
                   </div>

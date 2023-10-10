@@ -11,7 +11,7 @@ export default function Contact(props) {
                 className="rounded-4 p-1 text-center yellow_bg fw500"
                 style={{ cursor: "pointer" }}
               >
-                <NavLink to={`/viewbusiness/${businessByID.businessId}`}>
+                <NavLink to={`/viewbusiness/${businessByID?.businessId}`}>
                   {" "}
                   Cập nhật thông tin
                 </NavLink>

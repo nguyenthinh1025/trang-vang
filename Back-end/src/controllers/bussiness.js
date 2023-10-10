@@ -107,20 +107,23 @@ const getListBussiness = async (req, res) => {
 
 const updateStatusActiveBussiness = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { businessId, money, startDate, endDate } = req.body;
     let result = await models.Businesses.update(
       {
         status: "active",
+        money,
+        startDate,
+        endDate,
       },
       {
         where: {
-          businessId: id,
+          businessId: businessId,
         },
       }
     );
     let result1 = await models.Users.findOne({
       where: {
-        businessId: id,
+        businessId: businessId,
       },
     });
     let hashedPassword = await bcrypt.hashSync("123456", 10);
@@ -130,7 +133,7 @@ const updateStatusActiveBussiness = async (req, res) => {
       },
       {
         where: {
-          businessId: id,
+          businessId: businessId,
         },
       }
     );
@@ -138,12 +141,12 @@ const updateStatusActiveBussiness = async (req, res) => {
     // Find the updated record in Users table
     let updatedUser = await models.Users.findOne({
       where: {
-        businessId: id,
+        businessId: businessId,
       },
     });
     let findBusiness = await models.Businesses.findOne({
       where: {
-        businessId: id,
+        businessId: businessId,
       },
     });
     const email = updatedUser.email;
@@ -235,24 +238,6 @@ const updateStatusActiveBussiness = async (req, res) => {
   }
 };
 
-const getCategoryIdAndLocationId = async (businessId) => {
-  try {
-    const business = await models.Businesses.findOne({
-      attributes: ["categoryId", "locationId"],
-      where: {
-        businessId: businessId,
-      },
-    });
-
-    if (!business) {
-      throw new Error("Không tìm thấy doanh nghiệp với businessId đã cho.");
-    }
-
-    return business;
-  } catch (error) {
-    throw new Error(`Lỗi khi lấy categoryId và locationId: `);
-  }
-};
 const createBusiness = async (req, res) => {
   try {
     const {
@@ -274,6 +259,7 @@ const createBusiness = async (req, res) => {
       emailOperator,
       province,
       createDate,
+      money,
       // images,
       careers,
       services,
@@ -304,6 +290,7 @@ const createBusiness = async (req, res) => {
       tax,
       employees,
       fax,
+      money: 0,
       province,
       createDate,
       phoneOperator,
@@ -398,29 +385,38 @@ const createBusiness = async (req, res) => {
       createdCertificates.push(createCertificates);
     }
 
-    const createUser = await models.Users.create({
-      userId: uuidv4(),
-      fullName: fullName,
-      email: emailuser,
-      phone: phoneuser,
-      zalo: zalouser,
-      position: position,
-      businessId: business.businessId,
+    let user = await models.Users.findOne({
+      where: {
+        email: emailuser,
+      },
     });
 
-    succesCode(
-      res,
-      {
-        business,
-        careers: createdCareers,
-        services: createdServices,
-        category: createdCategory,
-        locations: createdLocations,
-        certificates: createdCertificates,
-        user: createUser,
-      },
-      "Tạo business thành công"
-    );
+    if (user) {
+      failCode(res, "Email đã tồn tại. Vui lòng nhập email khác");
+    } else {
+      const createUser = await models.Users.create({
+        userId: uuidv4(),
+        fullName: fullName,
+        email: emailuser,
+        phone: phoneuser,
+        zalo: zalouser,
+        position: position,
+        businessId: business.businessId,
+      });
+      succesCode(
+        res,
+        {
+          business,
+          careers: createdCareers,
+          services: createdServices,
+          category: createdCategory,
+          locations: createdLocations,
+          certificates: createdCertificates,
+          user: createUser,
+        },
+        "Tạo business thành công"
+      );
+    }
   } catch (error) {
     console.error(error);
     errorCode(res, "Lỗi Backend");
@@ -518,6 +514,8 @@ const searchBusinessByName = async (req, res) => {
   const { name, location } = req.params;
 
   const decodedName = decodeURIComponent(name);
+  const currentDate = new Date();
+  currentDate.setHours(currentDate.getHours() + 7);
   try {
     const result = await models.Careers.findAll({
       model: models.Careers,
@@ -559,11 +557,7 @@ const searchBusinessByName = async (req, res) => {
                   [Op.like]: `%${location}%`,
                 },
               }
-            : {
-                address: {
-                  [Op.like]: `%%`,
-                },
-              },
+            : null,
         },
       ],
     });
@@ -594,11 +588,7 @@ const searchBusinessByName = async (req, res) => {
                           [Op.like]: `%${location}%`,
                         },
                       }
-                    : {
-                        address: {
-                          [Op.like]: `%%`,
-                        },
-                      },
+                    : null,
                 },
               ],
             },
@@ -606,7 +596,7 @@ const searchBusinessByName = async (req, res) => {
         },
       ],
     });
-    const business = await models.Businesses.findAll({
+    const arrBusiness = await models.Businesses.findAll({
       where: {
         [Op.and]: [
           {
@@ -623,11 +613,29 @@ const searchBusinessByName = async (req, res) => {
             : null,
         ],
       },
+      include: ["Images"],
     });
-    const career = result.map((category) => category.business);
+    const business = arrBusiness
+      .filter((business) => {
+        business !== null;
+        const endDate = new Date(business.endDate);
+        return endDate >= currentDate;
+      })
+     .sort((a, b) => b.money - a.money);
+
+    const career = result
+      .map((category) => category.business)
+      .filter((business) => {
+        business !== null;
+        const endDate = new Date(business.endDate);
+        return endDate >= currentDate;
+      })
+     .sort((a, b) => b.money - a.money);
+
     const listproduct = result1.map(
       (category) => category.service.BusinessServices
     );
+
     const arrProduct = listproduct.map((product) => {
       const businessData = product[0];
       if (!businessData) {
@@ -636,16 +644,27 @@ const searchBusinessByName = async (req, res) => {
       const businessId = businessData.business;
       return businessId;
     });
+
     const advertisement = await models.Advertisements.findAll({
       where: {
         career: {
           [Op.like]: `%${name}%`,
         },
+        endDate: {
+          [Op.gte]: currentDate, // Chỉ lấy những quảng cáo có endDate lớn hơn hoặc bằng ngày hiện tại
+        },
       },
       include: "image",
-      order: [["stt", "ASC"]],
+      order: [["money", "ASC"]],
     });
     const product = arrProduct.filter((item) => item !== null);
+    product
+      .filter((business) => {
+        console.log(business.endDate);
+        const endDate = new Date(business.endDate);
+        return endDate >= currentDate;
+      })
+     .sort((a, b) => b.money - a.money);
     succesCode(
       res,
       { name, career, product, advertisement, business },

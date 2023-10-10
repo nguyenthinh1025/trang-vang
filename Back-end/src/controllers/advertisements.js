@@ -6,7 +6,7 @@ const { v4: uuidv4 } = require("uuid");
 
 const getListAdvertisements = async (req, res) => {
   try {
-    let result = await models.Advertisements.findAll({include :'image', order: [['stt', 'ASC']] });
+    let result = await models.Advertisements.findAll({include :'image', order: [['money', 'ASC']] });
     succesCode(res, result, "Lấy Danh Sách Quảng Cáo Thành Công!!!");
   } catch (error) {
     errorCode(res, "Lỗi Backend");
@@ -65,7 +65,7 @@ const updateStatusAdvertisements = async (req, res) => {
 
 const updateAdvertisements = async (req, res) => {
   try {
-    let { id,  image, startDate, endDate, website, stt } = req.body;
+    let { id,  image, startDate, endDate, website, money } = req.body;
     let result = await models.Images.create({
       imageId: uuidv4(),
       imageUrl: image,
@@ -76,7 +76,7 @@ const updateAdvertisements = async (req, res) => {
         startDate,
         endDate,
         website,
-        stt,
+        money,
         imageId : result.imageId
       },
       {

@@ -55,7 +55,7 @@ class Advertisements extends Sequelize.Model {
       type: DataTypes.DATE,
       allowNull: true
     },
-    stt: {
+    money: {
       type: DataTypes.INTEGER,
       allowNull: true
     },

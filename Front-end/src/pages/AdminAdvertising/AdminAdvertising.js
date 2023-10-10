@@ -64,7 +64,7 @@ export default function AdminAdvertising() {
       endDate: "",
       website: "",
       image: "",
-      stt: 0,
+      money: 0,
     },
     onSubmit: (value) => {
       console.log(value);
@@ -573,11 +573,11 @@ export default function AdminAdvertising() {
                 </div>
                 <div className="field mt-3">
                   <label htmlFor="name" className="font-bold">
-                    Số thứ tự
+                    Số số tiền
                   </label>
                   <InputText
                     min={1}
-                    name="stt"
+                    name="money"
                     onChange={formik.handleChange}
                     type="number"
                     id="name"
