@@ -97,9 +97,31 @@ const updateAdvertisements = async (req, res) => {
 };
 
 
+const deleteAdvertisements =async (req,res) =>{
+  try {
+    const {id} = req.params;
+    let result = await models.Advertisements.update({
+      status: "inactive",
+    }, {
+      where:{
+        adId: id
+      }
+    })
+    succesCode(
+      res,
+      result,
+      "Xóa quảng cáo thành công!!!"
+    );
+  } catch (error) {
+    errorCode(res, "Lỗi Backend");
+  }
+}
+
+
 module.exports = {
   getListAdvertisements,
   createAdvertisements,
   updateStatusAdvertisements,
-  updateAdvertisements
+  updateAdvertisements,
+  deleteAdvertisements
 };

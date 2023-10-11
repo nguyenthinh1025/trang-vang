@@ -123,7 +123,7 @@ const searchCareersBusiness = async (req, res) => {
           },
         },
         include: "image",
-        order: [["money", "ASC"]],
+          order: [["money", "DESC"]],
       });
     succesCode(
       res,

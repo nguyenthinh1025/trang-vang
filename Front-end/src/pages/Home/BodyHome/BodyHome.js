@@ -45,7 +45,7 @@ export default function BodyHome(props) {
                                 to={`getcareersbyname/${cate.careerName}`}
                               >
                                 <img
-                                  alt="Công ty Logistics"
+                                  alt={cate.careerName}
                                   src={cate?.image_Image?.imageUrl}
                                   style={{
                                     width:

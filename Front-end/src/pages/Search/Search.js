@@ -31,8 +31,7 @@ export default function Search(props) {
   const totalActiveBusinesses = 
     countActiveBusinesses(searchBusinessName) +
     countActiveBusinesses(searchBusinessCareer) +
-    countActiveBusinesses(searchBusinessProduct) +
-    countActiveBusinesses(searchBusinessAdvertisement);
+    countActiveBusinesses(searchBusinessProduct) 
   
   return (
     <div className="page_bg mb-5" >

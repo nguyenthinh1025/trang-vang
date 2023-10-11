@@ -1,44 +1,55 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 
 export default function Footer() {
+  const [css, setCss] = useState(false);
+  const handleClick = () => {
+    setCss((css) => !css);
+  };
   return (
     <div className="w-100 h-auto bg_ffde06">
-      <div className="container-xl  pt-5">
+      <div className="container-xl  pt-5" onClick={()=>{handleClick()}}>
         <div className="rounded-3 h-auto w-100 p-3 clearfix lienket_chantrang mucluc_pc">
-          <NavLink to="/gioi-thieu">Giới thiệu Trang vàng</NavLink>
+          <NavLink to="/gioi-thieu" style={{ background: "none" }}>
+            Giới thiệu Trang vàng
+          </NavLink>
           <span className="text-black-50 ps-2 pe-2">|</span>{" "}
-          <a href="./subpages/quyche.asp">Quy chế hoạt động</a>{" "}
+          <NavLink to="/quy-che" style={{ background: "none" }}>
+            Quy chế hoạt động
+          </NavLink>
           <span className="text-black-50 ps-2 pe-2">|</span>{" "}
-          <a href="./subpages/chinhsachbaomat.asp">Chính sách bảo mật</a>{" "}
+          <NavLink to="/bao-mat" style={{ background: "none" }}>
+            Chính sách bảo mật
+          </NavLink>
           <span className="text-black-50 ps-2 pe-2">|</span>{" "}
           <i className="fa fa-regular fa-pen-to-square pe-1 fa-shake" />{" "}
-          <NavLink to="/signup">Đăng ký Trang vàng</NavLink>
+          <NavLink to="/signup" style={{ background: "none" }}>
+            Đăng ký Trang vàng
+          </NavLink>
           <span className="text-black-50 ps-2 pe-2">|</span>{" "}
           <i className="fa fa-regular fa-thumbs-up pe-1 fa-shake" />{" "}
-          <a href="./subpages/advertising.asp">Quảng cáo Trang vàng</a>{" "}
+          <NavLink to="/advertising" style={{ background: "none" }}>
+            Quảng cáo Trang vàng
+          </NavLink>
           <span className="text-black-50 ps-2 pe-2">|</span>{" "}
-          <a href="./subpages/contact.asp">Liên hệ Trang vàng</a>{" "}
-          <span className="text-black-50 ps-2 pe-2">|</span>{" "}
-          <a target="_blank" href="https://www.yellowpages.com.vn">
-            English
-          </a>
+          <NavLink to="/contact" style={{ background: "none" }}>
+            Liên hệ Trang vàng
+          </NavLink>
         </div>
         <div className="rounded-3 h-auto w-100 p-3 clearfix lienket_chantrang mucluc_mobile">
           <i className="fa fa-regular fa-pen-to-square pe-1 fa-shake" />{" "}
-          <a href="./subpages/signup.asp">Đăng ký Trang vàng</a>{" "}
+          <NavLink to="/signup" style={{ background: "none" }}>
+            Đăng ký Trang vàng
+          </NavLink>
           <span className="text-black-50 ps-2 pe-2">|</span>{" "}
           <i className="fa fa-regular fa-thumbs-up pe-1 fa-shake" />{" "}
-          <a href="./subpages/advertising.asp">Quảng cáo Trang vàng</a>
+          <NavLink to="/advertising" style={{ background: "none" }}>
+            Quảng cáo Trang vàng
+          </NavLink>
         </div>
         <div className="mt-5">
           <div className="sangiaodich">
-            <a
-              target="_blank"
-              href="http://online.gov.vn/HomePage/WebsiteDisplay.aspx?DocId=9853"
-            >
-              <img src="images/San-TMDT.png" />
-            </a>
+            <img src="https://trangvangvietnam.com/images/San-TMDT.png" />
           </div>
           <div className="noidung_chantrang pb-3">
             <span className="fw500">
@@ -76,14 +87,25 @@ export default function Footer() {
           <p className="m-0 clearfix" />
         </div>
       </div>
+
       <button
         title="LIÊN HỆ VỚI TRANG VÀNG VIỆT NAM !"
         className="nut_lienhe bg-transparent"
-        onclick="call_all()"
+        onClick={() => {
+          handleClick()
+        }}
       >
         <img src="./images/iconlienhe.png" />
       </button>
-      <div id="lienhe_truot">
+      <div
+        style={{
+          visibility: css ? "initial" : "hidden",
+          position: "fixed",
+          zIndex: 100,
+          right: "28px",
+          bottom: "150px",
+        }}
+      >
         <div className="p-0 m-0 clearfix">
           <div className="mb-2 nut_zalo">
             <a target="_blank" href="https://zalo.me/0934498168">

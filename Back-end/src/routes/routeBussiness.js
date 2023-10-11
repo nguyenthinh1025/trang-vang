@@ -1,5 +1,5 @@
 const express = require('express');
-const { getBussiness, getListBussiness, createBusiness, getBussinessById, updateStatusActiveBussiness, updateBusiness, createImageBussiness, searchBusinessByName,  } = require('../controllers/bussiness');
+const { getBussiness, getListBussiness, createBusiness, getBussinessById, updateStatusActiveBussiness, updateBusiness, createImageBussiness, searchBusinessByName, deleteBussiness,  } = require('../controllers/bussiness');
 const routeBussiness = express.Router();
 
 
@@ -8,6 +8,7 @@ routeBussiness.get('/getlistbussiness', getListBussiness)
 routeBussiness.post('/createbussiness', createBusiness)
 routeBussiness.get('/getbussinessbyid/:id', getBussinessById)
 routeBussiness.put('/updatebusiness/:id', updateBusiness)
+routeBussiness.delete('/deletebusiness/:id', deleteBussiness)
 routeBussiness.post('/changeactivebusiness', updateStatusActiveBussiness)
 routeBussiness.get('/getbusinessname/:name/:location?', searchBusinessByName)
 // routeBussiness.post('/createimagebusiness', createImageBussiness)

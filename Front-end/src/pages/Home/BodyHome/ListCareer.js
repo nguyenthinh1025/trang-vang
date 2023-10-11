@@ -1,6 +1,6 @@
 export   const ListCareer = [
     {id:1,name:'An ninh - Bảo vệ'},
-    {id:2,name:'Bao bì'},
+    {id:2,name:'Bao bì - In ấn'},
     {id:3,name:'Bảo hộ lao động'},
     {id:4,name:'Cao su'},
     {id:5,name:'Cơ khí'},

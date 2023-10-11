@@ -8,14 +8,15 @@ import { GetListCareersNameAction } from "../../redux/actions/CareersAction";
 import { useDispatch, useSelector } from "react-redux";
 export default function ListCareerBusiness(props) {
   const { name } = props.match.params;
+  const currentURL = window.location.href;
   const dispatch = useDispatch();
 const {arrCareersName,arrCareersAdvertisement} = useSelector(root =>root.CareersReducer)
-console.log(arrCareersAdvertisement)
   useEffect(() => {
+    
     window.scrollTo(0, 0);
     const action = GetListCareersNameAction(name);
     dispatch(action);
-  }, [name]);
+  }, [currentURL, name]);
   return (
     <div className="m-auto h-auto pt-5">
       <div className="h-auto w-100 m-0 p-3 pt-0 head_m clearfix">
@@ -70,7 +71,7 @@ console.log(arrCareersAdvertisement)
           </div>
           <CareerCenter arrCareersName ={arrCareersName}/>
         </div>
-        <CareerRight />
+        <CareerRight arrCareersAdvertisement ={arrCareersAdvertisement}/>
         <p className="m-0 clearfix" />
       </div>
     </div>

@@ -23,6 +23,8 @@ import Modal from "./Test";
 import AdminAdvertising from "./pages/AdminAdvertising/AdminAdvertising";
 import ListCareerBusiness from "./pages/ListCareerBusiness/ListCareerBusiness";
 import Search from "./pages/Search/Search";
+import Quyche from "./pages/Quyche/QuyChe";
+import Baomat from "./pages/Baomat/Baomat";
 export const history = createBrowserHistory();
 function App() {
   return (
@@ -44,6 +46,8 @@ function App() {
       <UserTemplate1  path="/careerbussiness/:name" exact Component={ListCareerBusiness} /> 
       <UserTemplate1  path="/yourbussiness/:id" exact Component={YourBusiness} /> 
       <Route  path="/gioi-thieu" exact component={Gioithieu} />
+      <Route  path="/quy-che" exact component={Quyche} />
+      <Route  path="/bao-mat" exact component={Baomat} />
       <Route  path="/signup-success" exact component={SignupSuccess} />
       <Route  path="/contact" exact component={Contact} />  
       <Route  path="/test" exact component={Modal} /> 

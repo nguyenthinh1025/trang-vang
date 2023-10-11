@@ -14,6 +14,7 @@ import moment from "moment";
 import { addHours } from "date-fns";
 import {
   ActiveAdvertisementsAction,
+  DetelteAdvertisementsAction,
   GetListAdvertisementsAction,
   UpdateStatusAdvertisementsAction,
 } from "../../redux/actions/AdvertisementsAction";
@@ -77,7 +78,7 @@ export default function AdminAdvertising() {
       };
       const action = ActiveAdvertisementsAction(updatedValues);
       dispatch(action);
-      hideDialog()
+      hideDialog();
     },
   });
   const uploadFile = async (e) => {
@@ -173,9 +174,8 @@ export default function AdminAdvertising() {
   };
 
   const deleteProduct = () => {
-    let _products = products.filter((val) => val.id !== product.id);
-
-    setProducts(_products);
+    const action = DetelteAdvertisementsAction(product.adId);
+    dispatch(action);
     setDeleteProductDialog(false);
     setProduct(emptyProduct);
     toast.current.show({
@@ -270,7 +270,7 @@ export default function AdminAdvertising() {
         <InputText
           type="search"
           onInput={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search..."
+          placeholder="Tìm kiếm..."
         />
       </span>
     </div>
@@ -288,13 +288,13 @@ export default function AdminAdvertising() {
   const deleteProductDialogFooter = (
     <React.Fragment>
       <Button
-        label="No"
+        label="Hủy"
         icon="pi pi-times"
         outlined
         onClick={hideDeleteProductDialog}
       />
       <Button
-        label="Yes"
+        label="Đồng ý"
         icon="pi pi-check"
         severity="danger"
         onClick={deleteProduct}
@@ -353,7 +353,7 @@ export default function AdminAdvertising() {
             rows={10}
             rowsPerPageOptions={[5, 10, 25]}
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+            currentPageReportTemplate="Danh sách {first} đến {last} của {totalRecords} quảng cáo"
             globalFilter={globalFilter}
             header={header}
           >
@@ -388,13 +388,30 @@ export default function AdminAdvertising() {
               sortable
               style={{ minWidth: "12rem" }}
             ></Column>
-            <Column
-              field={(createDate) =>
-                moment(createDate.createDate).format("DD/MM/YYYY hh:mm A")
-              }
-              header="Thời gian tạo"
-              style={{ minWidth: "12rem" }}
-            ></Column>
+            {op === "pending" ? (
+              <Column
+                field="createDate"
+                header="Thời gian tạo"
+                sortable
+                style={{ minWidth: "12rem" }}
+                body={(rowData) =>
+                  moment(rowData.createDate).format("DD/MM/YYYY hh:mm A")
+                }
+              ></Column>
+            ) : (
+              <div></div>
+            )}
+            {op === "active" ? (
+              <Column
+                field="money"
+                header="Số tiền"
+                sortable
+                style={{ minWidth: "12rem" }}
+                body={(rowData) => rowData.money.toLocaleString() + " vnđ"}
+              ></Column>
+            ) : (
+              <div></div>
+            )}
             <Column
               body={actionBodyTemplate}
               exportable={false}
@@ -611,7 +628,8 @@ export default function AdminAdvertising() {
             />
             {product && (
               <span>
-                Are you sure you want to delete <b>{product.name}</b>?
+                Bạn muốn xóa quảng cáo của doanh nghiệp{" "}
+                <b>{product.businessName}</b>?
               </span>
             )}
           </div>

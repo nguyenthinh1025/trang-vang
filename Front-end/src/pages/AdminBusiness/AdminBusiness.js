@@ -7,7 +7,11 @@ import { Toolbar } from "primereact/toolbar";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import { GetListBusinessAction, UpdateAciveBusinessAction } from "../../redux/actions/BusinessAction";
+import {
+  DetelteBisinessAction,
+  GetListBusinessAction,
+  UpdateAciveBusinessAction,
+} from "../../redux/actions/BusinessAction";
 import { useDispatch, useSelector } from "react-redux";
 import { Dropdown } from "primereact/dropdown";
 import { addHours } from "date-fns";
@@ -47,14 +51,14 @@ export default function AdminBusiness() {
   ];
   const [op, setOp] = useState("active");
   const onInputDropdown = (e, field) => {
-    setOp(e.target.value);;
+    setOp(e.target.value);
   };
   useEffect(() => {
     const modifiedArray = arrBusiness.map((item) => ({
       ...item,
-      formattedCreateDate: moment(item.createDate).format('DD/MM/YYYY hh:mm A')
+      formattedCreateDate: moment(item.createDate).format("DD/MM/YYYY hh:mm A"),
     }));
-  
+
     const filteredArray = modifiedArray.filter((item) => item.status === op);
     setProducts(filteredArray);
   }, [arrBusiness, op]);
@@ -63,8 +67,6 @@ export default function AdminBusiness() {
     const action = GetListBusinessAction();
     dispatch(action);
   }, []);
-
-
 
   const hideDialog = () => {
     setSubmitted(false);
@@ -79,29 +81,32 @@ export default function AdminBusiness() {
     setDeleteProductsDialog(false);
   };
 
-  const  [money,setMoney] = useState(0)
-  const  [startDate,setStartDate] = useState("")
-  const  [endDate,setEndDate] = useState("")
+  const [money, setMoney] = useState(0);
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const saveProduct = () => {
     setSubmitted(true);
 
     let _products = [...products];
-    let _product = { ...product , money:Number(money), startDate: addHours(new Date(startDate), 7), endDate: addHours(new Date(endDate), 7)};
-    console.log(_product)
-     const action = UpdateAciveBusinessAction(_product);
-     dispatch(action)
-        toast.current.show({
-          severity: "success",
-          summary: "Thành công",
-          detail: "Duyệt doanh ngihệp thành công",
-          life: 3000,
-        });
+    let _product = {
+      ...product,
+      money: Number(money),
+      startDate: addHours(new Date(startDate), 7),
+      endDate: addHours(new Date(endDate), 7),
+    };
+    console.log(_product);
+    const action = UpdateAciveBusinessAction(_product);
+    dispatch(action);
+    toast.current.show({
+      severity: "success",
+      summary: "Thành công",
+      detail: "Duyệt doanh ngihệp thành công",
+      life: 3000,
+    });
 
-
-      // setProducts(_products);
-      // setProductDialog(false);
-      // setProduct(emptyProduct);
-    
+    // setProducts(_products);
+    // setProductDialog(false);
+    // setProduct(emptyProduct);
   };
 
   const editProduct = (product) => {
@@ -115,24 +120,23 @@ export default function AdminBusiness() {
   };
 
   const deleteProduct = () => {
-    let _products = products.filter((val) => val.id !== product.id);
+    // let _products = products.filter((val) => val.id !== product.id);
+    console.log(product.businessId);
+    const action = DetelteBisinessAction(product.businessId);
+    dispatch(action);
 
-    setProducts(_products);
     setDeleteProductDialog(false);
     setProduct(emptyProduct);
     toast.current.show({
       severity: "success",
-      summary: "Successful",
-      detail: "Product Deleted",
+      summary: "Thành công",
+      detail: "Xóa danh nghiệp thành công",
       life: 3000,
     });
   };
   const exportCSV = () => {
     dt.current.exportCSV();
   };
-
-
-
 
   const deleteSelectedProducts = () => {
     let _products = products.filter((val) => !selectedProducts.includes(val));
@@ -148,8 +152,6 @@ export default function AdminBusiness() {
     });
   };
 
-
-
   const onInputChange = (e, name) => {
     const val = (e.target && e.target.value) || "";
     let _product = { ...product };
@@ -158,8 +160,6 @@ export default function AdminBusiness() {
 
     setProduct(_product);
   };
-
-  
 
   const leftToolbarTemplate = () => {
     return (
@@ -187,7 +187,6 @@ export default function AdminBusiness() {
     );
   };
 
-
   const actionBodyTemplate = (rowData) => {
     return (
       <React.Fragment>
@@ -209,8 +208,6 @@ export default function AdminBusiness() {
     );
   };
 
-
-
   const header = (
     <div className="flex flex-wrap gap-2 align-items-center justify-content-between">
       <h4 className="m-0">Quản lý doanh nghiệp</h4>
@@ -219,7 +216,7 @@ export default function AdminBusiness() {
         <InputText
           type="search"
           onInput={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search..."
+          placeholder="Tìm kiếm..."
         />
       </span>
     </div>
@@ -227,19 +224,23 @@ export default function AdminBusiness() {
   const productDialogFooter = (
     <React.Fragment>
       <Button label="Hủy" icon="pi pi-times" outlined onClick={hideDialog} />
-     {op ==="pending" ?  <Button label="Đồng ý" icon="pi pi-check" onClick={saveProduct} /> : <div></div>}
+      {op === "pending" ? (
+        <Button label="Đồng ý" icon="pi pi-check" onClick={saveProduct} />
+      ) : (
+        <div></div>
+      )}
     </React.Fragment>
   );
   const deleteProductDialogFooter = (
     <React.Fragment>
       <Button
-        label="No"
+        label="Hủy"
         icon="pi pi-times"
         outlined
         onClick={hideDeleteProductDialog}
       />
       <Button
-        label="Yes"
+        label="Đồng ý"
         icon="pi pi-check"
         severity="danger"
         onClick={deleteProduct}
@@ -298,7 +299,7 @@ export default function AdminBusiness() {
             rows={10}
             rowsPerPageOptions={[5, 10, 25]}
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
+            currentPageReportTemplate="Danh sách {first} đến {last} của {totalRecords} doanh nghiệp"
             globalFilter={globalFilter}
             header={header}
           >
@@ -341,12 +342,30 @@ export default function AdminBusiness() {
               sortable
               style={{ minWidth: "12rem" }}
             ></Column>
-            <Column
-              field={money => (money.money).toLocaleString() + " vnđ"}
-              header="Số tiền"
-              sortable
-              style={{ minWidth: "12rem" }}
-            ></Column>
+            {op === "active" ? (
+              <Column
+                field="money"
+                header="Số tiền"
+                sortable
+                style={{ minWidth: "12rem" }}
+                body={(rowData) => rowData.money.toLocaleString() + " vnđ"}
+              ></Column>
+            ) : (
+              <div></div>
+            )}
+            {op === "pending" ? (
+              <Column
+                field="createDate"
+                header="Thời gian tạo"
+                sortable
+                style={{ minWidth: "12rem" }}
+                body={(rowData) =>
+                  moment(rowData.createDate).format("DD/MM/YYYY hh:mm A")
+                }
+              ></Column>
+            ) : (
+              <div></div>
+            )}
             <Column
               body={actionBodyTemplate}
               exportable={false}
@@ -426,7 +445,7 @@ export default function AdminBusiness() {
           <div class="grid grid-cols-2 gap-2">
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-              Email
+                Email
               </label>
               <InputText
                 id="name"
@@ -496,12 +515,14 @@ export default function AdminBusiness() {
           <div class="grid grid-cols-2 gap-2">
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-               Người liên lạc
+                Người liên lạc
               </label>
               <InputText
                 id="name"
                 value={product?.Users && product?.Users?.[0]?.fullName}
-                onChange={(e) => onInputChange(e, "product?.Users?.[0]?.username")}
+                onChange={(e) =>
+                  onInputChange(e, "product?.Users?.[0]?.username")
+                }
                 required
                 autoFocus
                 // className={classNames({
@@ -519,7 +540,9 @@ export default function AdminBusiness() {
               <InputText
                 id="name"
                 value={product?.Users && product?.Users?.[0]?.position}
-                onChange={(e) => onInputChange(e, "product?.Users?.[0]?.position")}
+                onChange={(e) =>
+                  onInputChange(e, "product?.Users?.[0]?.position")
+                }
                 required
                 autoFocus
                 // className={classNames({
@@ -531,10 +554,10 @@ export default function AdminBusiness() {
               )} */}
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-2" style={{paddingBottom:'20px'}}>
+          <div class="grid grid-cols-2 gap-2" style={{ paddingBottom: "20px" }}>
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-              Số điện thoại
+                Số điện thoại
               </label>
               <InputText
                 id="name"
@@ -550,17 +573,25 @@ export default function AdminBusiness() {
                 <small className="p-error">Name is required.</small>
               )} */}
             </div>
-           
           </div>
           <hr />
-          <div style={{textAlign:'center', paddingBottom:'20px', fontWeight:700, fontSize:'20px'}}>Cần cập nhật</div>
-          <div class="grid grid-cols-2 gap-2" style={{paddingBottom:'20px'}}>
+          <div
+            style={{
+              textAlign: "center",
+              paddingBottom: "20px",
+              fontWeight: 700,
+              fontSize: "20px",
+            }}
+          >
+            Cần cập nhật
+          </div>
+          <div class="grid grid-cols-2 gap-2" style={{ paddingBottom: "20px" }}>
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-              Số tiền
+                Số tiền
               </label>
               <InputText
-              type="number"
+                type="number"
                 id="name"
                 // value={1000}
                 onChange={(e) => setMoney(e.target.value)}
@@ -568,15 +599,14 @@ export default function AdminBusiness() {
                 // autoFocus
               />
             </div>
-           
           </div>
-          <div class="grid grid-cols-2 gap-2" style={{paddingBottom:'20px'}}>
+          <div class="grid grid-cols-2 gap-2" style={{ paddingBottom: "20px" }}>
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-              Ngày bắt đầu
+                Ngày bắt đầu
               </label>
               <InputText
-              type="datetime-local"
+                type="datetime-local"
                 id="name"
                 // value={product.startDate}
                 onChange={(e) => setStartDate(e.target.value)}
@@ -586,10 +616,10 @@ export default function AdminBusiness() {
             </div>
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-              Ngày kết thúc
+                Ngày kết thúc
               </label>
               <InputText
-              type="datetime-local"
+                type="datetime-local"
                 id="name"
                 // value={product.endDate}
                 onChange={(e) => setEndDate(e.target.value)}
@@ -616,7 +646,7 @@ export default function AdminBusiness() {
             />
             {product && (
               <span>
-                Are you sure you want to delete <b>{product.name}</b>?
+                Bạn muốn xóa doanh nghiệp <b>{product.businessName}</b>?
               </span>
             )}
           </div>

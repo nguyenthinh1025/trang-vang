@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 
 export default function Header() {
@@ -51,6 +51,18 @@ export default function Header() {
                 <NavLink to="/advertising">
                   <i className="fa fa-solid fa-bullseye" /> Quảng cáo Trang vàng
                 </NavLink>
+                {localStorage.getItem("userID") ? (
+                    <NavLink
+                      to={`/signin`}
+                      onClick={() => {
+                        localStorage.removeItem("userID");
+                      }}
+                    >
+                      Đăng xuất
+                    </NavLink>
+                  ) : (
+                    <Fragment></Fragment>
+                  )}
               </div>
             </div>
             <div className="head_m">

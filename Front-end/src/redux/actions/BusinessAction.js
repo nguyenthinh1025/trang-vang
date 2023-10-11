@@ -10,16 +10,16 @@ export const CreateBusinessAction = (value, props) => {
       props.history.push("/signup-success");
       const action = {
         type: "CHECK_EMAIL",
-        errorEmail:"",
+        errorEmail: "",
       };
-      dispatch(action)
+      dispatch(action);
     } catch (error) {
       console.log(error.response?.data.message);
       const action = {
         type: "CHECK_EMAIL",
         errorEmail: error.response?.data.message,
       };
-      dispatch(action)
+      dispatch(action);
     }
   };
 };
@@ -166,6 +166,18 @@ export const SearchBusinessLocation = (name, location) => {
       };
       dispatch(action);
       // props.history.push(`/searchbusiness/${name}/${location}`)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const DetelteBisinessAction = (id) => {
+  return async (dispatch) => {
+    try {
+      let result = await http.delete(`/bussiness/deletebusiness/${id}`);
+      const action = GetListBusinessAction();
+      dispatch(action);
     } catch (error) {
       console.log(error);
     }

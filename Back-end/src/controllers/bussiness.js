@@ -238,6 +238,25 @@ const updateStatusActiveBussiness = async (req, res) => {
   }
 };
 
+const deleteBussiness = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = await models.Businesses.update(
+      {
+        status: "inactive",
+      },
+      {
+        where: {
+          businessId: id,
+        },
+      }
+    );
+    succesCode(res, result , "Xóa doanh nghiệp thành công")
+  } catch (error) {
+    errorCode(res, "Lỗi Backend");
+  }
+};
+
 const createBusiness = async (req, res) => {
   try {
     const {
@@ -621,7 +640,7 @@ const searchBusinessByName = async (req, res) => {
         const endDate = new Date(business.endDate);
         return endDate >= currentDate;
       })
-     .sort((a, b) => b.money - a.money);
+      .sort((a, b) => b.money - a.money);
 
     const career = result
       .map((category) => category.business)
@@ -630,7 +649,7 @@ const searchBusinessByName = async (req, res) => {
         const endDate = new Date(business.endDate);
         return endDate >= currentDate;
       })
-     .sort((a, b) => b.money - a.money);
+      .sort((a, b) => b.money - a.money);
 
     const listproduct = result1.map(
       (category) => category.service.BusinessServices
@@ -655,7 +674,7 @@ const searchBusinessByName = async (req, res) => {
         },
       },
       include: "image",
-      order: [["money", "ASC"]],
+      order: [["money", "DESC"]],
     });
     const product = arrProduct.filter((item) => item !== null);
     product
@@ -664,7 +683,7 @@ const searchBusinessByName = async (req, res) => {
         const endDate = new Date(business.endDate);
         return endDate >= currentDate;
       })
-     .sort((a, b) => b.money - a.money);
+      .sort((a, b) => b.money - a.money);
     succesCode(
       res,
       { name, career, product, advertisement, business },
@@ -684,4 +703,5 @@ module.exports = {
   updateBusiness,
   createImageBussiness,
   searchBusinessByName,
+  deleteBussiness,
 };

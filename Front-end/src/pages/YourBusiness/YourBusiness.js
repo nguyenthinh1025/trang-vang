@@ -305,7 +305,7 @@ export default function YourBusiness(props) {
               </div>
             </div>
             <div id="section2" className="w-100 p-0 m-0 pt-3">
-              <div className="w-100 rounded-3  bg-white  border-bottom" style={{ paddingBottom: "30px" }}>
+              <div className="w-100 rounded-3  bg-white  border-bottom" style={{ paddingBottom: "70px" }}>
                 <div style={{ display: "flex", justifyContent: "space-between" }}>
                   <h2 className="fs-6 p-3 pt-4 pb-1">
                     <span className="yellow_bg h2_radius">
@@ -564,7 +564,7 @@ export default function YourBusiness(props) {
                       <i className="fa fa-brands fa-connectdevelop pe-1" /> TÊN
                       CÔNG TY
                     </div>
-                    <div className="div_77 text-uppercase h6">
+                    <div className="div_77 text-uppercase h6" style={{fontSize:'18px'}}>
                       {businessByID?.businessName}
                     </div>
                   </div>

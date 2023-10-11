@@ -51,3 +51,15 @@ export const ActiveAdvertisementsAction = (value) => {
     }
   };
 };
+
+export const DetelteAdvertisementsAction = (id) => {
+  return async (dispatch) => {
+    try {
+      let result = await http.delete(`/advertisements/deleteadvertisements/${id}`);
+      const action = GetListAdvertisementsAction();
+      dispatch(action);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

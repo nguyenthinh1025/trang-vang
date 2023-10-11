@@ -1,5 +1,5 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom/cjs/react-router-dom'
+import React from "react";
+import { NavLink } from "react-router-dom/cjs/react-router-dom";
 
 export default function Footer() {
   return (
@@ -84,5 +84,5 @@ export default function Footer() {
         </div>
       </div>
     </div>
-  )
+  );
 }

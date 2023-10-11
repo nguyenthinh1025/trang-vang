@@ -85,7 +85,7 @@ export default function ListCenter(props) {
                               NGÀNH:
                             </span>{" "}
                             <span className="nganh_listing_txt fw500">
-                              {item?.Careers?.map((item, index) => {
+                              {item?.Careers?.slice(0,1).map((item, index) => {
                                 return <span>{item.careerName}</span>;
                               })}
                             </span>
@@ -231,7 +231,7 @@ export default function ListCenter(props) {
                             NGÀNH:
                           </span>{" "}
                           <span className="nganh_listing_txt fw500">
-                            {item?.Careers?.map((item, index) => {
+                            {item?.Careers?.slice(0,1).map((item, index) => {
                               return <span>{item.careerName}</span>;
                             })}
                           </span>
@@ -376,7 +376,7 @@ export default function ListCenter(props) {
                             NGÀNH:
                           </span>{" "}
                           <span className="nganh_listing_txt fw500">
-                            {item?.Careers?.map((item, index) => {
+                            {item?.Careers?.slice(0,1).map((item, index) => {
                               return <span>{item.careerName}</span>;
                             })}
                           </span>
