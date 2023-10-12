@@ -679,7 +679,6 @@ const searchBusinessByName = async (req, res) => {
     const product = arrProduct.filter((item) => item !== null);
     product
       .filter((business) => {
-        console.log(business.endDate);
         const endDate = new Date(business.endDate);
         return endDate >= currentDate;
       })

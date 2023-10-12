@@ -6,12 +6,6 @@ export default function HeaderMobile() {
     <div className="m-0 p-0 bg-white head_m">
       <div className="container-xl p-2">
         <div className="row">
-          <div className="p-0 h-auto text-center position-relative">
-            <img
-              style={{ width: 186 }}
-              src="../images/trangvang_logo_mobile.png"
-            />
-          </div>
           <div className="menu_m">
             <div className="dropdown" style={{ float: "right" }}>
               <button

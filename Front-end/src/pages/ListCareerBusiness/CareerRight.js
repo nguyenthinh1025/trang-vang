@@ -3,7 +3,6 @@ import React, { Fragment } from "react";
 
 export default function CareerRight(props) {
   const { arrCareersAdvertisement } = props;
-  console.log(arrCareersAdvertisement)
   const currentDate = moment();
   return (
     <div className="div_banner_qc_pc">

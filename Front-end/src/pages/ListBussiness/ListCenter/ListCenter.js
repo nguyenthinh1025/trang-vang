@@ -3,11 +3,7 @@ import { NavLink } from "react-router-dom/cjs/react-router-dom";
 
 export default function ListCenter(props) {
   const { name, arrBusinessByCareersType } = props;
-  console.log(
-    arrBusinessByCareersType?.businesses?.filter(
-      (item) => item.status === "active"
-    )
-  );
+ 
   return (
     <div className="div_list_cty">
       {arrBusinessByCareersType?.businesses?.filter(

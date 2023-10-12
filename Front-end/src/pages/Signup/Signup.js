@@ -80,8 +80,7 @@ export default function Signup(props) {
       position: "",
     },
     validationSchema: validationSchema,
-    onSubmit: async (value) => {
-      console.log(value);    
+    onSubmit: async (value) => { 
         const action = CreateBusinessAction(value, props);
         dispatch(action);
     },
@@ -209,7 +208,6 @@ export default function Signup(props) {
     const loca = newLocation1.filter(
       (location) => location.locationName !== ""
     );
-    console.log(loca);
     formik.setFieldValue("locations", loca);
   };
 
@@ -258,7 +256,6 @@ export default function Signup(props) {
     const loca = certificates.filter(
       (certificates) => certificates.certificateName !== ""
     );
-    console.log(loca);
     formik.setFieldValue("certificates", loca);
   };
 

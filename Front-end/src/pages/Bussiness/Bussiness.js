@@ -7,7 +7,6 @@ export default function Bussiness(props) {
   const { id } = props.match.params;
   const dispatch = useDispatch();
   const { businessByID } = useSelector((root) => root.BusinessReducer);
-  console.log(businessByID);
   useEffect(() => {
     const action = BusinessByIDAction(id);
     dispatch(action);
@@ -153,7 +152,7 @@ export default function Bussiness(props) {
                   <i className="fa fa-solid fa-layer-group pe-1" /> LOẠI HÌNH:
                 </span>{" "}
                 <ul style={{ listStyle: "none" }}>
-                  <div style={{ marginLeft: "216px" }}>
+                  <div style={{ marginLeft: "216px" }} className="the-ul">
                     {businessByID?.BusinessServices?.map((item, idnex) => {
                       return <li>+ {item?.service?.serviceName}</li>;
                     })}
@@ -185,13 +184,13 @@ export default function Bussiness(props) {
                       <span className="span_lienhe">Tên liên hệ:</span>
                       <span className="red_color fw-bold">
                         {" "}
-                        {item.username}
+                        {item.fullName}
                       </span>
                     </div>
                     <div className="w-100 rounded-3 p-1 ps-2 mb-2 mauxam_bg">
                       <i className="fa fa-regular fa-gem" />{" "}
                       <span className="span_lienhe">Chức vụ:</span>
-                      <small> Sales and Marketing Division</small>
+                      <small> {item.position}</small>
                     </div>
                     <div className="w-100 rounded-3 p-1 ps-2 mb-2 mauxam_bg">
                       <i className="fa fa-solid fa-mobile-screen-button" />{" "}
@@ -336,7 +335,6 @@ export default function Bussiness(props) {
                         className="pt-3 ps-3 pe-0 listing_images"
                         key={index}
                         onClick={() => {
-                          console.log(item?.certificateId, index);
                         }}
                       >
                         <div className="rounded-3 border border-dark-subtle p-2 text-center sanphamtrungbay_khung">

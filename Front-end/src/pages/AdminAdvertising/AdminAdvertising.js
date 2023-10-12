@@ -27,7 +27,7 @@ export default function AdminAdvertising() {
   const { arrAdvertisements } = useSelector(
     (root) => root.AdvertisementsReducer
   );
-  console.log(arrAdvertisements);
+
   let emptyProduct = {
     id: null,
     name: "",
@@ -68,7 +68,6 @@ export default function AdminAdvertising() {
       money: 0,
     },
     onSubmit: (value) => {
-      console.log(value);
       const newStartDate = addHours(new Date(value.startDate), 7);
       const newEndDate = addHours(new Date(value.endDate), 7);
       const updatedValues = {
@@ -148,7 +147,6 @@ export default function AdminAdvertising() {
 
     let _products = [...products];
     let _product = { ...product };
-    console.log(_product);
     const action = UpdateStatusAdvertisementsAction(_product.adId);
     dispatch(action);
     toast.current.show({

@@ -13,7 +13,6 @@ export default function ViewBusiness(props) {
   const {id} = props.match.params
   const { businessByID } = useSelector((root) => root.BusinessReducer);
   const { userLogin } = useSelector((root) => root.LoginReducer);
-  console.log(businessByID);
   useEffect(() => {
     const action = BusinessByIDAction(id);
     dispatch(action);
@@ -47,7 +46,6 @@ export default function ViewBusiness(props) {
     },
     enableReinitialize: true,
     onSubmit: async (value) => {
-      console.log(value);
       const action = UpdateBusinessAction(id, value, props);
       dispatch(action);
     },

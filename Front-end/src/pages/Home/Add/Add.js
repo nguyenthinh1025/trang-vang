@@ -16,12 +16,12 @@ export default function Add() {
               textAlign: "center",
             }}
           >
-            <a href="./subpages/signup.asp">
+             <NavLink to="/signup">
               <img
                 style={{ width: "96%" }}
                 src="./images/signup_icon.png"
               />
-            </a>
+              </NavLink>
           </div>
           <div
             className="ps-3 pt-1"

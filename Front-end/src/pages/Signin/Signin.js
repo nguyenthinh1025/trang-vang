@@ -11,7 +11,6 @@ export default function Signin(props) {
       password: "",
     },
     onSubmit: (value) => {
-      console.log(value);
       if (value.email === "admin@gmail.com" && value.password === "123456") {
         localStorage.setItem('admin', "admin")
         props.history.push("/admin");

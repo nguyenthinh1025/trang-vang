@@ -1,4 +1,5 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom/cjs/react-router-dom'
 
 export default function MucLuc() {
   return (
@@ -330,9 +331,9 @@ export default function MucLuc() {
         </div>
         <div className="foot_signup3">
           <button className="border-0 rounded-2 p-1 ps-3 pe-3 buttom_bg_footer_signup text-white">
-            <a href="https://trangvangvietnam.com/subpages/signup.asp">
+          <NavLink to="/signup" style={{background:'none'}} >
               Đăng ký miễn phí !
-            </a>
+          </NavLink>
           </button>
         </div>
         <p className="m-0 p-0 mb-1 clearfix" />

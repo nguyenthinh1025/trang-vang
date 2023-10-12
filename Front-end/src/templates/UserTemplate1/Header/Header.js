@@ -52,17 +52,17 @@ export default function Header() {
                   <i className="fa fa-solid fa-bullseye" /> Quảng cáo Trang vàng
                 </NavLink>
                 {localStorage.getItem("userID") ? (
-                    <NavLink
-                      to={`/signin`}
-                      onClick={() => {
-                        localStorage.removeItem("userID");
-                      }}
-                    >
-                      Đăng xuất
-                    </NavLink>
-                  ) : (
-                    <Fragment></Fragment>
-                  )}
+                  <NavLink
+                    to={`/signin`}
+                    onClick={() => {
+                      localStorage.removeItem("userID");
+                    }}
+                  >
+                    Đăng xuất
+                  </NavLink>
+                ) : (
+                  <Fragment></Fragment>
+                )}
               </div>
             </div>
             <div className="head_m">
@@ -90,35 +90,30 @@ export default function Header() {
                         <i className="fa fa-solid fa-house pe-2" /> TRANG VÀNG
                         VIỆT NAM
                       </div>
-                      <div className="p-3 pt-4 pb-2">
-                        <a href="https://trangvangvietnam.com/findex.asp">
-                          <i className="fa fa-solid fa-list pe-2" /> Mục lục
-                          ngành nghề
-                        </a>
-                      </div>
+
                       <div className="p-3 pb-2">
-                        <a href="https://trangvangvietnam.com/subpages/aboutus.asp">
+                        <NavLink to="/gioi-thieu">
                           <i className="fa fa-solid fa-seedling pe-2" /> Giới
                           thiệu Trang vàng
-                        </a>
+                        </NavLink>
                       </div>
                       <div className="p-3 pb-2">
-                        <a href="https://trangvangvietnam.com/subpages/advertising.asp">
+                        <NavLink to="/advertising">
                           <i className="fa fa-solid fa-bullseye pe-2" /> Quảng
                           cáo Trang vàng
-                        </a>
+                        </NavLink>
                       </div>
                       <div className="p-3 pb-2">
-                        <a href="https://trangvangvietnam.com/subpages/signup.asp">
+                        <NavLink to="/signup">
                           <i className="fa-solid fa-user-plus pe-2" /> Đăng ký
                           Trang vàng miễn phí
-                        </a>
+                        </NavLink>
                       </div>
                       <div className="p-3 pb-2">
-                        <a href="https://trangvangvietnam.com/subpages/contact.asp">
+                        <NavLink to="/contact">
                           <i className="fa fa-solid fa-headphones-simple pe-2" />{" "}
                           Liên hệ Trang vàng
-                        </a>
+                        </NavLink>
                       </div>
                       <div className="p-3 pb-2">
                         <NavLink to="/signin">

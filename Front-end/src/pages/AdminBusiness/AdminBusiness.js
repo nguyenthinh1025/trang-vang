@@ -20,7 +20,6 @@ import moment from "moment";
 export default function AdminBusiness() {
   const dispatch = useDispatch();
   const { arrBusiness } = useSelector((root) => root.BusinessReducer);
-  console.log(arrBusiness);
   let emptyProduct = {
     id: null,
     name: "",
@@ -94,7 +93,6 @@ export default function AdminBusiness() {
       startDate: addHours(new Date(startDate), 7),
       endDate: addHours(new Date(endDate), 7),
     };
-    console.log(_product);
     const action = UpdateAciveBusinessAction(_product);
     dispatch(action);
     toast.current.show({
@@ -121,7 +119,6 @@ export default function AdminBusiness() {
 
   const deleteProduct = () => {
     // let _products = products.filter((val) => val.id !== product.id);
-    console.log(product.businessId);
     const action = DetelteBisinessAction(product.businessId);
     dispatch(action);
 

@@ -228,13 +228,13 @@ export default function YourBusiness(props) {
                       <span className="span_lienhe">Tên liên hệ:</span>
                       <span className="red_color fw-bold">
                         {" "}
-                        {item.username}
+                        {item.fullname}
                       </span>
                     </div>
                     <div className="w-100 rounded-3 p-1 ps-2 mb-2 mauxam_bg">
                       <i className="fa fa-regular fa-gem" />{" "}
                       <span className="span_lienhe">Chức vụ:</span>
-                      <small> Sales and Marketing Division</small>
+                      <small> {item.position}</small>
                     </div>
                     <div className="w-100 rounded-3 p-1 ps-2 mb-2 mauxam_bg">
                       <i className="fa fa-solid fa-mobile-screen-button" />{" "}

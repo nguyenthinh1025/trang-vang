@@ -149,7 +149,7 @@ export default function BodyHome(props) {
           </div>
           <div className="foot_signup3">
             <button className="border-0 rounded-2 p-1 ps-3 pe-3 buttom_bg_footer_signup text-white">
-              <a href="./subpages/signup.asp">Đăng ký miễn phí !</a>
+            <NavLink to="/signup">Đăng ký miễn phí !</NavLink>
             </button>
           </div>
           <p className="m-0 p-0 mb-1 clearfix" />

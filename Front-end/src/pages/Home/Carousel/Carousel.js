@@ -4,29 +4,42 @@ import {useFormik} from 'formik'
 import { SearchBusiness, SearchBusinessLocation } from "../../../redux/actions/BusinessAction";
 import { useDispatch } from "react-redux";
 import { history } from "../../../App";
+import Swal from "sweetalert2";
 export default function Carousel(props) {
   const dispatch = useDispatch()
   const [location,setLocation]= useState('')
-  const [searchTerm, setSearchTerm] = useState('');
+
   const [suggestions, setSuggestions] = useState([]);
-
-
-
   const formik = useFormik({
     initialValues:{
       name:"",
       location:""
     },
     onSubmit : (value)=>{
-      if(value.location ===""){
-      //  const action = SearchBusiness(value.name);
-      //  dispatch(action)
-       history.push(`/searchbusiness/${value.name}`)
-      }
-      else{
-      //   const action = SearchBusinessLocation(value.name, value.location);
-      //  dispatch(action)
-       history.push(`/searchbusinesslocation/${value.name}/${value.location}`)
+      if(value.name ===""){
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener("mouseenter", Swal.stopTimer);
+            toast.addEventListener("mouseleave", Swal.resumeTimer);
+          },
+        });
+  
+        Toast.fire({
+          icon: "warning",
+          title: `Vui lòng nhập thông tin cần tìm kiếm`,
+        });
+      }else{
+        if(value.location ===""){
+          history.push(`/searchbusiness/${value.name}`)
+         }
+         else{
+          history.push(`/searchbusinesslocation/${value.name}/${value.location}`)
+         }
       }
     }
   })
@@ -39,8 +52,7 @@ export default function Carousel(props) {
       setLocation(value)
       formik.setFieldValue('location', value)
     }
-   else{
-    setSearchTerm(value);
+   else{ 
     setLocation(value)
     const filteredCities = ListCity.filter(city =>
       city.toLowerCase().trim().includes(value.toLowerCase().trim())
