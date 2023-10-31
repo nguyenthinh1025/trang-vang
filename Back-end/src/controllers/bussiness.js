@@ -97,7 +97,7 @@ const getBussinessById = async (req, res) => {
 const getListBussiness = async (req, res) => {
   try {
     let result = await models.Businesses.findAll({
-      include: ["Images", "Users"],
+      include: ["Images", "Users","Careers"],
     });
     succesCode(res, result, "Lấy Danh Sách Công Ty Thành Công!!!");
   } catch (error) {

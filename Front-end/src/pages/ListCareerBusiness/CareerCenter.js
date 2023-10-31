@@ -1,13 +1,36 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { NavLink } from "react-router-dom/cjs/react-router-dom";
 export default function CareerCenter(props) {
   const { arrCareersName } = props;
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(arrCareersName.length / 5);
+  const pageNumbers = Array.from(
+    { length: totalPages },
+    (_, index) => index + 1
+  );
+  const indexOfLastItem = currentPage * 5;
+  const indexOfFirstItem = indexOfLastItem - 5;
+  const currentItems = arrCareersName.slice(indexOfFirstItem, indexOfLastItem);
+  console.log(currentItems);
+  console.log(arrCareersName);
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
   return (
     <div className="mt-7">
-      {arrCareersName?.filter((item) => item.status === "active").length !==
-      0 ? (
+      {currentItems?.filter((item) => item.status === "active").length !== 0 ? (
         <Fragment>
-          {arrCareersName
+          {currentItems
             ?.filter((item) => item.status === "active")
             .map((item, index) => {
               return (
@@ -74,7 +97,7 @@ export default function CareerCenter(props) {
                             NGÀNH:
                           </span>{" "}
                           <span className="nganh_listing_txt fw500">
-                            {item?.Careers?.slice(0,1).map((item, index) => {
+                            {item?.Careers?.slice(0, 1).map((item, index) => {
                               return <span>{item.careerName}</span>;
                             })}
                           </span>
@@ -150,6 +173,24 @@ export default function CareerCenter(props) {
                 </div>
               );
             })}
+          <div style={{textAlign:'center'}}>
+            <button onClick={prevPage} disabled={currentPage === 1} >
+              Trang trước
+            </button>
+            {pageNumbers.map((number) => (
+              <button
+                key={number}
+                onClick={() => setCurrentPage(number)}
+                className={currentPage === number ? "active-1" : ""}
+                style={{margin:'0 10px'}}
+              >
+                {number}
+              </button>
+            ))}
+            <button onClick={nextPage} disabled={currentPage === totalPages}>
+             Trang sau
+            </button>
+          </div>
         </Fragment>
       ) : (
         <div

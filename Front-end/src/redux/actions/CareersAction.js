@@ -1,4 +1,5 @@
 import { http } from "../../utils/reponse";
+import { GetListBusinessAction } from "./BusinessAction";
 
 export const GetListCareersAction = () => {
     return async (dispatch) => {
@@ -8,6 +9,7 @@ export const GetListCareersAction = () => {
                 type: "GET_LIST_CAREERS",
                 arrCareers: result.data.data
             }
+            console.log(result.data.data)
             dispatch(action)
 
         } catch (error) {
@@ -33,3 +35,33 @@ export const GetListCareersNameAction = (name) => {
         }
     }
 }
+
+
+
+export const UpdateCareersAction = (value) => {
+    return async (dispatch) => {
+        try {
+            let result = await http.put('/careers/updatecareer', value);
+            const action = GetListBusinessAction();
+            dispatch(action)
+            const action1 = GetListCareersAction();
+            dispatch(action1)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+}
+
+
+
+export const DetelteCareerAction = (id) => {
+    return async (dispatch) => {
+      try {
+        let result = await http.delete(`/careers/deletecareer/${id}`);
+        const action = GetListCareersAction();
+        dispatch(action);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };

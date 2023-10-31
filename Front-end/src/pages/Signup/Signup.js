@@ -465,7 +465,7 @@ export default function Signup(props) {
                   />
                 </div>
               </div>
-              <div className="row mt-3">
+              {/* <div className="row mt-3">
                 <div className="col-sm-2 pe-2 pt-1 title_text_align">
                   Ngành nghề 1
                 </div>
@@ -503,7 +503,7 @@ export default function Signup(props) {
                     onChange={(e) => handleInputChange(3, e.target.value)}
                   />
                 </div>
-              </div>
+              </div> */}
               <div className="text-red-700">{car}</div>
               <div className="rounded-4 bg-info bg-opacity-25 p-1 ps-4 mt-4">
                 Phần 3: SẢN PHẨM DỊCH VỤ

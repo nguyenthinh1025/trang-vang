@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Fragment } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Toast } from "primereact/toast";
@@ -16,10 +16,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Dropdown } from "primereact/dropdown";
 import { addHours } from "date-fns";
 import moment from "moment";
+import { useFormik } from "formik";
+import { UpdateCareersAction } from "../../redux/actions/CareersAction";
 
 export default function AdminBusiness() {
   const dispatch = useDispatch();
   const { arrBusiness } = useSelector((root) => root.BusinessReducer);
+  console.log(arrBusiness);
   let emptyProduct = {
     id: null,
     name: "",
@@ -42,7 +45,46 @@ export default function AdminBusiness() {
   const [globalFilter, setGlobalFilter] = useState(null);
   const toast = useRef(null);
   const dt = useRef(null);
+  const [editingIndex, setEditingIndex] = useState(null);
+  const [name, setName] = useState("");
+  const formik = useFormik({
+    initialValues: {
+      careerId: "",
+      careerName: "",
+    },
+    onSubmit: (value) => {
+      if (value.careerName === "") {
+        const data = {
+          careerId: value.careerId,
+          careerName: name,
+        };
+      const action = UpdateCareersAction(data);
+      dispatch(action)
+      toast.current.show({
+        severity: "success",
+        summary: "Thành công",
+        detail: "Cập nhật ngành nghề thành công",
+        life: 3000,
+      });
+      hideDialog()
+      setEditingIndex(null)
+      } else {
+        console.log(value)
+        const action = UpdateCareersAction(value);
+      dispatch(action)
+      toast.current.show({
+        severity: "success",
+        summary: "Thành công",
+        detail: "Cập nhật ngành nghề thành công",
+        life: 3000,
+      });
+      hideDialog()
+      setEditingIndex(null)
+      }
+    },
+  });
 
+  
   const arrReportType = [
     { value: "active", label: "Hoạt động" },
     { value: "inactive", label: "Cấm hoạt động" },
@@ -572,59 +614,157 @@ export default function AdminBusiness() {
             </div>
           </div>
           <hr />
-          <div
-            style={{
-              textAlign: "center",
-              paddingBottom: "20px",
-              fontWeight: 700,
-              fontSize: "20px",
-            }}
-          >
-            Cần cập nhật
-          </div>
-          <div class="grid grid-cols-2 gap-2" style={{ paddingBottom: "20px" }}>
-            <div className="field mt-3">
-              <label htmlFor="name" className="font-bold">
-                Số tiền
-              </label>
-              <InputText
-                type="number"
-                id="name"
-                // value={1000}
-                onChange={(e) => setMoney(e.target.value)}
-                required
-                // autoFocus
-              />
-            </div>
-          </div>
-          <div class="grid grid-cols-2 gap-2" style={{ paddingBottom: "20px" }}>
-            <div className="field mt-3">
-              <label htmlFor="name" className="font-bold">
-                Ngày bắt đầu
-              </label>
-              <InputText
-                type="datetime-local"
-                id="name"
-                // value={product.startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                required
-                autoFocus
-              />
-            </div>
-            <div className="field mt-3">
-              <label htmlFor="name" className="font-bold">
-                Ngày kết thúc
-              </label>
-              <InputText
-                type="datetime-local"
-                id="name"
-                // value={product.endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                required
-                autoFocus
-              />
-            </div>
-          </div>
+          {op === "pending" ? (
+            <Fragment>
+              <div
+                style={{
+                  textAlign: "center",
+                  paddingBottom: "20px",
+                  fontWeight: 700,
+                  fontSize: "20px",
+                }}
+              >
+                Cần cập nhật
+              </div>
+              <div
+                class="grid grid-cols-2 gap-2"
+                style={{ paddingBottom: "20px" }}
+              >
+                <div className="field mt-3">
+                  <label htmlFor="name" className="font-bold">
+                    Số tiền
+                  </label>
+                  <InputText
+                    type="number"
+                    id="name"
+                    // value={1000}
+                    onChange={(e) => setMoney(e.target.value)}
+                    required
+                    // autoFocus
+                  />
+                </div>
+              </div>
+              <div
+                class="grid grid-cols-2 gap-2"
+                style={{ paddingBottom: "20px" }}
+              >
+                <div className="field mt-3">
+                  <label htmlFor="name" className="font-bold">
+                    Ngày bắt đầu
+                  </label>
+                  <InputText
+                    type="datetime-local"
+                    id="name"
+                    // value={product.startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    required
+                    autoFocus
+                  />
+                </div>
+                <div className="field mt-3">
+                  <label htmlFor="name" className="font-bold">
+                    Ngày kết thúc
+                  </label>
+                  <InputText
+                    type="datetime-local"
+                    id="name"
+                    // value={product.endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    required
+                    autoFocus
+                  />
+                </div>
+              </div>
+            </Fragment>
+          ) : (
+            <div></div>
+          )}
+
+          {op === "active" ? (
+            <Fragment>
+              <div
+                style={{
+                  textAlign: "center",
+                  paddingBottom: "20px",
+                  fontWeight: 700,
+                  fontSize: "20px",
+                }}
+              >
+                Danh sách ngành nghề
+              </div>
+              {product?.Careers?.map((item, index) => {
+                return (
+                  <div
+                    class="grid grid-cols-2 gap-2"
+                    style={{ paddingBottom: "20px" }}
+                    key={index}
+                  >
+                    <div className="field mt-3">
+                      {editingIndex === index ? (
+                        <form onSubmit={formik.handleSubmit}>
+                          <div
+                            style={{ display: "flex", paddingBottom: "10px" }}
+                          >
+                            <label htmlFor="name" className="font-bold mr-10">
+                              Chỉnh sửa ngành nghề thứ {index + 1}
+                            </label>
+                            <div
+                              onClick={() => setEditingIndex(null)}
+                              style={{
+                                cursor: "pointer",
+                                textDecoration: "underline",
+                                color: "red",
+                              }}
+                            >
+                              Chỉnh sửa
+                            </div>
+                          </div>
+                          <InputText
+                            type="text"
+                            id="name"
+                            placeholder={item.careerName}
+                            name="careerName"
+                            onChange={formik.handleChange}
+                          />
+                          <button
+                            type="submit"
+                            className=" bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-5"
+                          >
+                            Cập nhật
+                          </button>
+                        </form>
+                      ) : (
+                        <div style={{ display: "flex" }}>
+                          <div style={{ paddingRight: "20px" }}>
+                            <label htmlFor="name" className="font-bold">
+                              Ngành nghề thứ {index + 1}
+                            </label>
+                            <div>{item.careerName}</div>
+                          </div>
+                          <div
+                            onClick={() => {
+                              setEditingIndex(index);
+                              formik.setFieldValue("careerId", item.careerId);
+                              setName(item.careerName);
+                            }}
+                            style={{
+                              cursor: "pointer",
+                              textDecoration: "underline",
+                              color: "red",
+                            }}
+                          >
+                            Chỉnh sửa
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </Fragment>
+          ) : (
+            <div></div>
+          )}
         </Dialog>
 
         <Dialog
@@ -644,28 +784,6 @@ export default function AdminBusiness() {
             {product && (
               <span>
                 Bạn muốn xóa doanh nghiệp <b>{product.businessName}</b>?
-              </span>
-            )}
-          </div>
-        </Dialog>
-
-        <Dialog
-          visible={deleteProductsDialog}
-          style={{ width: "32rem" }}
-          breakpoints={{ "960px": "75vw", "641px": "90vw" }}
-          header="Confirm"
-          modal
-          footer={deleteProductsDialogFooter}
-          onHide={hideDeleteProductsDialog}
-        >
-          <div className="confirmation-content">
-            <i
-              className="pi pi-exclamation-triangle mr-3"
-              style={{ fontSize: "2rem" }}
-            />
-            {product && (
-              <span>
-                Are you sure you want to delete the selected products?
               </span>
             )}
           </div>

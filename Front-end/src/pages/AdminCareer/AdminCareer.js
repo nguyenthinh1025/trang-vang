@@ -21,12 +21,14 @@ import {
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage_bucket } from "../../firebase";
 import { useFormik } from "formik";
+import { DetelteCareerAction, GetListCareersAction, UpdateCareersAction } from "../../redux/actions/CareersAction";
 
-export default function AdminAdvertising() {
+export default function AdminCareer() {
   const dispatch = useDispatch();
-  const { arrAdvertisements } = useSelector(
-    (root) => root.AdvertisementsReducer
+  const { arrCareers } = useSelector(
+    (root) => root.CareersReducer
   );
+  console.log(arrCareers)
 
   let emptyProduct = {
     id: null,
@@ -115,17 +117,17 @@ export default function AdminAdvertising() {
     setOp(e.target.value);
   };
   useEffect(() => {
-    const modifiedArray = arrAdvertisements.map((item) => ({
-      ...item,
-      formattedCreateDate: moment(item.createDate).format("DD/MM/YYYY hh:mm A"),
-    }));
+    // const modifiedArray = arrCareers.map((item) => ({
+    //   ...item,
+    //   formattedCreateDate: moment(item.createDate).format("DD/MM/YYYY hh:mm A"),
+    // }));
 
-    const filteredArray = modifiedArray.filter((item) => item.status === op);
+    const filteredArray = arrCareers.filter((item) => item.businessId !== null);
     setProducts(filteredArray);
-  }, [arrAdvertisements, op]);
+  }, [arrCareers, op]);
 
   useEffect(() => {
-    const action = GetListAdvertisementsAction();
+    const action = GetListCareersAction();
     dispatch(action);
   }, []);
 
@@ -147,12 +149,13 @@ export default function AdminAdvertising() {
 
     let _products = [...products];
     let _product = { ...product };
-    const action = UpdateStatusAdvertisementsAction(_product.adId);
+    console.log(_product)
+    const action = UpdateCareersAction(_product);
     dispatch(action);
     toast.current.show({
       severity: "success",
       summary: "Thành công",
-      detail: "Duyệt quảng cáo thành công",
+      detail: "Cập nhật ngành nghề thành công",
       life: 3000,
     });
 
@@ -172,7 +175,8 @@ export default function AdminAdvertising() {
   };
 
   const deleteProduct = () => {
-    const action = DetelteAdvertisementsAction(product.adId);
+    console.log(product.careerId)
+    const action = DetelteCareerAction(product.careerId);
     dispatch(action);
     setDeleteProductDialog(false);
     setProduct(emptyProduct);
@@ -187,20 +191,6 @@ export default function AdminAdvertising() {
     dt.current.exportCSV();
   };
 
-  const deleteSelectedProducts = () => {
-    let _products = products.filter((val) => !selectedProducts.includes(val));
-
-    setProducts(_products);
-    setDeleteProductsDialog(false);
-    setSelectedProducts(null);
-    toast.current.show({
-      severity: "success",
-      summary: "Successful",
-      detail: "Products Deleted",
-      life: 3000,
-    });
-  };
-
   const onInputChange = (e, name) => {
     const val = (e.target && e.target.value) || "";
     let _product = { ...product };
@@ -213,14 +203,7 @@ export default function AdminAdvertising() {
   const leftToolbarTemplate = () => {
     return (
       <div className="flex flex-wrap gap-2">
-        <Dropdown
-          options={arrReportType}
-          id="reportType"
-          onChange={(e) => onInputDropdown(e, "reportType")}
-          value={op}
-          placeholder="Chọn trạng thái"
-        />
-        {/* <Button label="Delete" icon="pi pi-trash" severity="danger" onClick={confirmDeleteSelected} disabled={!selectedProducts || !selectedProducts.length} /> */}
+       
       </div>
     );
   };
@@ -276,11 +259,9 @@ export default function AdminAdvertising() {
   const productDialogFooter = (
     <React.Fragment>
       <Button label="Hủy" icon="pi pi-times" outlined onClick={hideDialog} />
-      {op === "pending" ? (
+
         <Button label="Đồng ý" icon="pi pi-check" onClick={saveProduct} />
-      ) : (
-        <div></div>
-      )}
+     
     </React.Fragment>
   );
   const deleteProductDialogFooter = (
@@ -299,6 +280,7 @@ export default function AdminAdvertising() {
       />
     </React.Fragment>
   );
+
 
   return (
     <div className="Box-elements" style={{ height: "80%" }}>
@@ -340,60 +322,21 @@ export default function AdminAdvertising() {
             header={header}
           >
             <Column
-              field="businessName"
-              header="Tên doanh nghiệp"
+              field="careerName"
+              header="Tên nghành nghề"
               sortable
               style={{ minWidth: "12rem" }}
             ></Column>
             <Column
-              field="career"
-              header="Loại hình kinh doanh"
-              sortable
-              style={{ minWidth: "16rem" }}
+             field={business =>business?.business?.businessName}
+             header="Doanh nghiệp"
+             sortable
+             style={{ minWidth: "12rem" }}
+             body={business =>business?.business?.businessName}
+             
             ></Column>
 
-            <Column
-              field="productService"
-              header="Sản phẩm"
-              sortable
-              style={{ minWidth: "10rem" }}
-            ></Column>
-            <Column
-              field="userName"
-              header="Người liên hệ"
-              sortable
-              style={{ minWidth: "12rem" }}
-            ></Column>
-            <Column
-              field="userPhone"
-              header="Số điện thoại"
-              sortable
-              style={{ minWidth: "12rem" }}
-            ></Column>
-            {op === "pending" ? (
-              <Column
-                field="createDate"
-                header="Thời gian tạo"
-                sortable
-                style={{ minWidth: "12rem" }}
-                body={(rowData) =>
-                  moment(rowData.createDate).format("DD/MM/YYYY hh:mm A")
-                }
-              ></Column>
-            ) : (
-              <div></div>
-            )}
-            {op === "active" ? (
-              <Column
-                field="money"
-                header="Số tiền"
-                sortable
-                style={{ minWidth: "12rem" }}
-                body={(rowData) => rowData.money.toLocaleString() + " vnđ"}
-              ></Column>
-            ) : (
-              <div></div>
-            )}
+       
             <Column
               body={actionBodyTemplate}
               exportable={false}
@@ -406,7 +349,7 @@ export default function AdminAdvertising() {
           visible={productDialog}
           style={{ width: "60rem" }}
           breakpoints={{ "960px": "75vw", "641px": "90vw" }}
-          header="Chi tiết quảng cáo"
+          header="Chi tiết ngành nghề"
           modal
           className="p-fluid"
           footer={productDialogFooter}
@@ -415,12 +358,12 @@ export default function AdminAdvertising() {
           <div class="grid grid-cols-1 gap-2">
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-                Tên doanh nghiệp
+                Tên ngành nghề
               </label>
               <InputText
                 id="name"
-                value={product.businessName}
-                onChange={(e) => onInputChange(e, "businessName")}
+                value={product.careerName}
+                onChange={(e) => onInputChange(e, "careerName")}
                 required
                 autoFocus
                 // className={classNames({
@@ -432,173 +375,34 @@ export default function AdminAdvertising() {
               )} */}
             </div>
           </div>
-          <div className="field mt-3">
-            <label htmlFor="description" className="font-bold">
-              Loại hình kinh doanh
-            </label>
-            <InputTextarea
-              id="career"
-              value={product.career}
-              onChange={(e) => onInputChange(e, "career")}
-              required
-              rows={3}
-              cols={20}
-            />
-          </div>
-          <div class="grid grid-cols-2 gap-2">
+          <div class="grid grid-cols-1 gap-2">
             <div className="field mt-3">
               <label htmlFor="name" className="font-bold">
-                Sản phẩm
+                Tên doanh nghiệp
               </label>
               <InputText
                 id="name"
-                value={product.productService}
-                onChange={(e) => onInputChange(e, "productService")}
+                value={product.business?.businessName}
+                // onChange={(e) => onInputChange(e, "careerName")}
                 required
                 autoFocus
+                // className={classNames({
+                //   "p-invalid": submitted && !product.name,
+                // })}
               />
-            </div>
-            <div className="field mt-3">
-              <label htmlFor="name" className="font-bold">
-                Người liên hệ
-              </label>
-              <InputText
-                id="name"
-                value={product.userName}
-                onChange={(e) => onInputChange(e, "userName")}
-                required
-                autoFocus
-              />
+              {/* {submitted && !product.name && (
+                <small className="p-error">Name is required.</small>
+              )} */}
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-2">
-            <div className="field mt-3">
-              <label htmlFor="name" className="font-bold">
-                Số điện thoại
-              </label>
-              <InputText
-                id="name"
-                value={product.userPhone}
-                onChange={(e) => onInputChange(e, "userPhone")}
-                required
-                autoFocus
-              />
-            </div>
-          </div>
-
-          {op === "update" ? (
-            <form onSubmit={formik.handleSubmit}>
-              <div style={{ marginTop: "30px" }}>
-                <hr />
-                <div
-                  style={{
-                    textAlign: "center",
-                    fontWeight: 800,
-                    fontSize: "20px",
-                  }}
-                >
-                  Cần Cập nhật
-                </div>
-              </div>
-              <div class="grid grid-cols-1 gap-2">
-                <div className="field mt-3">
-                  <label htmlFor="name" className="font-bold">
-                    Hình ảnh
-                  </label>
-                  <InputText
-                    type="file"
-                    name="upload"
-                    placeholder="Tải ảnh lên"
-                    onChange={(e) => {
-                      uploadFile(e);
-                    }}
-                  />
-                </div>
-              </div>
-              <div class="grid grid-cols-1 gap-2">
-                {formik.values.image !== "" ? (
-                  <img
-                    src={formik.values.image}
-                    width={300}
-                    height={300}
-                    style={{ marginTop: "50px" }}
-                  />
-                ) : (
-                  <div></div>
-                )}
-              </div>
-              <div class="grid grid-cols-2 gap-2">
-                <div className="field mt-3">
-                  <label htmlFor="name" className="font-bold">
-                    Ngày bắt đầu
-                  </label>
-                  <InputText
-                    type="datetime-local"
-                    name="startDate"
-                    value={formik.values.startDate}
-                    onChange={formik.handleChange}
-                    id="name"
-                    required
-                    autoFocus
-                  />
-                </div>
-                <div className="field mt-3">
-                  <label htmlFor="name" className="font-bold">
-                    Ngày kết thúc
-                  </label>
-                  <InputText
-                    type="datetime-local"
-                    name="endDate"
-                    value={formik.values.endDate}
-                    onChange={formik.handleChange}
-                    id="name"
-                    required
-                    autoFocus
-                  />
-                </div>
-              </div>
-              <div class="grid grid-cols-2 gap-2">
-                <div className="field mt-3">
-                  <label htmlFor="name" className="font-bold">
-                    Website
-                  </label>
-                  <InputText
-                    id="name"
-                    name="website"
-                    onChange={formik.handleChange}
-                    required
-                    autoFocus
-                  />
-                </div>
-                <div className="field mt-3">
-                  <label htmlFor="name" className="font-bold">
-                    Số số tiền
-                  </label>
-                  <InputText
-                    min={1}
-                    name="money"
-                    onChange={formik.handleChange}
-                    type="number"
-                    id="name"
-                    required
-                    autoFocus
-                  />
-                </div>
-              </div>
-              <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                Cập nhật
-              </button>
-            </form>
-          ) : (
-            <div></div>
-          )}
+         
         </Dialog>
 
         <Dialog
           visible={deleteProductDialog}
           style={{ width: "32rem" }}
           breakpoints={{ "960px": "75vw", "641px": "90vw" }}
-          header="Confirm"
+          header="Thông báo"
           modal
           footer={deleteProductDialogFooter}
           onHide={hideDeleteProductDialog}
@@ -610,12 +414,14 @@ export default function AdminAdvertising() {
             />
             {product && (
               <span>
-                Bạn muốn xóa quảng cáo của doanh nghiệp{" "}
+                Bạn muốn xóa ngành nghề của doanh nghiệp
                 <b>{product.businessName}</b>?
               </span>
             )}
           </div>
         </Dialog>
+
+      
       </div>
     </div>
   );

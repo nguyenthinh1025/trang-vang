@@ -25,6 +25,7 @@ import ListCareerBusiness from "./pages/ListCareerBusiness/ListCareerBusiness";
 import Search from "./pages/Search/Search";
 import Quyche from "./pages/Quyche/QuyChe";
 import Baomat from "./pages/Baomat/Baomat";
+import AdminCareer from "./pages/AdminCareer/AdminCareer";
 export const history = createBrowserHistory();
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
       <AdminTemplate  path="/admin" exact Component={Admin} /> 
       <AdminTemplate  path="/adminbusiness" exact Component={AdminBusiness} /> 
       <AdminTemplate  path="/adminadvertising" exact Component={AdminAdvertising} /> 
+      <AdminTemplate  path="/admincareer" exact Component={AdminCareer} /> 
       <UserTemplate1  path="/getcareersbyname/:name" exact Component={ListBussiness} /> 
       <UserTemplate1  path="/searchbusiness/:name" exact Component={Search} /> 
       <UserTemplate1  path="/searchbusinesslocation/:name/:location" exact Component={Search} /> 

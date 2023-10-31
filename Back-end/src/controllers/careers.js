@@ -64,7 +64,7 @@ const createCareers = async (req, res) => {
 const searchCareersBusiness = async (req, res) => {
   const { name } = req.params;
 
-  const decodedName = decodeURIComponent(name); 
+  const decodedName = decodeURIComponent(name);
   try {
     const result = await models.Careers.findAll({
       model: models.Careers,
@@ -104,27 +104,27 @@ const searchCareersBusiness = async (req, res) => {
       ],
     });
 
-    const currentDate = new Date(); 
+    const currentDate = new Date();
     currentDate.setHours(currentDate.getHours() + 7);
     const businesses = result
       .map((category) => category.business)
       .filter((business) => {
-        const endDate = new Date(business.endDate); 
+        const endDate = new Date(business.endDate);
         return endDate >= currentDate;
       })
-     .sort((a, b) => b.money - a.money);
-     const advertisement = await models.Advertisements.findAll({
-        where: {
-          career: {
-            [Op.like]: `%${name}%`,
-          },
-          endDate: {
-            [Op.gte]: currentDate, // Chỉ lấy những quảng cáo có endDate lớn hơn hoặc bằng ngày hiện tại
-          },
+      .sort((a, b) => b.money - a.money);
+    const advertisement = await models.Advertisements.findAll({
+      where: {
+        career: {
+          [Op.like]: `%${name}%`,
         },
-        include: "image",
-          order: [["money", "DESC"]],
-      });
+        endDate: {
+          [Op.gte]: currentDate, // Chỉ lấy những quảng cáo có endDate lớn hơn hoặc bằng ngày hiện tại
+        },
+      },
+      include: "image",
+      order: [["money", "DESC"]],
+    });
     succesCode(
       res,
       { name, businesses, advertisement },
@@ -134,4 +134,43 @@ const searchCareersBusiness = async (req, res) => {
     errorCode(res, "Lỗi Backend");
   }
 };
-module.exports = { getBussinessByCareers, getAllCareers, createCareers , searchCareersBusiness};
+
+const updateCareer = async (req, res) => {
+  try {
+    let { careerId, careerName } = req.body;
+    let result = await models.Careers.update(
+      {
+        careerName,
+      },
+      {
+        where: {
+          careerId: careerId,
+        },
+      }
+    );
+    succesCode(res, result, "Cập nhật Career Name thành công");
+  } catch (error) {
+    failCode(res, "Lỗi Backend");
+  }
+};
+const deleteCareer = async (req, res) => {
+  try {
+    let { id } = req.params;
+    let result = await models.Careers.destroy({
+      where: {
+        careerId: id,
+      },
+    });
+    succesCode(res, result, "Xóa Career Name thành công");
+  } catch (error) {
+    failCode(res, "Lỗi Backend");
+  }
+};
+module.exports = {
+  getBussinessByCareers,
+  getAllCareers,
+  createCareers,
+  searchCareersBusiness,
+  updateCareer,
+  deleteCareer
+};

@@ -14,6 +14,7 @@ import { storage_bucket } from "../../firebase";
 import { UpateCertificatesAction } from "../../redux/actions/CertificatesAction";
 import { useFormik } from "formik";
 import UpdateBusinessServices from "../../components/UpdateBusinessServices";
+import { Redirect } from "react-router-dom/cjs/react-router-dom";
 export default function YourBusiness(props) {
   const dispatch = useDispatch();
   const { businessByID } = useSelector((root) => root.BusinessReducer);
@@ -23,7 +24,7 @@ export default function YourBusiness(props) {
   const [create, setCreate] = useState(false);
   const [services, setServices] = useState({});
   const [services1, setServices1] = useState({});
-  const [ser, setSer] = useState('');
+  const [ser, setSer] = useState("");
   const handleClick = (index) => {
     setModal((prevState) => ({
       ...prevState,
@@ -39,10 +40,20 @@ export default function YourBusiness(props) {
   const handleClickCrate = () => {
     setCreate((prevState) => !prevState);
   };
+  const [business, setBusiness] = useState({});
+  console.log(business);
   useEffect(() => {
     const action = BusinessByIDAction(id);
     dispatch(action);
   }, []);
+  useEffect(() => {
+    const data = businessByID.status === "active";
+    console.log(data);
+    if (data === false) {
+      alert("Doanh nghiệp của bạn thông thể truy cập");
+      props.history.push("/");
+    }
+  }, [businessByID]);
   const uploadFile = async (e, certificateId) => {
     try {
       const file = e.target.files[0];
@@ -102,7 +113,7 @@ export default function YourBusiness(props) {
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           const integerProgress = Math.floor(progress);
         });
-      const snapshot = await uploadTask;
+        const snapshot = await uploadTask;
         if (snapshot.state === "success") {
           const downloadURL = await getDownloadURL(snapshot.ref);
           const updatedImages = [...newImages];
@@ -128,8 +139,8 @@ export default function YourBusiness(props) {
       return updatedImages;
     });
   };
- return (
-    <div style={{marginBottom:'50px'}}>
+  return (
+    <div style={{ marginBottom: "50px" }}>
       <div className="m-auto h-auto">
         <div className="container-xl  pt-4 ">
           <div className="listing_trai">
@@ -154,7 +165,7 @@ export default function YourBusiness(props) {
                   KINH DOANH
                 </div>
                 <ul style={{ listStyle: "none" }}>
-                  <div style={{ marginLeft: "216px"}}>
+                  <div style={{ marginLeft: "216px" }}>
                     {businessByID?.BusinessServices?.map((item, idnex) => {
                       return <li>+ {item?.service?.serviceName}</li>;
                     })}
@@ -196,7 +207,7 @@ export default function YourBusiness(props) {
                   <i className="fa fa-solid fa-layer-group pe-1" /> LOẠI HÌNH:
                 </span>{" "}
                 <ul style={{ listStyle: "none" }}>
-                  <div >
+                  <div>
                     {businessByID?.BusinessServices?.map((item, idnex) => {
                       return <li>+ {item?.service?.serviceName}</li>;
                     })}
@@ -305,8 +316,13 @@ export default function YourBusiness(props) {
               </div>
             </div>
             <div id="section2" className="w-100 p-0 m-0 pt-3">
-              <div className="w-100 rounded-3  bg-white  border-bottom" style={{ paddingBottom: "70px" }}>
-                <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div
+                className="w-100 rounded-3  bg-white  border-bottom"
+                style={{ paddingBottom: "70px" }}
+              >
+                <div
+                  style={{ display: "flex", justifyContent: "space-between" }}
+                >
                   <h2 className="fs-6 p-3 pt-4 pb-1">
                     <span className="yellow_bg h2_radius">
                       Sản phẩm dịch vụ
@@ -317,67 +333,79 @@ export default function YourBusiness(props) {
                   </div>
                 </div>
                 <div className="column-ser">
-                {businessByID?.BusinessServices?.map((item, index) => {
-                  return (
-                   <div style={{paddingBottom:'20px' , width:'100%'}}>
-                     <div className=" w-100 pe-3" style={{ padding: "30px 0" }}>
-                     <div style={{display:'flex'}}>
-                     <h3
-                        className="fs-6 p-0 ps-3 pt-2 clearfix dark_blue_color"
-                        style={{ textAlign: "left", cursor: "pointer" }}
-                        onClick={() => {
-                          handleClick(index);
-                          setServices((prevState) => ({
-                            ...prevState,
-                            [index]: item,
-                          }));
-                        }}
-                      >
-                        <i className="fa fa-regular fa-square-check pe-1" />
-                        {item?.service?.serviceName} 
-                      </h3>
-                      <div style={{paddingLeft:'8px', paddingTop:'6px', cursor:'pointer'}} onClick={() => {
-                          handleClick1(index);
-                          setServices1((prevState) => ({
-                            ...prevState,
-                            [index]: item,
-                          }));
-                          setSer(item?.service?.serviceId)
-                        }}>| Thêm sản phẩm</div>
-                     </div>
-                      {item?.service?.Products?.map((item, index) => {
-                        return (
-                          <div className="pt-2 ps-2 pe-0 sanphamdichvu">
-                            <div
-                              className="w-100 ps-2"
-                              style={{ minHeight: 26 }}
+                  {businessByID?.BusinessServices?.map((item, index) => {
+                    return (
+                      <div style={{ paddingBottom: "20px", width: "100%" }}>
+                        <div
+                          className=" w-100 pe-3"
+                          style={{ padding: "30px 0" }}
+                        >
+                          <div style={{ display: "flex" }}>
+                            <h3
+                              className="fs-6 p-0 ps-3 pt-2 clearfix dark_blue_color"
+                              style={{ textAlign: "left", cursor: "pointer" }}
+                              onClick={() => {
+                                handleClick(index);
+                                setServices((prevState) => ({
+                                  ...prevState,
+                                  [index]: item,
+                                }));
+                              }}
                             >
-                              <small>
-                                <i className="fa fa-solid fa-check pe-1" />
-                              </small>
-                              <span>{item.productName}</span>
+                              <i className="fa fa-regular fa-square-check pe-1" />
+                              {item?.service?.serviceName}
+                            </h3>
+                            <div
+                              style={{
+                                paddingLeft: "8px",
+                                paddingTop: "6px",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => {
+                                handleClick1(index);
+                                setServices1((prevState) => ({
+                                  ...prevState,
+                                  [index]: item,
+                                }));
+                                setSer(item?.service?.serviceId);
+                              }}
+                            >
+                              | Thêm sản phẩm
                             </div>
                           </div>
-                        );
-                      })}
-                      <br />
-                      <BusinessServices
-                        modal={modals[index]}
-                        services={services[index]}
-                        handleClick={() => handleClick(index)}
-                      />
-                       <UpdateBusinessServices
-                        modal={modals1[index]}
-                        services={services1[index]}
-                        handleClick={() => handleClick1(index)}
-                        service = {ser}
-                        business = {id}
-                      />
-                    </div>
-                    <br />
-                   </div>
-                  );
-                })}
+                          {item?.service?.Products?.map((item, index) => {
+                            return (
+                              <div className="pt-2 ps-2 pe-0 sanphamdichvu">
+                                <div
+                                  className="w-100 ps-2"
+                                  style={{ minHeight: 26 }}
+                                >
+                                  <small>
+                                    <i className="fa fa-solid fa-check pe-1" />
+                                  </small>
+                                  <span>{item.productName}</span>
+                                </div>
+                              </div>
+                            );
+                          })}
+                          <br />
+                          <BusinessServices
+                            modal={modals[index]}
+                            services={services[index]}
+                            handleClick={() => handleClick(index)}
+                          />
+                          <UpdateBusinessServices
+                            modal={modals1[index]}
+                            services={services1[index]}
+                            handleClick={() => handleClick1(index)}
+                            service={ser}
+                            business={id}
+                          />
+                        </div>
+                        <br />
+                      </div>
+                    );
+                  })}
                 </div>
 
                 <p className="p-0 m-0 mb-3 clearfix" />
@@ -447,106 +475,105 @@ export default function YourBusiness(props) {
                 <form onSubmit={formik.handleSubmit} className="h-auto">
                   <div>
                     <div>
-                    <h3
-                      className="fs-6 p-0 ps-3 pt-3 clearfix xanh_color"
-                      style={{ marginBottom: "10px", marginTop: "50px" }}
-                    >
-                      <i className="fa fa-regular fa-square-check ps-1 pe-1" />
-                      Hình ảnh doanh nghiệp
-                    </h3>
-                    {businessByID?.Images?.map((item, index) => {
-                      return (
-                        <div className="pt-3 ps-3 pe-0 listing_images">
-                          <div className="rounded-3 border border-dark-subtle p-2 text-center sanphamtrungbay_khung">
-                            <img
-                              id="myImg11"
-                              className="img_style"
-                              src={item?.imageUrl}
-                            />
+                      <h3
+                        className="fs-6 p-0 ps-3 pt-3 clearfix xanh_color"
+                        style={{ marginBottom: "10px", marginTop: "50px" }}
+                      >
+                        <i className="fa fa-regular fa-square-check ps-1 pe-1" />
+                        Hình ảnh doanh nghiệp
+                      </h3>
+                      {businessByID?.Images?.map((item, index) => {
+                        return (
+                          <div className="pt-3 ps-3 pe-0 listing_images">
+                            <div className="rounded-3 border border-dark-subtle p-2 text-center sanphamtrungbay_khung">
+                              <img
+                                id="myImg11"
+                                className="img_style"
+                                src={item?.imageUrl}
+                              />
+                            </div>
+                            <div
+                              className="pt-2 text-center"
+                              style={{ height: 56 }}
+                            >
+                              <small />
+                            </div>
                           </div>
-                          <div
-                            className="pt-2 text-center"
-                            style={{ height: 56 }}
-                          >
-                            <small />
-                          </div>
-                        </div>
-                      );
-                    })}
-
+                        );
+                      })}
                     </div>
                     <p className="m-0 clearfix" />
                     <div>
-                    <div
-                      className="button-wrapper-1"
-                      style={{ display: "flex" }}
-                    >
-                      <span className="label">Tải ảnh lên</span>
-                      <input
-                        type="file"
-                        name="upload"
-                        id="upload-1"
-                        className="upload-box"
-                        placeholder="Tải ảnh lên"
-                        multiple
-                        onChange={handleImageChange}
-                      />
-                      {images.length === 0 ? (
-                        <div></div>
-                      ) : (
-                        <button
-                          type="submit"
-                          style={{
-                            width: "100%",
-                            color: "black",
-                            fontSize: "16px",
-                          }}
-                        >
-                          Hoàn thành
-                        </button>
-                      )}
-                    </div>
+                      <div
+                        className="button-wrapper-1"
+                        style={{ display: "flex" }}
+                      >
+                        <span className="label">Tải ảnh lên</span>
+                        <input
+                          type="file"
+                          name="upload"
+                          id="upload-1"
+                          className="upload-box"
+                          placeholder="Tải ảnh lên"
+                          multiple
+                          onChange={handleImageChange}
+                        />
+                        {images.length === 0 ? (
+                          <div></div>
+                        ) : (
+                          <button
+                            type="submit"
+                            style={{
+                              width: "100%",
+                              color: "black",
+                              fontSize: "16px",
+                            }}
+                          >
+                            Hoàn thành
+                          </button>
+                        )}
+                      </div>
 
-                    <div
-                      className="image-container image-container-flex"
-                      style={{ paddingBottom: "100px" }}
-                    >
-                      {images.length === 0 ? (
-                        <div></div>
-                      ) : (
-                        <Fragment>
-                          <div>
-                            {images.map((image, index) => (
-                              <div
-                                className="pt-3 ps-3 pe-0 listing_images"
-                                style={{ position: "relative" }}
-                              >
-                                <div className="rounded-3 border border-dark-subtle p-2 text-center sanphamtrungbay_khung">
-                                  <img
-                                    id="myImg11"
-                                    className="img_style"
-                                    src={image?.url}
-                                  />
-                                </div>
+                      <div
+                        className="image-container image-container-flex"
+                        style={{ paddingBottom: "100px" }}
+                      >
+                        {images.length === 0 ? (
+                          <div></div>
+                        ) : (
+                          <Fragment>
+                            <div>
+                              {images.map((image, index) => (
                                 <div
-                                  style={{
-                                    position: "absolute",
-                                    top: "14px",
-                                    right: "10px",
-                                    color: "red",
-                                    cursor:'pointer'
-                                  }}
-                                  onClick={() => handleImageDelete(index)}
+                                  className="pt-3 ps-3 pe-0 listing_images"
+                                  style={{ position: "relative" }}
                                 >
-                                  <span>&times;</span>
+                                  <div className="rounded-3 border border-dark-subtle p-2 text-center sanphamtrungbay_khung">
+                                    <img
+                                      id="myImg11"
+                                      className="img_style"
+                                      src={image?.url}
+                                    />
+                                  </div>
+                                  <div
+                                    style={{
+                                      position: "absolute",
+                                      top: "14px",
+                                      right: "10px",
+                                      color: "red",
+                                      cursor: "pointer",
+                                    }}
+                                    onClick={() => handleImageDelete(index)}
+                                  >
+                                    <span>&times;</span>
+                                  </div>
                                 </div>
-                              </div>
-                            ))}
-                          </div>
-                          <br />
-                        </Fragment>
-                      )}
-                    </div>
+                              ))}
+                            </div>
+                            <br />
+                          </Fragment>
+                        )}
+                      </div>
                     </div>
                     <br />
                   </div>
@@ -564,7 +591,10 @@ export default function YourBusiness(props) {
                       <i className="fa fa-brands fa-connectdevelop pe-1" /> TÊN
                       CÔNG TY
                     </div>
-                    <div className="div_77 text-uppercase h6" style={{fontSize:'18px'}}>
+                    <div
+                      className="div_77 text-uppercase h6"
+                      style={{ fontSize: "18px" }}
+                    >
                       {businessByID?.businessName}
                     </div>
                   </div>
@@ -587,7 +617,7 @@ export default function YourBusiness(props) {
                       HÌNH KINH DOANH
                     </div>
                     <ul style={{ listStyle: "none" }}>
-                      <div style={{ marginLeft: "216px"}}>
+                      <div style={{ marginLeft: "216px" }}>
                         {businessByID?.BusinessServices?.map((item, idnex) => {
                           return <li>+ {item?.service?.serviceName}</li>;
                         })}
@@ -716,7 +746,7 @@ export default function YourBusiness(props) {
       <CreateBusniessServices
         create={create}
         handleClickCrate={handleClickCrate}
-        business  = {id}
+        business={id}
       />
     </div>
   );
